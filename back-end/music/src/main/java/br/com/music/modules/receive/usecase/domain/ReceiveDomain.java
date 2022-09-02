@@ -16,8 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-@Table(name = "receive")
 public class ReceiveDomain {
 
     private static final long serialVersionUID = 1L;

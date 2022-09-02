@@ -1,7 +1,7 @@
-package br.com.music.modules.song.entrypoint;
+package br.com.music.modules.song.controller;
 
-import br.com.music.modules.song.entrypoint.dto.SongDto;
-import br.com.music.modules.song.entrypoint.mapper.SongMapper;
+import br.com.music.modules.song.controller.dto.SongDto;
+import br.com.music.modules.song.controller.mapper.SongMapper;
 import br.com.music.modules.song.usecase.SongUseCase;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class SongController {
+public class SongController implements Song{
 
     private final SongMapper songMapper;
     private final SongUseCase songUseCase;
 
-    @GetMapping("/song/{id}")
     public SongDomain findById(@PathVariable Integer id) {
 
         var songDomain = songUseCase.findById(id);
@@ -34,7 +33,6 @@ public class SongController {
         return songDomain;
     }
 
-    @GetMapping("/songs")
     public ResponseEntity<List<SongDomain>> findAll() {
 
         var songs = songUseCase.findAll();
@@ -42,8 +40,7 @@ public class SongController {
         return ResponseEntity.ok(songs);
     }
 
-    @PostMapping("/song")
-    public ResponseEntity<String> save(@Valid @RequestBody SongDto songDto) {
+    public ResponseEntity<String> save(@RequestBody SongDto songDto) {
 
         var song = songMapper.toDomain(songDto);
 
@@ -52,14 +49,11 @@ public class SongController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
-    @DeleteMapping("/song/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Integer id) {
 
         songUseCase.deleteById(id);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
-
-
 
 }

@@ -14,48 +14,45 @@ import java.util.List;
 @Component
 public class SongMySQLDataProvider implements SongDadosGateway {
 
-    private final SongRepository songRepository;
+  private final SongRepository songRepository;
 
+  @Override
+  public void save(SongDomain songDomain) {
+    log.info("Save song.");
 
-    @Override
-    public void save(SongDomain songDomain) {
-        log.info("Save song.");
+    songRepository.save(songDomain);
 
-        songRepository.save(songDomain);
+    log.info("Save song successfully!");
+  }
 
-        log.info("Save song successfully!");
-    }
+  @Override
+  public List<SongDomain> findAll() {
+    log.info("Find all songs");
 
-    @Override
-    public List<SongDomain> findAll() {
-        log.info("Find all songs");
+    var songDomain = songRepository.findAll();
 
-        var songDomain = songRepository.findAll();
+    log.info("Find all songs successfully");
 
-        log.info("Find all songs successfully");
+    return songDomain;
+  }
 
-        return songDomain;
-    }
+  @Override
+  public SongDomain findById(Integer id) {
+    log.info("Find song by id: [{}}.", id);
 
-    @Override
-    public SongDomain findById(Integer id) {
-        log.info("Find song by id: [{}}.", id);
+    var songDomain = songRepository.findById(id);
 
-        var songDomain = songRepository.findById(id);
+    log.info("Find successfully song by id: [{}}.", id);
 
-        log.info("Find successfully song by id: [{}}.", id);
+    return songDomain.get();
+  }
 
-        return songDomain;
-    }
+  @Override
+  public void deleteById(Integer id) {
+    log.info("Delete song by id: [{}}.", id);
 
-    @Override
-    public void deleteById(Integer id) {
-        log.info("Delete song by id: [{}}.", id);
+    songRepository.deleteById(id);
 
-        songRepository.deleteById(id);
-
-        log.info("Delete successfully song by id: [{}}.", id);
-    }
-
-
+    log.info("Delete successfully song by id: [{}}.", id);
+  }
 }

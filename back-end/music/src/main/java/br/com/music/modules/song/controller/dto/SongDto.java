@@ -1,5 +1,7 @@
-package br.com.music.modules.song.entrypoint.dto;
+package br.com.music.modules.song.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,9 +14,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class SongDto {
 
-    @NotNull
-    private Integer id;
-
     @NotBlank
     private String description;
 
@@ -22,5 +21,6 @@ public class SongDto {
     private String link;
 
     @NotNull
-    private Integer idUser;
+    @JsonProperty("id_user")
+    private int idUser;
 }

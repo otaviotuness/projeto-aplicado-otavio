@@ -14,8 +14,6 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-@Table(name = "category")
 public class CategoryDomain {
 
     private static final long serialVersionUID = 1L;
