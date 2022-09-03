@@ -4,6 +4,8 @@ import br.com.music.modules.event.entrypoint.dto.EventDto;
 import br.com.music.modules.event.entrypoint.mapper.EventMapper;
 import br.com.music.modules.event.usecase.EventUseCase;
 import br.com.music.modules.event.usecase.domain.EventDomain;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,51 +17,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.util.List;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 public class EventController {
 
-    private final EventMapper eventMapper;
-    private final EventUseCase eventUseCase;
+  private final EventMapper eventMapper;
+  private final EventUseCase eventUseCase;
 
-    @GetMapping("/events")
-    public List<EventDomain> findAll() {
+  @GetMapping("/events")
+  public List<EventDomain> findAll() {
 
-        var eventDomains = eventUseCase.findAll();
+    var eventDomains = eventUseCase.findAll();
 
-        return eventDomains;
-    }
+    return eventDomains;
+  }
 
-    @GetMapping("/event/{id}")
-    public EventDomain findById(@PathVariable Integer id) {
+  @GetMapping("/event/{id}")
+  public EventDomain findById(@PathVariable Integer id) {
 
-        var eventDomain = eventUseCase.findById(id);
+    var eventDomain = eventUseCase.findById(id);
 
-        return eventDomain;
-    }
+    return eventDomain;
+  }
 
-    @PostMapping("/event")
-    public ResponseEntity<String> save(@Valid @RequestBody EventDto eventDto) {
+  @PostMapping("/event")
+  public ResponseEntity<String> save(@Valid @RequestBody EventDto eventDto) {
 
-        var eventDomain = eventMapper.toDomain(eventDto);
+    var eventDomain = eventMapper.toDomain(eventDto);
 
-        eventUseCase.save(eventDomain);
+    eventUseCase.save(eventDomain);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
+    return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+  }
 
-    @DeleteMapping("/event/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+  @DeleteMapping("/event/{id}")
+  public ResponseEntity<String> deleteById(@PathVariable Integer id) {
 
-        eventUseCase.deleteById(id);
+    eventUseCase.deleteById(id);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
-
-
-
+    return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+  }
 }

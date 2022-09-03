@@ -12,37 +12,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class RoleMySQLDataProvider implements RoleDadosGateway {
 
-    private final RoleRepository roleRepository;
+  private final RoleRepository roleRepository;
 
+  @Override
+  public void saveRole(RoleDomain roleDomain) {
+    log.info("Save role.");
 
-    @Override
-    public void saveRole(RoleDomain roleDomain) {
-        log.info("Save role.");
+    roleRepository.saveRole(roleDomain);
 
-        roleRepository.saveRole(roleDomain);
+    log.info("Save role successfully!");
+  }
 
-        log.info("Save role successfully!");
-    }
+  @Override
+  public RoleDomain findById(Integer id) {
+    log.info("Find role by id: [{}}.", id);
 
-    @Override
-    public RoleDomain findById(Integer id) {
-        log.info("Find role by id: [{}}.", id);
+    var roleDomain = roleRepository.findById(id);
 
-        var roleDomain = roleRepository.findById(id);
+    log.info("Find successfully role by id: [{}}.", id);
 
-        log.info("Find successfully role by id: [{}}.", id);
+    return roleDomain;
+  }
 
-        return roleDomain;
-    }
+  @Override
+  public void deleteById(Integer id) {
+    log.info("Delete role by id: [{}}.", id);
 
-    @Override
-    public void deleteById(Integer id) {
-        log.info("Delete role by id: [{}}.", id);
+    roleRepository.deleteById(id);
 
-        roleRepository.deleteById(id);
-
-        log.info("Delete successfully role by id: [{}}.", id);
-    }
-
-
+    log.info("Delete successfully role by id: [{}}.", id);
+  }
 }

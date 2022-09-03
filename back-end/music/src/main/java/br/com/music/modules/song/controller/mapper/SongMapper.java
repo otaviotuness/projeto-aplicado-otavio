@@ -7,6 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface SongMapper {
 
-    SongDomain toDomain(SongDto songDto);
-
+  SongDomain toDomain(SongDto songDto);
 }

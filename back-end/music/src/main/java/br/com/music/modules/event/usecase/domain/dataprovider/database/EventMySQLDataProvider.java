@@ -1,60 +1,57 @@
 package br.com.music.modules.event.usecase.domain.dataprovider.database;
 
-import br.com.music.modules.event.usecase.domain.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.domain.EventDomain;
+import br.com.music.modules.event.usecase.domain.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class EventMySQLDataProvider implements EventDadosGateway {
 
-    private final EventRepository eventRepository;
-    
-    @Override
-    public void save(EventDomain eventDomain) {
-        log.info("Save event.");
+  private final EventRepository eventRepository;
 
-        eventRepository.save(eventDomain);
+  @Override
+  public void save(EventDomain eventDomain) {
+    log.info("Save event.");
 
-        log.info("Save event successfully!");
-    }
+    eventRepository.save(eventDomain);
 
-    @Override
-    public List<EventDomain> findAll() {
-        log.info("Find all events");
+    log.info("Save event successfully!");
+  }
 
-        var eventDomain = eventRepository.findAll();
+  @Override
+  public List<EventDomain> findAll() {
+    log.info("Find all events");
 
-        log.info("Find all events successfully");
+    var eventDomain = eventRepository.findAll();
 
-        return eventDomain;
-    }
+    log.info("Find all events successfully");
 
-    @Override
-    public EventDomain findById(Integer id) {
-        log.info("Find event by id: [{}}.", id);
+    return eventDomain;
+  }
 
-        var eventDomain = eventRepository.findById(id);
+  @Override
+  public EventDomain findById(Integer id) {
+    log.info("Find event by id: [{}}.", id);
 
-        log.info("Find successfully event by id: [{}}.", id);
+    var eventDomain = eventRepository.findById(id);
 
-        return eventDomain;
-    }
+    log.info("Find successfully event by id: [{}}.", id);
 
-    @Override
-    public void deleteById(Integer id) {
-        log.info("Delete event by id: [{}}.", id);
+    return eventDomain;
+  }
 
-        eventRepository.deleteById(id);
+  @Override
+  public void deleteById(Integer id) {
+    log.info("Delete event by id: [{}}.", id);
 
-        log.info("Delete successfully event by id: [{}}.", id);
-    }
+    eventRepository.deleteById(id);
 
-
+    log.info("Delete successfully event by id: [{}}.", id);
+  }
 }

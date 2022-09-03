@@ -9,8 +9,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ReceiveMapper {
 
-    ReceiveDomain toDomain(ReceiveDto receiveDto);
+  ReceiveDomain toDomain(ReceiveDto receiveDto);
 
-    ReceiveItemDomain mapReceiveItem(ReceiveItemDto item);
-
+  ReceiveItemDomain mapReceiveItem(ReceiveItemDto item);
 }

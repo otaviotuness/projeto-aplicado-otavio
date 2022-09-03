@@ -1,29 +1,28 @@
 package br.com.music.modules.checklist.dataprovider.repository;
 
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
-import org.springframework.stereotype.Repository;
+import static br.com.music.modules.utils.GeneratorObj.EASY_RANDOM;
 
+import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
 import java.util.Arrays;
 import java.util.List;
-
-import static br.com.music.modules.shared.GeneratorObj.EASY_RANDOM;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class ChecklistRepository {
 
-    public void save(ChecklistDomain checklistDomain) {}
+  public void save(ChecklistDomain checklistDomain) {}
 
-    public ChecklistDomain findById(Integer id) {
-        var checklistDomain = EASY_RANDOM.nextObject(ChecklistDomain.class);
+  public ChecklistDomain findById(Integer id) {
+    var checklistDomain = EASY_RANDOM.nextObject(ChecklistDomain.class);
 
-        return checklistDomain;
-    }
+    return checklistDomain;
+  }
 
-    public List<ChecklistDomain> findAll(){
-        var checkList = Arrays.asList(EASY_RANDOM.nextObject(ChecklistDomain.class));
+  public List<ChecklistDomain> findAll() {
+    var checkList = Arrays.asList(EASY_RANDOM.nextObject(ChecklistDomain.class));
 
-        return checkList;
-    }
+    return checkList;
+  }
 
-    public void deleteById(Integer id) {}
+  public void deleteById(Integer id) {}
 }

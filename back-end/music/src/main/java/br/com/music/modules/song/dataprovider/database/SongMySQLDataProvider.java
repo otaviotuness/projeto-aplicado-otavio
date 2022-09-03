@@ -3,11 +3,11 @@ package br.com.music.modules.song.dataprovider.database;
 import br.com.music.modules.song.dataprovider.repository.SongRepository;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
+import br.com.music.modules.utils.exceptions.NotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -40,11 +40,11 @@ public class SongMySQLDataProvider implements SongDadosGateway {
   public SongDomain findById(Integer id) {
     log.info("Find song by id: [{}}.", id);
 
-    var songDomain = songRepository.findById(id);
+    var songDomain = songRepository.findById(id).orElseThrow(() -> NotFoundException.with(id));
 
     log.info("Find successfully song by id: [{}}.", id);
 
-    return songDomain.get();
+    return songDomain;
   }
 
   @Override

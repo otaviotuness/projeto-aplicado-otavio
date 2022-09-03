@@ -1,17 +1,15 @@
 package br.com.music.modules.checklist.usecase.gateway;
 
 import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
-
 import java.util.List;
 
 public interface ChecklistDadosGateway {
 
-    void save(ChecklistDomain checklistDomain);
+  void save(ChecklistDomain checklistDomain);
 
-    List<ChecklistDomain> findAll();
+  List<ChecklistDomain> findAll();
 
-    ChecklistDomain findById(Integer id);
+  ChecklistDomain findById(Integer id);
 
-    void deleteById(Integer id);
-
+  void deleteById(Integer id);
 }

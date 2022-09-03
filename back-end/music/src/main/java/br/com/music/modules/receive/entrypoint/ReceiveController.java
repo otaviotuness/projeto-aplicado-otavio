@@ -4,6 +4,8 @@ import br.com.music.modules.receive.entrypoint.dto.ReceiveDto;
 import br.com.music.modules.receive.entrypoint.mapper.ReceiveMapper;
 import br.com.music.modules.receive.usecase.ReceiveUseCase;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,51 +17,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.util.List;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ReceiveController {
 
-    private final ReceiveMapper receiveMapper;
-    private final ReceiveUseCase receiveUseCase;
+  private final ReceiveMapper receiveMapper;
+  private final ReceiveUseCase receiveUseCase;
 
-    @GetMapping("/receive/{id}")
-    public ReceiveDomain findById(@PathVariable Integer id) {
+  @GetMapping("/receive/{id}")
+  public ReceiveDomain findById(@PathVariable Integer id) {
 
-        var receiveDomain = receiveUseCase.findById(id);
+    var receiveDomain = receiveUseCase.findById(id);
 
-        return receiveDomain;
-    }
+    return receiveDomain;
+  }
 
-    @GetMapping("/receives")
-    public ResponseEntity<List<ReceiveDomain>> findAll() {
+  @GetMapping("/receives")
+  public ResponseEntity<List<ReceiveDomain>> findAll() {
 
-        var receives = receiveUseCase.findAll();
+    var receives = receiveUseCase.findAll();
 
-        return ResponseEntity.ok(receives);
-    }
+    return ResponseEntity.ok(receives);
+  }
 
-    @PostMapping("/receive")
-    public ResponseEntity<String> save(@Valid @RequestBody ReceiveDto receiveDto) {
+  @PostMapping("/receive")
+  public ResponseEntity<String> save(@Valid @RequestBody ReceiveDto receiveDto) {
 
-        var receive = receiveMapper.toDomain(receiveDto);
+    var receive = receiveMapper.toDomain(receiveDto);
 
-        receiveUseCase.save(receive);
+    receiveUseCase.save(receive);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
+    return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+  }
 
-    @DeleteMapping("/receive/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+  @DeleteMapping("/receive/{id}")
+  public ResponseEntity<String> deleteById(@PathVariable Integer id) {
 
-        receiveUseCase.deleteById(id);
+    receiveUseCase.deleteById(id);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
-
-
-
+    return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+  }
 }

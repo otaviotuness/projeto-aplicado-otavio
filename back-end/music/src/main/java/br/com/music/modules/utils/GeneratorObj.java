@@ -1,8 +1,9 @@
-package br.com.music.modules.configTest;
+package br.com.music.modules.utils;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 
+// Temporary class created to create random objects
 public class GeneratorObj {
 
   private GeneratorObj() {}

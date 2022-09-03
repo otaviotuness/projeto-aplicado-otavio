@@ -1,5 +1,7 @@
 package br.com.music.modules.configTest;
 
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -10,8 +12,6 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
@@ -28,8 +28,6 @@ public abstract class TestWithMySQL {
 
   @DynamicPropertySource
   public static void properties(DynamicPropertyRegistry registry) {
-    registry.add("spring.datasource.url",DB_CONTAINER::getJdbcUrl);
-
+    registry.add("spring.datasource.url", DB_CONTAINER::getJdbcUrl);
   }
-
 }
