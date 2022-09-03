@@ -1,8 +1,9 @@
 package br.com.music.modules.receive.dataprovider.database;
 
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
-import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
+import br.com.music.modules.receive.usecase.domain.Receive;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
+import br.com.music.modules.utils.exceptions.NotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,30 +17,31 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   private final ReceiveRepository receiveRepository;
 
   @Override
-  public void save(ReceiveDomain receiveDomain) {
+  public void save(Receive receive) {
     log.info("Save receive.");
 
-    receiveRepository.save(receiveDomain);
+    receiveRepository.save(receive);
 
     log.info("Save receive successfully!");
   }
 
   @Override
-  public List<ReceiveDomain> findAll() {
+  public List<Receive> findAll() {
     log.info("Find all receives");
 
-    var receiveDomain = receiveRepository.findAll();
+    var receive = receiveRepository.findAll();
 
     log.info("Find all receives successfully");
 
-    return receiveDomain;
+    return receive;
   }
 
   @Override
-  public ReceiveDomain findById(Integer id) {
+  public Receive findById(Integer id) {
     log.info("Find receive by id: [{}}.", id);
 
-    var receiveDomain = receiveRepository.findById(id);
+    var receiveDomain =
+        receiveRepository.findById(id).orElseThrow(() -> NotFoundException.with(id));
 
     log.info("Find successfully receive by id: [{}}.", id);
 

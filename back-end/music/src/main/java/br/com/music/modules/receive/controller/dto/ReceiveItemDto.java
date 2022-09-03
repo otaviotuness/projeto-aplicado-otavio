@@ -1,4 +1,4 @@
-package br.com.music.modules.receive.entrypoint.dto;
+package br.com.music.modules.receive.controller.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ public class ReceiveItemDto {
 
   @NotBlank private String description;
 
-  @NotNull private Integer idReceive;
+  @NotNull private ReceiveDto receive;
 
   @NotNull private double value;
 

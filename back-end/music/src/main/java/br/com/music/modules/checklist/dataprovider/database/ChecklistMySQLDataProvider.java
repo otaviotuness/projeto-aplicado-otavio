@@ -3,6 +3,7 @@ package br.com.music.modules.checklist.dataprovider.database;
 import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepository;
 import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
 import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
+import br.com.music.modules.utils.exceptions.NotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,8 @@ public class ChecklistMySQLDataProvider implements ChecklistDadosGateway {
   public ChecklistDomain findById(Integer id) {
     log.info("Find checklists by id: [{}}.", id);
 
-    var checklistDomain = checklistRepository.findById(id);
+    var checklistDomain =
+        checklistRepository.findById(id).orElseThrow(() -> NotFoundException.with(id));
 
     log.info("Find successfully checklists by id: [{}}.", id);
 

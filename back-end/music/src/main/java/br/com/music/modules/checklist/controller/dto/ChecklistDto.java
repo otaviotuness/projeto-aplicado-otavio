@@ -1,5 +1,6 @@
-package br.com.music.modules.checklist.entrypoint.dto;
+package br.com.music.modules.checklist.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
@@ -11,9 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChecklistDto {
 
-  @NotNull private Integer id;
-
   @NotBlank private String description;
 
-  @NotNull private Integer idUser;
+  @NotNull
+  @JsonProperty("id_user")
+  private int idUser;
 }

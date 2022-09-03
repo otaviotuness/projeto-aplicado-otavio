@@ -1,15 +1,15 @@
 package br.com.music.modules.receive.usecase.gateway;
 
-import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
+import br.com.music.modules.receive.usecase.domain.Receive;
 import java.util.List;
 
 public interface ReceiveDadosGateway {
 
-  void save(ReceiveDomain receiveDomain);
+  void save(Receive receiveDto);
 
-  List<ReceiveDomain> findAll();
+  List<Receive> findAll();
 
-  ReceiveDomain findById(Integer id);
+  Receive findById(Integer id);
 
   void deleteById(Integer id);
 }

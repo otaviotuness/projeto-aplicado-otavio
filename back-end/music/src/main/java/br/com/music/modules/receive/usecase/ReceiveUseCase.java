@@ -1,6 +1,6 @@
 package br.com.music.modules.receive.usecase;
 
-import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
+import br.com.music.modules.receive.usecase.domain.Receive;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +14,15 @@ public class ReceiveUseCase {
 
   private final ReceiveDadosGateway receiveDadosGateway;
 
-  public void save(ReceiveDomain receiveDomain) {
-    receiveDadosGateway.save(receiveDomain);
+  public void save(Receive receive) {
+    receiveDadosGateway.save(receive);
   }
 
-  public List<ReceiveDomain> findAll() {
+  public List<Receive> findAll() {
     return receiveDadosGateway.findAll();
   }
 
-  public ReceiveDomain findById(Integer id) {
+  public Receive findById(Integer id) {
     return receiveDadosGateway.findById(id);
   }
 
