@@ -1,7 +1,8 @@
 package br.com.music.modules.receive.usecase.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Builder
 @AllArgsConstructor
@@ -32,7 +35,8 @@ public class Receive {
   private Integer totalValue;
   private Integer totalValueReceive;
 
-  @JsonBackReference
-  @OneToMany(mappedBy = "receive")
+  @JsonManagedReference
+  @OneToMany(mappedBy = "receive", cascade = CascadeType.ALL)
+  @Fetch(FetchMode.JOIN)
   private List<ReceiveItem> receiveItem;
 }

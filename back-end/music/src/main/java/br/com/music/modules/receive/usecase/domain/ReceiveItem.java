@@ -1,6 +1,6 @@
 package br.com.music.modules.receive.usecase.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +29,7 @@ public class ReceiveItem {
   private double value;
   private Integer idTypeReceive;
 
-  @JsonManagedReference
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "receive_id")
   private Receive receive;

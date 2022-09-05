@@ -2,9 +2,9 @@ package br.com.music.modules.receive.controller;
 
 import br.com.music.modules.receive.controller.dto.ReceiveDto;
 import br.com.music.modules.receive.controller.mapper.ReceiveMapper;
+import br.com.music.modules.receive.dataprovider.repository.ReceiveItemRepository;
 import br.com.music.modules.receive.usecase.ReceiveUseCase;
 import br.com.music.modules.receive.usecase.domain.Receive;
-import br.com.music.modules.receive.usecase.domain.ReceiveItem;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +25,7 @@ public class ReceiveController {
 
   private final ReceiveMapper receiveMapper;
   private final ReceiveUseCase receiveUseCase;
+  private final ReceiveItemRepository receiveItemRepository;
 
   @GetMapping("/receive/{id}")
   public Receive findById(@PathVariable Integer id) {
@@ -45,22 +46,7 @@ public class ReceiveController {
   @PostMapping("/receive")
   public ResponseEntity<String> save(@Valid @RequestBody ReceiveDto receiveDto) {
 
-    // item setar receive
-
-    // receiveDto.getReceiveItem().forEach(a -> a.setReceive(receiveDto));
-
-    // mandar salvar
-
-    // var receive = receiveMapper.toDomain(receiveDto);
-
-    final Receive receive = new Receive();
-    receive.setDescription("teste");
-
-    final ReceiveItem receiveItem = new ReceiveItem();
-    receiveItem.setReceive(receive);
-    receiveItem.setDescription("teste item desc");
-
-    receive.setReceiveItem(List.of(receiveItem));
+    var receive = receiveMapper.toDomain(receiveDto);
 
     receiveUseCase.save(receive);
 

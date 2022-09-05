@@ -1,5 +1,6 @@
 package br.com.music.modules.receive.dataprovider.database;
 
+import br.com.music.modules.receive.dataprovider.repository.ReceiveItemRepository;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import br.com.music.modules.receive.usecase.domain.Receive;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
@@ -15,12 +16,13 @@ import org.springframework.stereotype.Component;
 public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
 
   private final ReceiveRepository receiveRepository;
+  private final ReceiveItemRepository receiveItemRepository;
 
   @Override
   public void save(Receive receive) {
     log.info("Save receive.");
 
-    receiveRepository.save(receive);
+    receiveRepository.saveAll(List.of(receive));
 
     log.info("Save receive successfully!");
   }
