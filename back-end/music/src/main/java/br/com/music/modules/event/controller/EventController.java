@@ -1,7 +1,7 @@
-package br.com.music.modules.event.entrypoint;
+package br.com.music.modules.event.controller;
 
-import br.com.music.modules.event.entrypoint.dto.EventDto;
-import br.com.music.modules.event.entrypoint.mapper.EventMapper;
+import br.com.music.modules.event.controller.dto.EventDto;
+import br.com.music.modules.event.controller.mapper.EventMapper;
 import br.com.music.modules.event.usecase.EventUseCase;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import java.util.List;

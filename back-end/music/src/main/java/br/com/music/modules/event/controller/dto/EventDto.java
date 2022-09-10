@@ -1,4 +1,4 @@
-package br.com.music.modules.event.entrypoint.dto;
+package br.com.music.modules.event.controller.dto;
 
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import java.util.ArrayList;

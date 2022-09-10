@@ -2,7 +2,6 @@ package br.com.music.modules.receive.controller;
 
 import br.com.music.modules.receive.controller.dto.ReceiveDto;
 import br.com.music.modules.receive.controller.mapper.ReceiveMapper;
-import br.com.music.modules.receive.dataprovider.repository.ReceiveItemRepository;
 import br.com.music.modules.receive.usecase.ReceiveUseCase;
 import br.com.music.modules.receive.usecase.domain.Receive;
 import java.util.List;
@@ -25,7 +24,6 @@ public class ReceiveController {
 
   private final ReceiveMapper receiveMapper;
   private final ReceiveUseCase receiveUseCase;
-  private final ReceiveItemRepository receiveItemRepository;
 
   @GetMapping("/receive/{id}")
   public Receive findById(@PathVariable Integer id) {

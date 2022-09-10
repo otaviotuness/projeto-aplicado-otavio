@@ -2,7 +2,6 @@ package br.com.music.modules.receive.usecase.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +35,7 @@ public class Receive {
   private Integer totalValueReceive;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "receive", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "receive")
   @Fetch(FetchMode.JOIN)
   private List<ReceiveItem> receiveItem;
 }

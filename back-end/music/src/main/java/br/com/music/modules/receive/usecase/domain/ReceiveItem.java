@@ -2,6 +2,8 @@ package br.com.music.modules.receive.usecase.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,9 @@ public class ReceiveItem {
 
   private String description;
   private double value;
-  private Integer idTypeReceive;
+
+  @Enumerated(EnumType.STRING)
+  private TypeReceive typeReceive;
 
   @JsonBackReference
   @ManyToOne

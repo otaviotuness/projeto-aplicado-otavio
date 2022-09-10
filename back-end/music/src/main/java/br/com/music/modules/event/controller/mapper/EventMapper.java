@@ -1,6 +1,6 @@
-package br.com.music.modules.event.entrypoint.mapper;
+package br.com.music.modules.event.controller.mapper;
 
-import br.com.music.modules.event.entrypoint.dto.EventDto;
+import br.com.music.modules.event.controller.dto.EventDto;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import org.mapstruct.Mapper;
 

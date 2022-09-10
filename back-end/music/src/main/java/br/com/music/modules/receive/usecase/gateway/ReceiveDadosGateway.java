@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ReceiveDadosGateway {
 
-  void save(Receive receiveDto);
+  Receive save(Receive receiveDto);
 
   List<Receive> findAll();
 

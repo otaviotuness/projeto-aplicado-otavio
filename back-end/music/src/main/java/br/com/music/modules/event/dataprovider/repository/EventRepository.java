@@ -1,4 +1,4 @@
-package br.com.music.modules.event.usecase.domain.dataprovider.repository;
+package br.com.music.modules.event.dataprovider.repository;
 
 import static br.com.music.modules.utils.GeneratorObj.EASY_RANDOM;
 

@@ -1,7 +1,7 @@
-package br.com.music.modules.event.usecase.domain.dataprovider.database;
+package br.com.music.modules.event.dataprovider.database;
 
+import br.com.music.modules.event.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.domain.EventDomain;
-import br.com.music.modules.event.usecase.domain.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
