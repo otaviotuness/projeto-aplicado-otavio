@@ -1,13 +1,12 @@
 package br.com.music.modules.event.usecase.domain;
 
-import br.com.music.modules.checklist.controller.Checklist;
 import br.com.music.modules.receive.usecase.domain.Receive;
-import br.com.music.modules.song.usecase.domain.SongDomain;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,13 +20,20 @@ import lombok.Setter;
 @Table(name = "event")
 public class EventDomain {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
+
   private Integer description;
   private String date;
 
-  @ManyToMany private Set<SongDomain> songsDomain;
+  //  @ManyToMany
+  //  private Set<SongDomain> songsDomain;
 
-  @OneToOne private Receive receive;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "receive_id", referencedColumnName = "id")
+  private Receive receive;
 
-  @OneToMany private List<Checklist> checklist;
+  //  @OneToMany
+  //  private List<Checklist> checklist;
 }
