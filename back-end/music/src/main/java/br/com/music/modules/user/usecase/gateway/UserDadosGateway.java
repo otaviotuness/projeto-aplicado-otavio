@@ -2,6 +2,7 @@ package br.com.music.modules.user.usecase.gateway;
 
 import br.com.music.modules.user.usecase.domain.UserDomain;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserDadosGateway {
 
@@ -9,7 +10,9 @@ public interface UserDadosGateway {
 
   List<UserDomain> findAll();
 
-  UserDomain findById(Integer id);
+  Optional<UserDomain> findById(Integer id);
 
   void deleteUserById(Integer id);
+
+  UserDomain findByEmail(String email);
 }

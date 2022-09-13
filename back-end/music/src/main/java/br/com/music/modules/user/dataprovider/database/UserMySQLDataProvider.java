@@ -4,6 +4,7 @@ import br.com.music.modules.user.dataprovider.repository.UserRepository;
 import br.com.music.modules.user.usecase.domain.UserDomain;
 import br.com.music.modules.user.usecase.gateway.UserDadosGateway;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class UserMySQLDataProvider implements UserDadosGateway {
   }
 
   @Override
-  public UserDomain findById(Integer id) {
+  public Optional<UserDomain> findById(Integer id) {
     log.info("Search users.");
 
     var user = userRepository.findById(id);
@@ -48,10 +49,17 @@ public class UserMySQLDataProvider implements UserDadosGateway {
 
   @Override
   public void deleteUserById(Integer id) {
-    log.info("Delete user by id: [{}].", id);
-
     userRepository.deleteById(id);
+  }
 
-    log.info("Delete user by id: [{}] with sucessfully.", id);
+  @Override
+  public UserDomain findByEmail(String email) {
+    log.info("Search users.");
+
+    var user = userRepository.findByEmail(email);
+
+    log.info("Search users successfully.");
+
+    return user;
   }
 }

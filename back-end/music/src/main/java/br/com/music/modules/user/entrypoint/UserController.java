@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,17 +24,29 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserDetailsService {
 
   private final UsuarioMapper usuarioMapper;
   private final UserUseCase userUseCase;
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+    final var user = userUseCase.findByEmail(username);
+
+    if (user == null) {
+      throw new UsernameNotFoundException("Email not found");
+    }
+
+    return user;
+  }
 
   @GetMapping("/user/{id}")
   private ResponseEntity<Optional<UserDomain>> findById(@PathVariable Integer id) {
 
     var usuario = userUseCase.findById(id);
 
-    return ResponseEntity.ok(Optional.of(usuario));
+    return ResponseEntity.ok(usuario);
   }
 
   @GetMapping("/users")

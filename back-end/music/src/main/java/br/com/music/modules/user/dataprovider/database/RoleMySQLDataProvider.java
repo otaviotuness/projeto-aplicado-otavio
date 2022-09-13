@@ -3,6 +3,8 @@ package br.com.music.modules.user.dataprovider.database;
 import br.com.music.modules.user.dataprovider.repository.RoleRepository;
 import br.com.music.modules.user.usecase.domain.RoleDomain;
 import br.com.music.modules.user.usecase.gateway.RoleDadosGateway;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,28 +20,30 @@ public class RoleMySQLDataProvider implements RoleDadosGateway {
   public void saveRole(RoleDomain roleDomain) {
     log.info("Save role.");
 
-    roleRepository.saveRole(roleDomain);
+    roleRepository.save(roleDomain);
 
-    log.info("Save role successfully!");
+    log.info("Save role sucessfully!");
   }
 
   @Override
-  public RoleDomain findById(Integer id) {
-    log.info("Find role by id: [{}}.", id);
+  public List<RoleDomain> getRole() {
+    log.info("Search roles.");
 
-    var roleDomain = roleRepository.findById(id);
+    List<RoleDomain> roles = roleRepository.findAll();
 
-    log.info("Find successfully role by id: [{}}.", id);
+    log.info("Search roles sucessfully!");
 
-    return roleDomain;
+    return roles;
   }
 
   @Override
-  public void deleteById(Integer id) {
-    log.info("Delete role by id: [{}}.", id);
+  public Optional<RoleDomain> getRoleById(Integer id) {
+    log.info("Search role.");
 
-    roleRepository.deleteById(id);
+    Optional<RoleDomain> roles = roleRepository.findById(id);
 
-    log.info("Delete successfully role by id: [{}}.", id);
+    log.info("Search role sucessfully!");
+
+    return roles;
   }
 }

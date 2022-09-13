@@ -4,12 +4,17 @@ import br.com.music.modules.user.entrypoint.dto.RoleDto;
 import br.com.music.modules.user.entrypoint.mapper.RoleMapper;
 import br.com.music.modules.user.usecase.RoleUseCase;
 import br.com.music.modules.user.usecase.domain.RoleDomain;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -19,16 +24,16 @@ public class RoleController {
   private final RoleMapper roleMapper;
   private final RoleUseCase roleUseCase;
 
-  @GetMapping("/role/{id}")
-  public RoleDomain findById(@PathVariable Integer id) {
+  @GetMapping("/role")
+  private List<RoleDomain> getRole() {
 
-    var roleDomain = roleUseCase.findById(id);
+    List<RoleDomain> roles = roleUseCase.getRole();
 
-    return roleDomain;
+    return roles;
   }
 
   @PostMapping("/role")
-  public ResponseEntity<String> saveRole(@Valid @RequestBody RoleDto roleDto) {
+  private ResponseEntity<String> createRole(@Valid @RequestBody RoleDto roleDto) {
 
     var roleDomain = roleMapper.toDomain(roleDto);
 
@@ -37,11 +42,11 @@ public class RoleController {
     return ResponseEntity.status(HttpStatus.ACCEPTED).build();
   }
 
-  @DeleteMapping("/role/{id}")
-  public ResponseEntity<String> deleteRole(@PathVariable Integer id) {
+  @GetMapping("/role/{id}")
+  private RoleDomain createRole(@PathVariable Integer id) {
 
-    roleUseCase.deleteById(id);
+    var roleDomain = roleUseCase.getRoleById(id);
 
-    return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    return roleDomain.get();
   }
 }

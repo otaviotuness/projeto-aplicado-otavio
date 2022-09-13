@@ -1,12 +1,14 @@
 package br.com.music.modules.user.usecase.gateway;
 
 import br.com.music.modules.user.usecase.domain.RoleDomain;
+import java.util.List;
+import java.util.Optional;
 
 public interface RoleDadosGateway {
 
-  public void saveRole(RoleDomain roleDomain);
+  void saveRole(RoleDomain roleDomain);
 
-  public RoleDomain findById(Integer id);
+  List<RoleDomain> getRole();
 
-  public void deleteById(Integer id);
+  Optional<RoleDomain> getRoleById(Integer id);
 }
