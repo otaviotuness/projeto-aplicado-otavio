@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface Song {
 
   @GetMapping("/song/{id}")
-  SongDomain findById(@PathVariable Integer id) throws UnsupportedEncodingException;
+  SongDomain findById(
+      @RequestHeader("Authorization") final String authorization, @PathVariable Integer id)
+      throws UnsupportedEncodingException;
 
   @GetMapping("/songs")
   ResponseEntity<List<SongDomain>> findAll() throws UnsupportedEncodingException;

@@ -4,7 +4,8 @@ import br.com.music.modules.song.controller.dto.SongDto;
 import br.com.music.modules.song.controller.mapper.SongMapper;
 import br.com.music.modules.song.usecase.SongUseCase;
 import br.com.music.modules.song.usecase.domain.SongDomain;
-import java.io.UnsupportedEncodingException;
+import br.com.music.modules.user.usecase.UserUseCase;
+import br.com.music.modules.utils.jwt.JwtUtils;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,15 +22,17 @@ public class SongController implements Song {
 
   private final SongMapper songMapper;
   private final SongUseCase songUseCase;
+  private final UserUseCase userUseCase;
 
-  public SongDomain findById(@PathVariable Integer id) {
+  public SongDomain findById(final String authorization, final Integer id) {
+    final var email = JwtUtils.decodeJwt(authorization).getEmail();
 
     var songDomain = songUseCase.findById(id);
 
     return songDomain;
   }
 
-  public ResponseEntity<List<SongDomain>> findAll() throws UnsupportedEncodingException {
+  public ResponseEntity<List<SongDomain>> findAll() {
 
     var songs = songUseCase.findAll();
 
