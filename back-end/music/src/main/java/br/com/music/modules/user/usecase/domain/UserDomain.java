@@ -43,7 +43,7 @@ public class UserDomain implements UserDetails, Serializable {
 
   @JsonIgnore private String password;
 
-  private String id_master;
+  private Integer id_master;
 
   @JsonIgnore
   @ManyToMany(fetch = FetchType.EAGER)

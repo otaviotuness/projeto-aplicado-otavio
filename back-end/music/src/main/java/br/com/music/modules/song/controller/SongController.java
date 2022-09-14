@@ -4,8 +4,6 @@ import br.com.music.modules.song.controller.dto.SongDto;
 import br.com.music.modules.song.controller.mapper.SongMapper;
 import br.com.music.modules.song.usecase.SongUseCase;
 import br.com.music.modules.song.usecase.domain.SongDomain;
-import br.com.music.modules.user.usecase.UserUseCase;
-import br.com.music.modules.utils.jwt.JwtUtils;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +20,10 @@ public class SongController implements Song {
 
   private final SongMapper songMapper;
   private final SongUseCase songUseCase;
-  private final UserUseCase userUseCase;
 
-  public SongDomain findById(final String authorization, final Integer id) {
-    final var email = JwtUtils.decodeJwt(authorization).getEmail();
+  public SongDomain findById(final String authorization, final Integer idSong) {
 
-    var songDomain = songUseCase.findById(id);
-
-    return songDomain;
+    return songUseCase.findById(idSong);
   }
 
   public ResponseEntity<List<SongDomain>> findAll() {

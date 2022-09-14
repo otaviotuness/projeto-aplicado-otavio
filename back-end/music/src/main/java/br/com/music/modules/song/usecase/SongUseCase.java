@@ -22,8 +22,13 @@ public class SongUseCase {
     return songDadosGateway.findAll();
   }
 
-  public SongDomain findById(Integer id) {
-    return songDadosGateway.findById(id);
+  public SongDomain findById(final Integer idSong) {
+
+    // tera um validade de algum lugar que mando o id da busca
+    // bato o id da busca com o iduser ou idmaster e retorno ok ou exception
+
+    // nos itens que for all busco com relação ao id os que ele pode buscar
+    return songDadosGateway.findById(idSong);
   }
 
   public void deleteById(Integer id) {

@@ -1,5 +1,7 @@
 package br.com.music.modules.song.controller;
 
+import static br.com.music.modules.utils.BaseConstants.AUTHORIZATION_HEADER;
+
 import br.com.music.modules.song.controller.dto.SongDto;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import java.io.UnsupportedEncodingException;
@@ -20,7 +22,7 @@ public interface Song {
 
   @GetMapping("/song/{id}")
   SongDomain findById(
-      @RequestHeader("Authorization") final String authorization, @PathVariable Integer id)
+      @RequestHeader(AUTHORIZATION_HEADER) final String authorization, @PathVariable Integer id)
       throws UnsupportedEncodingException;
 
   @GetMapping("/songs")
