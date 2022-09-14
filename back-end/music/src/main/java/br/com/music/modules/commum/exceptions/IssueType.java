@@ -1,4 +1,4 @@
-package br.com.music.modules.utils.exceptions;
+package br.com.music.modules.commum.exceptions;
 
 import java.util.IllegalFormatException;
 import org.slf4j.Logger;
@@ -14,6 +14,7 @@ public class IssueType {
   public static final IssueType BAD_REQUEST_AUTHORIZATION_TOKEN_INVALID_OR_EXPIRED =
       new IssueType("02", "Authorization token is invalid or has expired.");
   public static final IssueType BAD_REQUEST_INVALID_JWT = new IssueType("03", "Invalid JWT.");
+  public static final IssueType NOT_AUTHORIZED = new IssueType("04", "Not authorized.");
 
   public IssueType(String code, String message) {
     this.code = String.format("%s-%s", code);

@@ -1,4 +1,4 @@
-package br.com.music.modules.utils;
+package br.com.music.modules.commum.utils;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;

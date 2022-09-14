@@ -1,9 +1,9 @@
 package br.com.music.modules.song.dataprovider.database;
 
+import br.com.music.modules.commum.exceptions.NotFoundException;
 import br.com.music.modules.song.dataprovider.repository.SongRepository;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
-import br.com.music.modules.utils.exceptions.NotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

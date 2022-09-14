@@ -1,4 +1,4 @@
-package br.com.music.modules.utils.exceptions;
+package br.com.music.modules.commum.exceptions;
 
 public class NotFoundException extends DomainException {
 

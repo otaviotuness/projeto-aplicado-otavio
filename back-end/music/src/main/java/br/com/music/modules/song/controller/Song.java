@@ -1,6 +1,6 @@
 package br.com.music.modules.song.controller;
 
-import static br.com.music.modules.utils.BaseConstants.AUTHORIZATION_HEADER;
+import static br.com.music.modules.commum.utils.BaseConstants.AUTHORIZATION_HEADER;
 
 import br.com.music.modules.song.controller.dto.SongDto;
 import br.com.music.modules.song.usecase.domain.SongDomain;

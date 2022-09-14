@@ -1,4 +1,4 @@
-package br.com.music.modules.utils.exceptions;
+package br.com.music.modules.commum.exceptions;
 
 import java.util.List;
 
@@ -21,5 +21,9 @@ public class BadRequestException extends GlobalException {
   public static BadRequestException tokenInvalidOrExpired() {
     return new BadRequestException(
         new Issue(IssueType.BAD_REQUEST_AUTHORIZATION_TOKEN_INVALID_OR_EXPIRED));
+  }
+
+  public static BadRequestException notAuthorized() {
+    return new BadRequestException(new Issue(IssueType.NOT_AUTHORIZED));
   }
 }

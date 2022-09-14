@@ -1,4 +1,4 @@
-package br.com.music.modules.utils.exceptions;
+package br.com.music.modules.commum.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

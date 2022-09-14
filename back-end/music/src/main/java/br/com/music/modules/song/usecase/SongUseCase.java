@@ -1,5 +1,6 @@
 package br.com.music.modules.song.usecase;
 
+import br.com.music.modules.commum.utils.ValidateRequest;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
 import java.util.List;
@@ -24,11 +25,12 @@ public class SongUseCase {
 
   public SongDomain findById(final Integer idSong) {
 
-    // tera um validade de algum lugar que mando o id da busca
-    // bato o id da busca com o iduser ou idmaster e retorno ok ou exception
+    final var songDomain = songDadosGateway.findById(idSong);
+
+    ValidateRequest.validate(songDomain.getIdUser());
 
     // nos itens que for all busco com relação ao id os que ele pode buscar
-    return songDadosGateway.findById(idSong);
+    return songDomain;
   }
 
   public void deleteById(Integer id) {

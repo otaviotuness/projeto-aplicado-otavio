@@ -3,7 +3,7 @@ package br.com.music.modules.checklist.dataprovider.database;
 import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepository;
 import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
 import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
-import br.com.music.modules.utils.exceptions.NotFoundException;
+import br.com.music.modules.commum.exceptions.NotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

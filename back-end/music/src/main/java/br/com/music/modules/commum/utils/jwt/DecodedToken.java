@@ -1,4 +1,4 @@
-package br.com.music.modules.utils.jwt;
+package br.com.music.modules.commum.utils.jwt;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

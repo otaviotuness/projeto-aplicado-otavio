@@ -1,4 +1,4 @@
-package br.com.music.modules.utils.exceptions;
+package br.com.music.modules.commum.exceptions;
 
 public class GlobalException extends RuntimeException {
   private static final long serialVersionUID = 1L;

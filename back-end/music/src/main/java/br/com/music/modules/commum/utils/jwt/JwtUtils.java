@@ -1,12 +1,11 @@
-package br.com.music.modules.utils.jwt;
+package br.com.music.modules.commum.utils.jwt;
 
-import static br.com.music.modules.utils.exceptions.GlobalException.globalException;
-import static br.com.music.modules.utils.exceptions.IssueType.BAD_REQUEST_AUTHORIZATION_TOKEN_INVALID_OR_EXPIRED;
-import static br.com.music.modules.utils.exceptions.IssueType.BAD_REQUEST_INVALID_JWT;
 import static java.util.Objects.isNull;
 
-import br.com.music.modules.utils.exceptions.BadRequestException;
-import br.com.music.modules.utils.exceptions.Issue;
+import br.com.music.modules.commum.exceptions.BadRequestException;
+import br.com.music.modules.commum.exceptions.GlobalException;
+import br.com.music.modules.commum.exceptions.Issue;
+import br.com.music.modules.commum.exceptions.IssueType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -32,7 +31,7 @@ public class JwtUtils {
     String[] tokens = accessToken.split("\\.");
 
     if (tokens.length != 3) {
-      throw new BadRequestException(new Issue(BAD_REQUEST_INVALID_JWT));
+      throw new BadRequestException(new Issue(IssueType.BAD_REQUEST_INVALID_JWT));
     }
 
     byte[] claimsBytesDecoded =
@@ -48,12 +47,12 @@ public class JwtUtils {
       jwtObject = jsonMapper.readValue(bytes, JwtObjectImpl.class);
       if (isNull(jwtObject.email)) {
         throw new BadRequestException(
-            new Issue(BAD_REQUEST_AUTHORIZATION_TOKEN_INVALID_OR_EXPIRED));
+            new Issue(IssueType.BAD_REQUEST_AUTHORIZATION_TOKEN_INVALID_OR_EXPIRED));
       }
 
     } catch (IOException e) {
       logger.error("Could not convert token to object", e);
-      throw globalException();
+      throw GlobalException.globalException();
     }
     return jwtObject;
   }

@@ -1,6 +1,6 @@
 package br.com.music.modules.event.dataprovider.repository;
 
-import static br.com.music.modules.utils.GeneratorObj.EASY_RANDOM;
+import static br.com.music.modules.commum.utils.GeneratorObj.EASY_RANDOM;
 
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import java.util.List;

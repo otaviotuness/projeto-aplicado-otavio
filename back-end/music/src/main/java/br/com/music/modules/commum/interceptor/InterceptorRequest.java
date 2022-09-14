@@ -1,10 +1,10 @@
-package br.com.music.modules.interceptor;
+package br.com.music.modules.commum.interceptor;
 
-import static br.com.music.modules.utils.BaseConstants.AUTHORIZATION_HEADER;
+import static br.com.music.modules.commum.utils.BaseConstants.AUTHORIZATION_HEADER;
 
+import br.com.music.modules.commum.utils.UserInfo;
+import br.com.music.modules.commum.utils.jwt.JwtUtils;
 import br.com.music.modules.user.usecase.UserUseCase;
-import br.com.music.modules.utils.UserInfo;
-import br.com.music.modules.utils.jwt.JwtUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

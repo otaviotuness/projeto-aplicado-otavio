@@ -1,10 +1,10 @@
 package br.com.music.modules.receive.dataprovider.database;
 
+import br.com.music.modules.commum.exceptions.DataIntegrityException;
+import br.com.music.modules.commum.exceptions.NotFoundException;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import br.com.music.modules.receive.usecase.domain.Receive;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
-import br.com.music.modules.utils.exceptions.DataIntegrityException;
-import br.com.music.modules.utils.exceptions.NotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

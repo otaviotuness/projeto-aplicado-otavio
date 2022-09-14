@@ -1,4 +1,4 @@
-package br.com.music.modules.utils;
+package br.com.music.modules.commum.utils;
 
 public final class BaseConstants {
 
