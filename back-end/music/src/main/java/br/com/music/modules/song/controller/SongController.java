@@ -21,7 +21,7 @@ public class SongController implements Song {
   private final SongMapper songMapper;
   private final SongUseCase songUseCase;
 
-  public SongDomain findById(final String authorization, final Integer idSong) {
+  public SongDomain findById(final Integer idSong) {
 
     return songUseCase.findById(idSong);
   }

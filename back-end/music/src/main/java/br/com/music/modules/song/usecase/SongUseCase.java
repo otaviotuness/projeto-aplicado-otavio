@@ -29,7 +29,6 @@ public class SongUseCase {
 
     ValidateRequest.validate(songDomain.getIdUser());
 
-    // nos itens que for all busco com relação ao id os que ele pode buscar
     return songDomain;
   }
 

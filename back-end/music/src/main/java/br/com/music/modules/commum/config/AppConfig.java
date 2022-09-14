@@ -1,4 +1,4 @@
-package br.com.music.modules.config;
+package br.com.music.modules.commum.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

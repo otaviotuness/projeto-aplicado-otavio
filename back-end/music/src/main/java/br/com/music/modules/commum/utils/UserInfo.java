@@ -2,14 +2,12 @@ package br.com.music.modules.commum.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
 @Data
 @AllArgsConstructor
 public class UserInfo {
 
-  private Integer userId;
-  private Integer userIdMaster;
+  private int userId;
+  private int userIdMaster;
   private String role;
 }
