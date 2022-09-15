@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class SongUseCase {
 
   private final SongDadosGateway songDadosGateway;
+  private final ValidateRequest validateRequest;
 
   public void save(SongDomain userDomain) {
     songDadosGateway.save(userDomain);
@@ -27,7 +28,7 @@ public class SongUseCase {
 
     final var songDomain = songDadosGateway.findById(idSong);
 
-    ValidateRequest.validate(songDomain.getIdUser());
+    validateRequest.validate(songDomain.getIdUser());
 
     return songDomain;
   }

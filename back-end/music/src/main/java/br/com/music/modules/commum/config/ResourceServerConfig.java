@@ -45,6 +45,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .hasAuthority(ADMIN)
         .antMatchers(HttpMethod.GET, SONGS)
         .hasAuthority(ADMIN)
+        .antMatchers(HttpMethod.POST, SONG_BY_ID)
+        .hasAuthority(ADMIN)
+        .antMatchers(HttpMethod.POST, SONGS)
+        .hasAuthority(ADMIN)
         // anyrequest
         .anyRequest()
         .denyAll();

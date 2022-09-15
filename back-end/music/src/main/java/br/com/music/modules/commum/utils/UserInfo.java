@@ -1,13 +1,16 @@
 package br.com.music.modules.commum.utils;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.annotation.Configuration;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@Configuration
 public class UserInfo {
 
   private int userId;
   private int userIdMaster;
   private String role;
+  private boolean isAdmin;
 }

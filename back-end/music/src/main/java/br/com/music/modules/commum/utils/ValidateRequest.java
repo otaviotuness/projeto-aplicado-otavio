@@ -2,15 +2,19 @@ package br.com.music.modules.commum.utils;
 
 import br.com.music.modules.commum.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class ValidateRequest {
 
-  private static UserInfo userInfo;
+  private final UserInfo userInfo;
 
-  public static void validate(final Integer id) {
+  public void validate(final Integer id) {
 
-    if (!id.equals(userInfo.getUserId()) || !id.equals(userInfo.getUserIdMaster())) {
+    if (userInfo.isAdmin()) return;
+
+    if ((!id.equals(userInfo.getUserId())) || (!id.equals(userInfo.getUserIdMaster()))) {
       throw BadRequestException.notAuthorized();
     }
   }

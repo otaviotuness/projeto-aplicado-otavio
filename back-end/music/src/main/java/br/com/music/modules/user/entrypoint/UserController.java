@@ -1,11 +1,16 @@
 package br.com.music.modules.user.entrypoint;
 
+import static br.com.music.modules.user.enumeration.RoleEnum.MUSICIAN;
+
+import br.com.music.modules.user.entrypoint.dto.NewUserDto;
 import br.com.music.modules.user.entrypoint.dto.UserDto;
 import br.com.music.modules.user.entrypoint.mapper.UsuarioMapper;
 import br.com.music.modules.user.usecase.UserUseCase;
+import br.com.music.modules.user.usecase.domain.RoleDomain;
 import br.com.music.modules.user.usecase.domain.UserDomain;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,9 +63,13 @@ public class UserController implements UserDetailsService {
   }
 
   @PostMapping("/newUser")
-  private ResponseEntity<String> createNewUser(@Valid @RequestBody UserDto userDto) {
+  private ResponseEntity<String> createNewUser(@Valid @RequestBody NewUserDto userDto) {
 
     var userDomain = usuarioMapper.toDomain(userDto);
+
+    final var role = new RoleDomain(MUSICIAN.getId(), MUSICIAN.getRoleName());
+
+    userDomain.setRoles(Set.of(role));
 
     userUseCase.saveUser(userDomain);
 

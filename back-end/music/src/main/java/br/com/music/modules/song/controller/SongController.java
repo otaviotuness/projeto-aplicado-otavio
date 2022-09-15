@@ -21,9 +21,9 @@ public class SongController implements Song {
   private final SongMapper songMapper;
   private final SongUseCase songUseCase;
 
-  public SongDomain findById(final Integer idSong) {
+  public SongDomain findById(final Integer id) {
 
-    return songUseCase.findById(idSong);
+    return songUseCase.findById(id);
   }
 
   public ResponseEntity<List<SongDomain>> findAll() {
