@@ -4,6 +4,7 @@ import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepositor
 import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
 import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
 import br.com.music.modules.commum.exceptions.NotFoundException;
+import br.com.music.modules.commum.utils.UserInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class ChecklistMySQLDataProvider implements ChecklistDadosGateway {
 
   private final ChecklistRepository checklistRepository;
+  private final UserInfo userInfo;
 
   @Override
   public void save(ChecklistDomain checklistDomain) {
@@ -29,11 +31,13 @@ public class ChecklistMySQLDataProvider implements ChecklistDadosGateway {
   public List<ChecklistDomain> findAll() {
     log.info("Find all checklists");
 
-    var checklistDomains = checklistRepository.findAll();
+    var checklists =
+        checklistRepository.findAllChecklists(
+            userInfo.isAdmin(), userInfo.getUserId(), userInfo.getUserIdMaster());
 
     log.info("Find all checklists successfully");
 
-    return checklistDomains;
+    return checklists;
   }
 
   @Override

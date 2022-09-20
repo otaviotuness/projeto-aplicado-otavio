@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SongDto {
 
+  private Integer id;
+
   @NotBlank private String description;
 
   @NotBlank private String link;

@@ -3,45 +3,39 @@ package br.com.music.modules.receive.controller;
 import br.com.music.modules.receive.controller.dto.ReceiveDto;
 import br.com.music.modules.receive.controller.mapper.ReceiveMapper;
 import br.com.music.modules.receive.usecase.ReceiveUseCase;
-import br.com.music.modules.receive.usecase.domain.Receive;
+import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class ReceiveController {
+public class ReceiveController implements Receive {
 
   private final ReceiveMapper receiveMapper;
   private final ReceiveUseCase receiveUseCase;
 
-  @GetMapping("/receive/{id}")
-  public Receive findById(@PathVariable Integer id) {
+  public ReceiveDomain findById(@PathVariable Integer id) {
 
-    var receiveDomain = receiveUseCase.findById(id);
+    var receive = receiveUseCase.findById(id);
 
-    return receiveDomain;
+    return receive;
   }
 
-  @GetMapping("/receives")
-  public ResponseEntity<List<Receive>> findAll() {
+  public ResponseEntity<List<ReceiveDomain>> findAll() {
 
     var receives = receiveUseCase.findAll();
 
     return ResponseEntity.ok(receives);
   }
 
-  @PostMapping("/receive")
   public ResponseEntity<String> save(@Valid @RequestBody ReceiveDto receiveDto) {
 
     var receive = receiveMapper.toDomain(receiveDto);
@@ -51,7 +45,6 @@ public class ReceiveController {
     return ResponseEntity.status(HttpStatus.ACCEPTED).build();
   }
 
-  @DeleteMapping("/receive/{id}")
   public ResponseEntity<String> deleteById(@PathVariable Integer id) {
 
     receiveUseCase.deleteById(id);

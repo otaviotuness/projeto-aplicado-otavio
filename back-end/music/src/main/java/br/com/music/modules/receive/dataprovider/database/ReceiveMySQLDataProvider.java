@@ -3,7 +3,7 @@ package br.com.music.modules.receive.dataprovider.database;
 import br.com.music.modules.commum.exceptions.DataIntegrityException;
 import br.com.music.modules.commum.exceptions.NotFoundException;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
-import br.com.music.modules.receive.usecase.domain.Receive;
+import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +19,10 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   private final ReceiveRepository receiveRepository;
 
   @Override
-  public Receive save(Receive receive) {
+  public ReceiveDomain save(ReceiveDomain receiveDomain) {
     log.info("Save receive.");
 
-    final var newReceive = receiveRepository.save(receive);
+    final var newReceive = receiveRepository.save(receiveDomain);
 
     log.info("Save receive successfully!");
 
@@ -30,7 +30,7 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   }
 
   @Override
-  public List<Receive> findAll() {
+  public List<ReceiveDomain> findAll() {
     log.info("Find all receives");
 
     var receive = receiveRepository.findAll();
@@ -41,7 +41,7 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   }
 
   @Override
-  public Receive findById(Integer id) {
+  public ReceiveDomain findById(Integer id) {
     log.info("Find receive by id: [{}}.", id);
 
     var receiveDomain =

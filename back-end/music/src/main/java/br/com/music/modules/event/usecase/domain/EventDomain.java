@@ -1,6 +1,6 @@
 package br.com.music.modules.event.usecase.domain;
 
-import br.com.music.modules.receive.usecase.domain.Receive;
+import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +32,7 @@ public class EventDomain {
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "receive_id", referencedColumnName = "id")
-  private Receive receive;
+  private ReceiveDomain receiveDomain;
 
   //  @OneToMany
   //  private List<Checklist> checklist;

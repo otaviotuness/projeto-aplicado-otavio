@@ -6,7 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import br.com.music.modules.receive.usecase.domain.Receive;
+import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
 import br.com.music.modules.receive.usecase.gateway.ReceiveItemDadosGateway;
 import java.util.List;
@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ReceiveUseCaseTest {
+public class ReceiveDomainUseCaseTest {
 
   private static final Integer RECEIVE_ID = 123;
 
@@ -36,22 +36,22 @@ public class ReceiveUseCaseTest {
 
   @Test
   void givenSave_thenReturnSuccessfully() {
-    final var receive = EASY_RANDOM.nextObject(Receive.class);
-    final var receiveExpected = EASY_RANDOM.nextObject((Receive.class));
+    final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
+    final var receiveExpected = EASY_RANDOM.nextObject((ReceiveDomain.class));
 
     when(receiveDadosGateway.save(receive)).thenReturn(receiveExpected);
 
-    doNothing().when(receiveItemDadosGateway).saveAll(receiveExpected.getReceiveItem());
+    doNothing().when(receiveItemDadosGateway).saveAll(receiveExpected.getReceiveItemDomain());
 
     receiveUseCase.save(receive);
 
     verify(receiveDadosGateway, times(1)).save(receive);
-    verify(receiveItemDadosGateway, times(1)).saveAll(receiveExpected.getReceiveItem());
+    verify(receiveItemDadosGateway, times(1)).saveAll(receiveExpected.getReceiveItemDomain());
   }
 
   @Test
   void givenFindAll_thenReturnSuccessfully() {
-    final var receive = EASY_RANDOM.nextObject(Receive.class);
+    final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
 
     when(receiveDadosGateway.findAll()).thenReturn(List.of(receive));
 
@@ -62,7 +62,7 @@ public class ReceiveUseCaseTest {
 
   @Test
   void givenFindById_thenReturnSuccessfully() {
-    final var receive = EASY_RANDOM.nextObject(Receive.class);
+    final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
 
     when(receiveDadosGateway.findById(RECEIVE_ID)).thenReturn(receive);
 
@@ -73,11 +73,11 @@ public class ReceiveUseCaseTest {
 
   @Test
   void givenDeleteById_thenReturnSuccessfully() {
-    final var receive = EASY_RANDOM.nextObject(Receive.class);
+    final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
 
     when(receiveDadosGateway.findById(RECEIVE_ID)).thenReturn(receive);
 
-    doNothing().when(receiveItemDadosGateway).deleteAll(receive.getReceiveItem());
+    doNothing().when(receiveItemDadosGateway).deleteAll(receive.getReceiveItemDomain());
 
     receiveUseCase.deleteById(RECEIVE_ID);
 

@@ -1,6 +1,7 @@
 package br.com.music.modules.receive.usecase;
 
-import br.com.music.modules.receive.usecase.domain.Receive;
+import br.com.music.modules.commum.utils.ValidateRequest;
+import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
 import br.com.music.modules.receive.usecase.gateway.ReceiveItemDadosGateway;
 import java.util.List;
@@ -15,27 +16,36 @@ public class ReceiveUseCase {
 
   private final ReceiveDadosGateway receiveDadosGateway;
   private final ReceiveItemDadosGateway receiveItemDadosGateway;
+  private final ValidateRequest validateRequest;
 
-  public void save(Receive receive) {
-    final var newReceive = receiveDadosGateway.save(receive);
+  public void save(ReceiveDomain receiveDomain) {
+    final var newReceive = receiveDadosGateway.save(receiveDomain);
 
-    final var items = newReceive.getReceiveItem();
+    final var items = newReceive.getReceiveItemDomain();
 
-    items.forEach(i -> i.setReceive(newReceive));
+    items.forEach(i -> i.setReceiveDomain(newReceive));
 
     receiveItemDadosGateway.saveAll(items);
   }
 
-  public List<Receive> findAll() {
+  public List<ReceiveDomain> findAll() {
     return receiveDadosGateway.findAll();
   }
 
-  public Receive findById(Integer id) {
-    return receiveDadosGateway.findById(id);
+  public ReceiveDomain findById(Integer id) {
+    final var receive = receiveDadosGateway.findById(id);
+
+    validateRequest.validate(receive.getIdUser());
+
+    return receive;
   }
 
   public void deleteById(Integer id) {
-    final var receiveItems = receiveDadosGateway.findById(id).getReceiveItem();
+    final var receive = receiveDadosGateway.findById(id);
+
+    validateRequest.validate(receive.getIdUser());
+
+    final var receiveItems = receive.getReceiveItemDomain();
 
     receiveItemDadosGateway.deleteAll(receiveItems);
 

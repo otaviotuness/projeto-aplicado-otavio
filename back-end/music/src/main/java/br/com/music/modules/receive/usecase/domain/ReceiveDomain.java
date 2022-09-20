@@ -1,25 +1,27 @@
 package br.com.music.modules.receive.usecase.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "receive_item")
-public class ReceiveItem {
+@Table(name = "receive")
+public class ReceiveDomain {
 
   private static final long serialVersionUID = 1L;
 
@@ -28,13 +30,12 @@ public class ReceiveItem {
   private Integer id;
 
   private String description;
-  private double value;
+  private Integer idUser;
+  private Integer totalValue;
+  private Integer totalValueReceive;
 
-  @Enumerated(EnumType.STRING)
-  private TypeReceive typeReceive;
-
-  @JsonBackReference
-  @ManyToOne
-  @JoinColumn(name = "receive_id")
-  private Receive receive;
+  @JsonManagedReference
+  @OneToMany(mappedBy = "receive")
+  @Fetch(FetchMode.JOIN)
+  private List<ReceiveItemDomain> receiveItemDomain;
 }
