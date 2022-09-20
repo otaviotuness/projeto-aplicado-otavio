@@ -1,6 +1,7 @@
 package br.com.music.modules.song.dataprovider.database;
 
 import br.com.music.modules.commum.exceptions.NotFoundException;
+import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.song.dataprovider.repository.SongRepository;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class SongMySQLDataProvider implements SongDadosGateway {
 
   private final SongRepository songRepository;
+  private final UserInfo userInfo;
 
   @Override
   public void save(SongDomain songDomain) {
@@ -29,7 +31,9 @@ public class SongMySQLDataProvider implements SongDadosGateway {
   public List<SongDomain> findAll() {
     log.info("Find all songs");
 
-    var songDomain = songRepository.findAll();
+    var songDomain =
+        songRepository.findAllSongs(
+            userInfo.isAdmin(), userInfo.getUserId(), userInfo.getUserIdMaster());
 
     log.info("Find all songs successfully");
 

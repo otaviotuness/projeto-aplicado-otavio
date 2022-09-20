@@ -16,16 +16,22 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   private final JwtTokenStore tokenStore;
   // roles
-  private static final String ADMIN = "ROLE_ADMIN";
-  private static final String MUCISIAN = "ROLE_MUSICIAN";
-  private static final String OPERATOR = "ROLE_OPERATOR";
+  private static final String ADMIN = "ADMIN";
+  private static final String MUSICIAN = "MUSICIAN";
+  private static final String OPERATOR = "OPERATOR";
 
+  // public
   private static final String OAUTH_TOKEN = "/oauth/token";
   private static final String NEW_USER = "/newUser";
+  // users
   private static final String USER = "/user/**";
   private static final String USERS = "/users/**";
+  // song
   private static final String SONGS = "/songs/**";
   private static final String SONG_BY_ID = "/song/**";
+  // checklsit
+  private static final String CHECKLIST_BY_ID = "/checklist/**";
+  private static final String CHECKLISTS = "/checklists/**";
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -40,15 +46,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .permitAll()
         .antMatchers(NEW_USER)
         .permitAll()
-        // admin
-        .antMatchers(HttpMethod.GET, SONG_BY_ID)
-        .hasAuthority(ADMIN)
-        .antMatchers(HttpMethod.GET, SONGS)
-        .hasAuthority(ADMIN)
-        .antMatchers(HttpMethod.POST, SONG_BY_ID)
-        .hasAuthority(ADMIN)
-        .antMatchers(HttpMethod.POST, SONGS)
-        .hasAuthority(ADMIN)
+        .antMatchers(HttpMethod.GET, USER, USERS)
+        .hasAnyRole(ADMIN)
+        .antMatchers(HttpMethod.GET, SONG_BY_ID, SONGS)
+        .hasAnyRole(ADMIN, MUSICIAN, OPERATOR)
+        .antMatchers(HttpMethod.GET, CHECKLIST_BY_ID, CHECKLISTS)
+        .hasAnyRole(ADMIN, MUSICIAN)
+        .antMatchers(HttpMethod.POST, USER)
+        .hasAnyAuthority(ADMIN)
+        .antMatchers(HttpMethod.POST, SONG_BY_ID, CHECKLIST_BY_ID)
+        .hasAnyAuthority(ADMIN, MUSICIAN)
+        .antMatchers(HttpMethod.DELETE, SONG_BY_ID, CHECKLIST_BY_ID, USER)
+        .hasAnyAuthority(ADMIN, MUSICIAN)
         // anyrequest
         .anyRequest()
         .denyAll();

@@ -7,6 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import br.com.music.modules.commum.utils.UserInfo;
+import br.com.music.modules.commum.utils.ValidateRequest;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
 import java.util.List;
@@ -22,10 +24,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class SongUseCaseTest {
 
   private static final Integer SONG_ID = 123;
+  private static final Integer USER_ID = 123;
 
   @InjectMocks SongUseCase songUseCase;
 
   @Mock private SongDadosGateway songDadosGateway;
+
+  @Mock private UserInfo userInfo;
+
+  @Mock private ValidateRequest validateRequest;
 
   @BeforeEach
   void cleanUp() {
@@ -56,7 +63,9 @@ public class SongUseCaseTest {
   void givenFindById_thenReturnSuccessfully() {
     final var song = EASY_RANDOM.nextObject(SongDomain.class);
 
-    when(songUseCase.findById(SONG_ID)).thenReturn(song);
+    when(songDadosGateway.findById(SONG_ID)).thenReturn(song);
+
+    doNothing().when(validateRequest).validate(song.getIdUser());
 
     songUseCase.findById(SONG_ID);
 
@@ -66,6 +75,8 @@ public class SongUseCaseTest {
   @Test
   void givenDeleteById_thenReturnSuccessfully() {
     doNothing().when(songDadosGateway).deleteById(SONG_ID);
+
+    doNothing().when(validateRequest).validate(SONG_ID);
 
     songUseCase.deleteById(SONG_ID);
 

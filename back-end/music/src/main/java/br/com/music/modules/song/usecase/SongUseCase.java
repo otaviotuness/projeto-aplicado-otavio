@@ -34,6 +34,11 @@ public class SongUseCase {
   }
 
   public void deleteById(Integer id) {
+
+    final var songDomain = songDadosGateway.findById(id);
+
+    validateRequest.validate(songDomain.getIdUser());
+
     songDadosGateway.deleteById(id);
   }
 }

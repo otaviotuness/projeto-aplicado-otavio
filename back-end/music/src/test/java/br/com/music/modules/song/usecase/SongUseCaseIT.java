@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 @EnableAutoConfiguration
-public class SongUseCaseIT extends TestWithMySQL {
+class SongUseCaseIT extends TestWithMySQL {
 
   @Autowired private SongUseCase songUseCase;
 
@@ -32,5 +32,8 @@ public class SongUseCaseIT extends TestWithMySQL {
     final var expectedSong = songRepository.getOne(song.getId());
 
     Assertions.assertNotNull(expectedSong);
+    Assertions.assertEquals(song.getIdUser(), expectedSong.getIdUser());
+    Assertions.assertEquals(song.getLink(), expectedSong.getLink());
+    Assertions.assertEquals(song.getDescription(), expectedSong.getDescription());
   }
 }
