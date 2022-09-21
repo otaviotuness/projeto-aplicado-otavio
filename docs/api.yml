@@ -1,0 +1,807 @@
+openapi: 3.0.1
+info:
+  title: TCC - Otavio Tunes
+  description: Documentação API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      tags:
+        - User
+      summary: Consulta de usuários
+      operationId: execute
+      parameters:
+        - name: authorization
+          in: header
+          description: Authorization Bearer Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /user:
+    post:
+      tags:
+        - User
+      summary: Cadastro de usuário
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Cadastro de usuário
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /user/{id}:
+    get:
+      tags:
+        - User
+      summary: Consulta de usuário por ID
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID do usuário
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+    delete:
+      tags:
+        - User
+      summary: Exclusão de usuário
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID do usuário
+          required: true
+          schema:
+            type: integer
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /songs:
+    get:
+      tags:
+        - Song
+      summary: Consulta de músicas
+      operationId: executeMusica
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SongResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /song:
+    post:
+      tags:
+        - Song
+      summary: Cadastro de música
+      requestBody:
+        description: Set of Order Tracking
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Song'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /song/{id}:
+    get:
+      tags:
+        - Song
+      summary: Consulta de música por ID
+      operationId: executeMusicaById
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID do usuário
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Song'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+    delete:
+      tags:
+        - Song
+      summary: Exclusão de música
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID da música
+          required: true
+          schema:
+            type: integer
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /events:
+    get:
+      tags:
+        - Event
+      summary: Consulta de eventos
+      operationId: executeEvento
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /event:
+    post:
+      tags:
+        - Event
+      summary: Cadastro de evento
+      requestBody:
+        description: Categoria
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /event/{id}:
+    get:
+      tags:
+        - Event
+      summary: Consulta de evento por ID
+      operationId: executeEntradaById
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID do user
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+    delete:
+      tags:
+        - Event
+      summary: Exclusão de evento
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID da categoria
+          required: true
+          schema:
+            type: integer
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /role:
+    post:
+      tags:
+        - Role
+      summary: Cadastro de role
+      requestBody:
+        description: Role
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Role'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /role/{id}:
+    get:
+      tags:
+        - Role
+      summary: Consutla de role por ID
+      operationId: executeRoleById
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID do user
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+    delete:
+      tags:
+        - Role
+      summary: Exclusão de role
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID da role
+          required: true
+          schema:
+            type: integer
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /checklists:
+    get:
+      tags:
+        - Checklist
+      summary: Consulta de checklist
+      operationId: executeChecklist
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChecklistResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /checklist:
+    post:
+      tags:
+        - Checklist
+      summary: Cadastro de checklist
+      requestBody:
+        description: Role
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Checklist'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /checklist/{id}:
+    get:
+      tags:
+        - Checklist
+      summary: Consutla de checklist por ID
+      operationId: executeChecklistById
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID da checklist
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checklist'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+    delete:
+      tags:
+        - Checklist
+      summary: Exclusão de Checklist
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID da checklist
+          required: true
+          schema:
+            type: integer
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /receives:
+    get:
+      tags:
+        - Receive
+      summary: Consulta de recebimentos
+      operationId: executeReceive
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceiveResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /receive:
+    post:
+      tags:
+        - Receive
+      summary: Cadastro de recebimento
+      requestBody:
+        description: Receive
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Receive'
+        required: true
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+  /receive/{id}:
+    get:
+      tags:
+        - Receive
+      summary: Consutla de recebimento por ID
+      operationId: executeReceiveById
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID da recebimento
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receive'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+    delete:
+      tags:
+        - Receive
+      summary: Exclusão de recebimento
+      parameters:
+        - name: authorization
+          in: header
+          description: Token de autorização
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: ID da recebimento
+          required: true
+          schema:
+            type: integer
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+
+components:
+  schemas:
+    UserResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    SongResponse:
+      type: object
+      properties:
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+    EventResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    RoleResponse:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    ChecklistResponse:
+      type: object
+      properties:
+        checklists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Checklist'
+    ReceiveResponse:
+      type: object
+      properties:
+        receives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Receive'
+    User:
+      title: User
+      required:
+        - id
+        - name
+        - telephone
+        - email
+        - password
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID user'
+          example: '1'
+        name:
+          type: integer
+          description: 'Nome do usuário'
+          example: 'João da Silva'
+        telephone:
+          type: string
+          description: 'Telefone do usário'
+          example: '(99)1234-5678'
+        email:
+          type: string
+          description: 'E-mail do usário'
+          example: 'email@email.com.br'
+        password:
+          type: string
+          description: 'Senha do usuário'
+          example: 'HYjs76fk*yy12'
+    Song:
+      title: Musica
+      required:
+        - id
+        - description
+        - link
+        - idUser
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID música'
+          example: '1'
+        description:
+          type: string
+          description: 'Nome da música'
+          example: 'Boate azul'
+        link:
+          type: string
+          description: 'Link da música'
+          example: 'https://www.linkmusic.com.br'
+        idUser:
+          type: integer
+          description: 'Id do operador que cadastrou a música'
+          example: '2'
+    Role:
+      title: Role
+      required:
+        - id
+        - roleName
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID da role'
+          example: '1'
+        roleName:
+          type: string
+          description: 'Descricao da role'
+          example: 'ADMINISTRATOR'
+    Event:
+      title: Evento
+      required:
+        - id
+        - date
+        - local
+        - time
+        - event_song
+        - id_user
+        - id_user_master
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID do event'
+          example: '1'
+        date:
+          type: string
+          description: 'Data do event'
+          example: '10/10/2022'
+        time:
+          type: string
+          description: 'Horário do event'
+          example: '10:30'
+        id_user:
+          type: integer
+          description: 'ID do usuario vinculado ao evento'
+          example: '12'
+        event_song:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+          description: 'ID do evnto'
+    Receive:
+      title: Receive
+      required:
+        - id
+        - description
+        - idUser
+        - totalValue
+        - totalValueReceive
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID do Receber'
+          example: '1'
+        description:
+          type: string
+          description: 'Descrição do Receber'
+          example: 'CONTAS A RECEBER - JÃO'
+        idUser:
+          type: string
+          description: 'Id do usuário'
+          example: '1'
+        totalValue:
+          type: number
+          description: 'Valor total'
+          example: '1500.00'
+        totalValueReceive:
+          type: number
+          description: 'Valor recebido'
+          example: '500.00'
+        receiveItem:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReceiveItem'
+          description: 'Recebimentos'
+    ReceiveItem:
+      title: ReceiveItem
+      required:
+        - id
+        - description
+        - idUser
+        - value
+        - idTypeRecebimento
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID do Receber Item'
+          example: '1'
+        description:
+          type: string
+          description: 'Descrição do Receber Item'
+          example: 'Conta recebida do cliente Fulado de Tal'
+        idUser:
+          type: string
+          description: 'Id do usuário'
+          example: '1'
+        value:
+          type: number
+          description: 'Valore do recebimento'
+          example: '500.00'
+        idTypeRecebimento:
+          type: number
+          description: 'Id tipo recebimento'
+          example: '5'
+    Checklist:
+      title: CheckList
+      required:
+        - id
+        - description
+        - idUser
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID do Receber'
+          example: '1'
+        description:
+          type: string
+          description: 'Descrição do item do checklist'
+          example: 'UTILIZA PALCO SOB-LOCADO'
+        idUser:
+          type: integer
+          description: 'ID do Receber'
+          example: '1'
