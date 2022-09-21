@@ -1,12 +1,14 @@
 package br.com.music.modules.checklist.usecase;
 
+import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
 import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
 import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.commum.utils.ValidateRequest;
-import br.com.music.modules.song.usecase.SongUseCase;
-import br.com.music.modules.song.usecase.domain.SongDomain;
-import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,20 +17,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-
-import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class ChecklistCaseTest {
 
   private static final Integer CHECKLIST_ID = 123;
   private static final Integer USER_ID = 123;
 
-  @InjectMocks
-  ChecklistUseCase checklistUseCase;
+  @InjectMocks ChecklistUseCase checklistUseCase;
 
   @Mock private ChecklistDadosGateway checklistDadosGateway;
 
