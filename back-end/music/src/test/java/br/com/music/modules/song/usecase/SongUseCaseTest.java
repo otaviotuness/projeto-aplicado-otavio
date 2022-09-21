@@ -74,9 +74,14 @@ public class SongUseCaseTest {
 
   @Test
   void givenDeleteById_thenReturnSuccessfully() {
+    final var song = EASY_RANDOM.nextObject(SongDomain.class);
+    song.setId(SONG_ID);
+
+    when(songDadosGateway.findById(SONG_ID)).thenReturn(song);
+
     doNothing().when(songDadosGateway).deleteById(SONG_ID);
 
-    doNothing().when(validateRequest).validate(SONG_ID);
+    doNothing().when(validateRequest).validate(song.getIdUser());
 
     songUseCase.deleteById(SONG_ID);
 
