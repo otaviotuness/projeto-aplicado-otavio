@@ -2,13 +2,11 @@ package br.com.music.modules.event.usecase.domain;
 
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Entity
-@Table(name = "event")
+// @Entity
+// @Table(name = "event")
 public class EventDomain {
 
   @Id

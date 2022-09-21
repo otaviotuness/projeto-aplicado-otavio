@@ -35,7 +35,7 @@ public class ReceiveDomain {
   private Integer totalValueReceive;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "receive")
+  @OneToMany(mappedBy = "receiveDomain")
   @Fetch(FetchMode.JOIN)
   private List<ReceiveItemDomain> receiveItemDomain;
 }

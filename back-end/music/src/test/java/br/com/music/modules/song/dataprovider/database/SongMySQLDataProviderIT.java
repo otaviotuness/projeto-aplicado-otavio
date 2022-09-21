@@ -1,46 +1,44 @@
-package br.com.music.modules.song.usecase;
+package br.com.music.modules.song.dataprovider.database;
 
 import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
 
+import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.configTest.TestWithMySQL;
 import br.com.music.modules.song.dataprovider.repository.SongRepository;
 import br.com.music.modules.song.usecase.domain.SongDomain;
-import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
-import java.util.List;
-
 @EnableAutoConfiguration
-class SongUseCaseIT extends TestWithMySQL {
+class SongMySQLDataProviderIT extends TestWithMySQL {
 
-  @Autowired private SongUseCase songUseCase;
+  @Autowired private SongMySQLDataProvider songMySQLDataProvider;
 
   @Autowired private SongRepository songRepository;
 
-  @Spy private SongDadosGateway songDadosGateway;
+  @Autowired private UserInfo userInfo;
 
   @BeforeEach
-  void beforeEach(){
+  void beforeEach() {
     songRepository.deleteAll();
   }
 
   @Test
   void shouldSave_thenReturnSuccessfully() {
     final var song = EASY_RANDOM.nextObject(SongDomain.class);
+    song.setId(null);
 
     Assertions.assertEquals(0, songRepository.count());
 
-    songUseCase.save(song);
+    songMySQLDataProvider.save(song);
 
-    final var expectedSong = songRepository.getOne(song.getId());
+    final var expectedSong = songRepository.findAll().get(0);
 
     Assertions.assertNotNull(expectedSong);
-    Assertions.assertEquals(song.getIdUser(), expectedSong.getIdUser());
+    Assertions.assertNotNull(song.getIdUser());
     Assertions.assertEquals(song.getLink(), expectedSong.getLink());
     Assertions.assertEquals(song.getDescription(), expectedSong.getDescription());
   }
@@ -52,16 +50,16 @@ class SongUseCaseIT extends TestWithMySQL {
     final var expectedIdUser = 1;
 
     final var song = EASY_RANDOM.nextObject(SongDomain.class);
-    songUseCase.save(song);
+    songMySQLDataProvider.save(song);
 
-    final var newSong = song;
-    newSong.setDescription(expectedDescription);
-    newSong.setLink(expectedLink);
-    newSong.setIdUser(expectedIdUser);
+    final var songUpdate = songRepository.findAll().get(0);
+    songUpdate.setDescription(expectedDescription);
+    songUpdate.setLink(expectedLink);
+    songUpdate.setIdUser(expectedIdUser);
 
-    songUseCase.save(newSong);
+    songMySQLDataProvider.save(songUpdate);
 
-    final var expectedSong = songRepository.getOne(newSong.getId());
+    final var expectedSong = songRepository.findById(songUpdate.getId()).get();
 
     Assertions.assertNotNull(expectedSong);
     Assertions.assertEquals(expectedSong.getIdUser(), expectedIdUser);
@@ -72,13 +70,13 @@ class SongUseCaseIT extends TestWithMySQL {
   @Test
   void shouldFindById_thenReturnSuccessfully() {
     final var song = EASY_RANDOM.nextObject(SongDomain.class);
-    songUseCase.save(song);
+    song.setId(null);
+    songMySQLDataProvider.save(song);
 
-    Assertions.assertEquals(1, songRepository.count());
-
-    final var expectedSong = songUseCase.findById(song.getId());
+    final var expectedSong = songMySQLDataProvider.findById(song.getId());
 
     Assertions.assertNotNull(expectedSong);
+    Assertions.assertNotNull(song.getId());
     Assertions.assertEquals(song.getIdUser(), expectedSong.getIdUser());
     Assertions.assertEquals(song.getLink(), expectedSong.getLink());
     Assertions.assertEquals(song.getDescription(), expectedSong.getDescription());
@@ -87,11 +85,12 @@ class SongUseCaseIT extends TestWithMySQL {
   @Test
   void shouldFindAll_thenReturnSuccessfully() {
     final var song = EASY_RANDOM.nextObject(SongDomain.class);
-    songUseCase.save(song);
+    song.setIdUser(0);
+    songMySQLDataProvider.save(song);
 
     Assertions.assertEquals(1, songRepository.count());
 
-    final var expectedSong = songUseCase.findAll().get(0);
+    final var expectedSong = songMySQLDataProvider.findAll().get(0);
 
     Assertions.assertNotNull(expectedSong);
     Assertions.assertEquals(song.getIdUser(), expectedSong.getIdUser());
@@ -101,19 +100,13 @@ class SongUseCaseIT extends TestWithMySQL {
 
   @Test
   void shouldDelete_thenReturnSuccessfully() {
-    final var expectedCountSongs = 0;
     final var song = EASY_RANDOM.nextObject(SongDomain.class);
+    song.setId(null);
+
+    final var songSave = songRepository.save(song);
+
+    songMySQLDataProvider.deleteById(songSave.getId());
 
     Assertions.assertEquals(0, songRepository.count());
-
-    songUseCase.save(song);
-
-    songUseCase.deleteById(song.getId());
-
-    Assertions.assertEquals(0, songRepository.count());
-
-    final var expectedSongCount = songRepository.getOne(song.getId());
-
-    Assertions.assertEquals(expectedSongCount, expectedCountSongs);
   }
 }
