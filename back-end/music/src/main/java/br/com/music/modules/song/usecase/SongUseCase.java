@@ -16,8 +16,10 @@ public class SongUseCase {
   private final SongDadosGateway songDadosGateway;
   private final ValidateRequest validateRequest;
 
-  public void save(SongDomain userDomain) {
-    songDadosGateway.save(userDomain);
+  public void save(SongDomain songDomain) {
+    validateRequest.validate(songDomain.getIdUser());
+
+    songDadosGateway.save(songDomain);
   }
 
   public List<SongDomain> findAll() {

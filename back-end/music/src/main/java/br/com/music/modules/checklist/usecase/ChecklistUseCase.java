@@ -17,6 +17,9 @@ public class ChecklistUseCase {
   private final ValidateRequest validateRequest;
 
   public void save(ChecklistDomain checklistDomain) {
+
+    validateRequest.validate(checklistDomain.getIdUser());
+
     checklistDadosGateway.save(checklistDomain);
   }
 

@@ -1,7 +1,6 @@
 package br.com.music.modules.song.usecase;
 
 import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -41,11 +40,12 @@ public class SongUseCaseTest {
 
   @Test
   void givenSave_thenReturnSuccessfully() {
-    doNothing().when(songDadosGateway).save(any());
+    final var song = EASY_RANDOM.nextObject(SongDomain.class);
+    doNothing().when(songDadosGateway).save(song);
 
-    songUseCase.save(any());
+    songUseCase.save(song);
 
-    verify(songDadosGateway, times(1)).save(any());
+    verify(songDadosGateway, times(1)).save(song);
   }
 
   @Test

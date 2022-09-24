@@ -1,5 +1,6 @@
 package br.com.music.modules.song.controller;
 
+import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.song.controller.dto.SongDto;
 import br.com.music.modules.song.controller.mapper.SongMapper;
 import br.com.music.modules.song.usecase.SongUseCase;
@@ -20,6 +21,7 @@ public class SongController implements Song {
 
   private final SongMapper songMapper;
   private final SongUseCase songUseCase;
+  private final UserInfo userInfo;
 
   public SongDomain findById(final Integer id) {
 
@@ -36,6 +38,10 @@ public class SongController implements Song {
   public ResponseEntity<String> save(@RequestBody SongDto songDto) {
 
     var song = songMapper.toDomain(songDto);
+
+    if (song.getIdUser() == null) {
+      song.setIdUser(userInfo.getUserId());
+    }
 
     songUseCase.save(song);
 

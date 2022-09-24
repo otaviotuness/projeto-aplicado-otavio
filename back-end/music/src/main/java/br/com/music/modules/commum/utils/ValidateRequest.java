@@ -14,7 +14,7 @@ public class ValidateRequest {
 
     if (userInfo.isAdmin()) return;
 
-    if ((!id.equals(userInfo.getUserId())) || (!id.equals(userInfo.getUserIdMaster()))) {
+    if ((!id.equals(userInfo.getUserId())) && (!id.equals(userInfo.getUserIdMaster()))) {
       throw BadRequestException.notAuthorized();
     }
   }

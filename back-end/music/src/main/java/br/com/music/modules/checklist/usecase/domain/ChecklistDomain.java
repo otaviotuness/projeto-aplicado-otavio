@@ -1,5 +1,6 @@
 package br.com.music.modules.checklist.usecase.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +21,10 @@ public class ChecklistDomain {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
   private String description;
-  private int idUser;
+
+  @JsonProperty("id_user")
+  private Integer idUser;
 }

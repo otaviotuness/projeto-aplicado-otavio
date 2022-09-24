@@ -65,7 +65,7 @@ class ChecklistMySQLDataProviderIT extends TestWithMySQL {
   @Test
   void shouldFindById_thenReturnSuccessfully() {
     final var checklist = EASY_RANDOM.nextObject(ChecklistDomain.class);
-    checklist.setId(1);
+    checklist.setId(null);
     checklistMySQLDataProvider.save(checklist);
 
     final var expectedChecklist = checklistMySQLDataProvider.findById(checklist.getId());

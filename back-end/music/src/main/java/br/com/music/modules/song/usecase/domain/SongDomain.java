@@ -1,5 +1,6 @@
 package br.com.music.modules.song.usecase.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,7 @@ public class SongDomain {
 
   private String description;
   private String link;
+
+  @JsonProperty("id_user")
   private Integer idUser;
 }

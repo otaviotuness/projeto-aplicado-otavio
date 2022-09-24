@@ -1,7 +1,6 @@
 package br.com.music.modules.checklist.usecase;
 
 import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
@@ -38,11 +37,13 @@ class ChecklistCaseTest {
 
   @Test
   void givenSave_thenReturnSuccessfully() {
-    doNothing().when(checklistDadosGateway).save(any());
+    final var checklist = EASY_RANDOM.nextObject(ChecklistDomain.class);
 
-    checklistUseCase.save(any());
+    doNothing().when(checklistDadosGateway).save(checklist);
 
-    verify(checklistDadosGateway, times(1)).save(any());
+    checklistUseCase.save(checklist);
+
+    verify(checklistDadosGateway, times(1)).save(checklist);
   }
 
   @Test

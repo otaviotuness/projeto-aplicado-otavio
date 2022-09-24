@@ -20,6 +20,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   private static final String MUSICIAN = "MUSICIAN";
   private static final String OPERATOR = "OPERATOR";
 
+  private static final String ROLE_ADMIN = "ROLE_ADMIN";
+  private static final String ROLE_MUSICIAN = "ROLE_MUSICIAN";
+  private static final String ROLE_OPERATOR = "ROLE_OPERATOR";
+
   // public
   private static final String OAUTH_TOKEN = "/oauth/token";
   private static final String NEW_USER = "/newUser";
@@ -53,11 +57,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers(HttpMethod.GET, CHECKLIST_BY_ID, CHECKLISTS)
         .hasAnyRole(ADMIN, MUSICIAN)
         .antMatchers(HttpMethod.POST, USER)
-        .hasAnyAuthority(ADMIN)
+        .hasAnyRole(ADMIN)
         .antMatchers(HttpMethod.POST, SONG_BY_ID, CHECKLIST_BY_ID)
-        .hasAnyAuthority(ADMIN, MUSICIAN)
+        .hasAnyRole(ADMIN, MUSICIAN)
         .antMatchers(HttpMethod.DELETE, SONG_BY_ID, CHECKLIST_BY_ID, USER)
-        .hasAnyAuthority(ADMIN, MUSICIAN)
+        .hasAnyRole(ADMIN, MUSICIAN)
         // anyrequest
         .anyRequest()
         .denyAll();
