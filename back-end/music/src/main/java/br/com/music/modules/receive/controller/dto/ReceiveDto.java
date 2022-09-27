@@ -15,6 +15,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReceiveDto {
 
+  private Integer id;
+
   @NotBlank private String description;
 
   @NotNull
@@ -25,11 +27,5 @@ public class ReceiveDto {
   @JsonProperty("total_value")
   private Integer totalValue;
 
-  @NotNull
-  @JsonProperty("total_value_receive")
-  private Integer totalValueReceive;
-
-  @NotEmpty
-  @JsonProperty("items")
-  private List<ReceiveItemDto> receiveItem = new ArrayList<>();
+  @NotEmpty private List<ReceiveItemDto> items = new ArrayList<>();
 }

@@ -19,13 +19,9 @@ public class ReceiveUseCase {
   private final ValidateRequest validateRequest;
 
   public void save(ReceiveDomain receiveDomain) {
-    final var newReceive = receiveDadosGateway.save(receiveDomain);
+    validateRequest.validate(receiveDomain.getIdUser());
 
-    final var items = newReceive.getReceiveItemDomain();
-
-    items.forEach(i -> i.setReceiveDomain(newReceive));
-
-    receiveItemDadosGateway.saveAll(items);
+    receiveDadosGateway.save(receiveDomain);
   }
 
   public List<ReceiveDomain> findAll() {
@@ -45,7 +41,7 @@ public class ReceiveUseCase {
 
     validateRequest.validate(receive.getIdUser());
 
-    final var receiveItems = receive.getReceiveItemDomain();
+    final var receiveItems = receive.getItems();
 
     receiveItemDadosGateway.deleteAll(receiveItems);
 

@@ -1,6 +1,7 @@
 package br.com.music.modules.receive.usecase.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,7 +29,7 @@ public class ReceiveItemDomain {
   private Integer id;
 
   private String description;
-  private double value;
+  private BigDecimal value;
 
   @Enumerated(EnumType.STRING)
   private TypeReceive typeReceive;

@@ -1,6 +1,7 @@
 package br.com.music.modules.receive.usecase.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,11 +32,11 @@ public class ReceiveDomain {
 
   private String description;
   private Integer idUser;
-  private Integer totalValue;
-  private Integer totalValueReceive;
+  private BigDecimal totalValue = BigDecimal.ZERO;
+  private BigDecimal totalValueReceive = BigDecimal.ZERO;
 
   @JsonManagedReference
   @OneToMany(mappedBy = "receiveDomain")
   @Fetch(FetchMode.JOIN)
-  private List<ReceiveItemDomain> receiveItemDomain;
+  private List<ReceiveItemDomain> items;
 }

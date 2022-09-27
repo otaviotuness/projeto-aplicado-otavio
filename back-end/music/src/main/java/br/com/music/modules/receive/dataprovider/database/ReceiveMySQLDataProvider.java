@@ -2,9 +2,13 @@ package br.com.music.modules.receive.dataprovider.database;
 
 import br.com.music.modules.commum.exceptions.DataIntegrityException;
 import br.com.music.modules.commum.exceptions.NotFoundException;
+import br.com.music.modules.commum.utils.UserInfo;
+import br.com.music.modules.receive.dataprovider.repository.ReceiveItemRepository;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
+import br.com.music.modules.receive.usecase.domain.ReceiveItemDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,23 +21,39 @@ import org.springframework.stereotype.Component;
 public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
 
   private final ReceiveRepository receiveRepository;
+  private final ReceiveItemRepository receiveItemRepository;
+  private final UserInfo userInfo;
 
   @Override
-  public ReceiveDomain save(ReceiveDomain receiveDomain) {
+  public void save(ReceiveDomain receiveDomain) {
     log.info("Save receive.");
+
+    final var totalValue =
+        receiveDomain.getItems().stream()
+            .map(ReceiveItemDomain::getValue)
+            .reduce(BigDecimal::add)
+            .orElse(BigDecimal.ZERO);
+
+    receiveDomain.setTotalValue(totalValue);
 
     final var newReceive = receiveRepository.save(receiveDomain);
 
-    log.info("Save receive successfully!");
+    final var items = receiveDomain.getItems();
 
-    return newReceive;
+    items.forEach(i -> i.setReceiveDomain(newReceive));
+
+    receiveItemRepository.saveAll(items);
+
+    log.info("Save receive successfully!");
   }
 
   @Override
   public List<ReceiveDomain> findAll() {
     log.info("Find all receives");
 
-    var receive = receiveRepository.findAll();
+    var receive =
+        receiveRepository.findAllReceive(
+            userInfo.isAdmin(), userInfo.getUserId(), userInfo.getUserIdMaster());
 
     log.info("Find all receives successfully");
 

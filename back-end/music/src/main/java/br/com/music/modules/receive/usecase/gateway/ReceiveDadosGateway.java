@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ReceiveDadosGateway {
 
-  ReceiveDomain save(ReceiveDomain receiveDomainDto);
+  void save(ReceiveDomain receiveDomainDto);
 
   List<ReceiveDomain> findAll();
 

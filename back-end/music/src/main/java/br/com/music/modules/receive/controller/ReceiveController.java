@@ -1,5 +1,6 @@
 package br.com.music.modules.receive.controller;
 
+import br.com.music.modules.commum.utils.ValidateRequest;
 import br.com.music.modules.receive.controller.dto.ReceiveDto;
 import br.com.music.modules.receive.controller.mapper.ReceiveMapper;
 import br.com.music.modules.receive.usecase.ReceiveUseCase;
@@ -21,12 +22,11 @@ public class ReceiveController implements Receive {
 
   private final ReceiveMapper receiveMapper;
   private final ReceiveUseCase receiveUseCase;
+  private final ValidateRequest validateRequest;
 
   public ReceiveDomain findById(@PathVariable Integer id) {
 
-    var receive = receiveUseCase.findById(id);
-
-    return receive;
+    return receiveUseCase.findById(id);
   }
 
   public ResponseEntity<List<ReceiveDomain>> findAll() {

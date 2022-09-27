@@ -36,6 +36,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   // checklsit
   private static final String CHECKLIST_BY_ID = "/checklist/**";
   private static final String CHECKLISTS = "/checklists/**";
+  // receive
+  private static final String RECEIVES = "/receives/**";
+  private static final String RECEIVE_BY_ID = "/receive/**";
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -54,13 +57,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .hasAnyRole(ADMIN)
         .antMatchers(HttpMethod.GET, SONG_BY_ID, SONGS)
         .hasAnyRole(ADMIN, MUSICIAN, OPERATOR)
-        .antMatchers(HttpMethod.GET, CHECKLIST_BY_ID, CHECKLISTS)
+        .antMatchers(HttpMethod.GET, CHECKLIST_BY_ID, CHECKLISTS, RECEIVES, RECEIVE_BY_ID)
         .hasAnyRole(ADMIN, MUSICIAN)
         .antMatchers(HttpMethod.POST, USER)
         .hasAnyRole(ADMIN)
-        .antMatchers(HttpMethod.POST, SONG_BY_ID, CHECKLIST_BY_ID)
+        .antMatchers(HttpMethod.POST, SONG_BY_ID, CHECKLIST_BY_ID, RECEIVE_BY_ID)
         .hasAnyRole(ADMIN, MUSICIAN)
-        .antMatchers(HttpMethod.DELETE, SONG_BY_ID, CHECKLIST_BY_ID, USER)
+        .antMatchers(HttpMethod.DELETE, SONG_BY_ID, CHECKLIST_BY_ID, USER, RECEIVE_BY_ID)
         .hasAnyRole(ADMIN, MUSICIAN)
         // anyrequest
         .anyRequest()
