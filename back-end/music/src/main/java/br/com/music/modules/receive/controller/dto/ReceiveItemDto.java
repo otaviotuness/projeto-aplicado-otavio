@@ -15,8 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReceiveItemDto {
 
-  private Integer id;
-
   @NotBlank private String description;
 
   @NotNull private ReceiveDto receive;

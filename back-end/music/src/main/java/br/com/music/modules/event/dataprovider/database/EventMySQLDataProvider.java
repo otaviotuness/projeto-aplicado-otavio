@@ -39,7 +39,7 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   public EventDomain findById(Integer id) {
     log.info("Find event by id: [{}}.", id);
 
-    var eventDomain = eventRepository.findById(id);
+    var eventDomain = eventRepository.findById(id).get();
 
     log.info("Find successfully event by id: [{}}.", id);
 

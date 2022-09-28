@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EventDto {
 
-  @NotBlank private Integer id;
+  private Integer id;
 
   @NotBlank private String date;
 

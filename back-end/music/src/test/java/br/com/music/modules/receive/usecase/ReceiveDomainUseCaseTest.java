@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import br.com.music.modules.commum.utils.ValidateRequest;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
 import br.com.music.modules.receive.usecase.gateway.ReceiveItemDadosGateway;
@@ -29,6 +30,8 @@ public class ReceiveDomainUseCaseTest {
 
   @Mock private ReceiveItemDadosGateway receiveItemDadosGateway;
 
+  @Mock private ValidateRequest validateRequest;
+
   @BeforeEach
   void cleanUp() {
     Mockito.reset(receiveDadosGateway, receiveItemDadosGateway);
@@ -37,16 +40,12 @@ public class ReceiveDomainUseCaseTest {
   @Test
   void givenSave_thenReturnSuccessfully() {
     final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
-    final var receiveExpected = EASY_RANDOM.nextObject((ReceiveDomain.class));
 
-    when(receiveDadosGateway.save(receive)).thenReturn(receiveExpected);
-
-    doNothing().when(receiveItemDadosGateway).saveAll(receiveExpected.getReceiveItemDomain());
+    doNothing().when(receiveDadosGateway).save(receive);
 
     receiveUseCase.save(receive);
 
     verify(receiveDadosGateway, times(1)).save(receive);
-    verify(receiveItemDadosGateway, times(1)).saveAll(receiveExpected.getReceiveItemDomain());
   }
 
   @Test
@@ -77,7 +76,7 @@ public class ReceiveDomainUseCaseTest {
 
     when(receiveDadosGateway.findById(RECEIVE_ID)).thenReturn(receive);
 
-    doNothing().when(receiveItemDadosGateway).deleteAll(receive.getReceiveItemDomain());
+    doNothing().when(receiveItemDadosGateway).deleteAll(receive.getItems());
 
     receiveUseCase.deleteById(RECEIVE_ID);
 

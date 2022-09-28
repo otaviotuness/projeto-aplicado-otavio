@@ -34,13 +34,20 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
             .reduce(BigDecimal::add)
             .orElse(BigDecimal.ZERO);
 
-    receiveDomain.setTotalValue(totalValue);
+    receiveDomain.setTotalValueReceive(totalValue);
 
     final var newReceive = receiveRepository.save(receiveDomain);
 
     final var items = receiveDomain.getItems();
 
     items.forEach(i -> i.setReceiveDomain(newReceive));
+
+    final var oldItems =
+        receiveRepository.findById(newReceive.getId()).orElse(new ReceiveDomain()).getItems();
+
+    if (!oldItems.isEmpty()) {
+      receiveItemRepository.deleteAll(oldItems);
+    }
 
     receiveItemRepository.saveAll(items);
 

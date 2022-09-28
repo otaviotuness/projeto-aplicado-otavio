@@ -20,10 +20,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   private static final String MUSICIAN = "MUSICIAN";
   private static final String OPERATOR = "OPERATOR";
 
-  private static final String ROLE_ADMIN = "ROLE_ADMIN";
-  private static final String ROLE_MUSICIAN = "ROLE_MUSICIAN";
-  private static final String ROLE_OPERATOR = "ROLE_OPERATOR";
-
   // public
   private static final String OAUTH_TOKEN = "/oauth/token";
   private static final String NEW_USER = "/newUser";
@@ -39,6 +35,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   // receive
   private static final String RECEIVES = "/receives/**";
   private static final String RECEIVE_BY_ID = "/receive/**";
+  // event
+  private static final String EVENTS = "/events/**";
+  private static final String EVENT_BY_ID = "/event/**";
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -55,7 +54,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.GET, USER, USERS)
         .hasAnyRole(ADMIN)
-        .antMatchers(HttpMethod.GET, SONG_BY_ID, SONGS)
+        .antMatchers(HttpMethod.GET, SONG_BY_ID, SONGS, EVENTS, EVENT_BY_ID)
         .hasAnyRole(ADMIN, MUSICIAN, OPERATOR)
         .antMatchers(HttpMethod.GET, CHECKLIST_BY_ID, CHECKLISTS, RECEIVES, RECEIVE_BY_ID)
         .hasAnyRole(ADMIN, MUSICIAN)
@@ -63,8 +62,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .hasAnyRole(ADMIN)
         .antMatchers(HttpMethod.POST, SONG_BY_ID, CHECKLIST_BY_ID, RECEIVE_BY_ID)
         .hasAnyRole(ADMIN, MUSICIAN)
-        .antMatchers(HttpMethod.DELETE, SONG_BY_ID, CHECKLIST_BY_ID, USER, RECEIVE_BY_ID)
+        .antMatchers(
+            HttpMethod.DELETE, SONG_BY_ID, CHECKLIST_BY_ID, USER, RECEIVE_BY_ID, EVENT_BY_ID)
         .hasAnyRole(ADMIN, MUSICIAN)
+        .antMatchers(HttpMethod.POST, EVENT_BY_ID, EVENTS)
+        .hasAnyRole(ADMIN, MUSICIAN, OPERATOR)
         // anyrequest
         .anyRequest()
         .denyAll();
