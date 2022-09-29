@@ -30,7 +30,7 @@ public class EventDomain {
   //  @ManyToMany private Set<SongDomain> songsDomain;
 
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "receive_id", referencedColumnName = "id")
+  @JoinColumn(name = "receive_id")
   private ReceiveDomain receiveDomain;
 
   //  @OneToMany private List<Checklist> checklist;

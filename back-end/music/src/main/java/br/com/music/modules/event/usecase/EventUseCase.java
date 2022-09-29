@@ -15,6 +15,7 @@ public class EventUseCase {
   private final EventDadosGateway eventDadosGateway;
 
   public void save(EventDomain eventDomain) {
+
     eventDadosGateway.save(eventDomain);
   }
 
