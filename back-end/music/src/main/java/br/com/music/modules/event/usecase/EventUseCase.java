@@ -2,6 +2,7 @@ package br.com.music.modules.event.usecase;
 
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
+import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class EventUseCase {
 
   private final EventDadosGateway eventDadosGateway;
+  private final ReceiveDadosGateway receiveDadosGateway;
 
   public void save(EventDomain eventDomain) {
 

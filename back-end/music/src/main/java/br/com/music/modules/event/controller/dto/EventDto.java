@@ -1,5 +1,8 @@
 package br.com.music.modules.event.controller.dto;
 
+import br.com.music.modules.receive.controller.dto.ReceiveDto;
+import br.com.music.modules.song.controller.dto.SongDto;
+import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +19,8 @@ public class EventDto {
 
   @NotBlank private String time;
 
-  // @NotEmpty private List<SongDomain> event_song = new ArrayList<>();
+  @NotBlank private String description;
+
+  private ReceiveDto receive;
+  private Set<SongDto> songs;
 }

@@ -1,6 +1,7 @@
 package br.com.music.modules.receive.usecase.domain;
 
 import br.com.music.modules.event.usecase.domain.EventDomain;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,6 +43,7 @@ public class ReceiveDomain {
   @Fetch(FetchMode.JOIN)
   private List<ReceiveItemDomain> items;
 
-  @OneToOne(mappedBy = "receiveDomain")
+  @JsonBackReference
+  @OneToOne(mappedBy = "receive")
   private EventDomain event;
 }
