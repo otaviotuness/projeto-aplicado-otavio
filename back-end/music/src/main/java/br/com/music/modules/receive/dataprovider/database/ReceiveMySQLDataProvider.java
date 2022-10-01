@@ -6,10 +6,9 @@ import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveItemRepository;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
-import br.com.music.modules.receive.usecase.domain.ReceiveItemDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,11 +27,15 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   public ReceiveDomain save(ReceiveDomain receiveDomain) {
     log.info("Save receive.");
 
-    final var totalValue =
-        receiveDomain.getItems().stream()
-            .map(ReceiveItemDomain::getValue)
-            .reduce(BigDecimal::add)
-            .orElse(BigDecimal.ZERO);
+    final var receive = Optional.ofNullable(receiveDomain.getItems());
+
+    //    final var totalValue =
+    //        receiveDomain.getItems().stream()
+    //            .map(ReceiveItemDomain::getValue)
+    //            .reduce(BigDecimal::add)
+    //            .orElse(BigDecimal.ZERO);
+    //
+    //    final var totalValue = receive.stream().map(ReceiveItemDomain::getValue);
 
     receiveDomain.setTotalValueReceive(totalValue);
 
