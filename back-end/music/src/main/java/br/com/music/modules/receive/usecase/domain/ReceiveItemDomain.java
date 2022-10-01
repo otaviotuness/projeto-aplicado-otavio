@@ -29,7 +29,7 @@ public class ReceiveItemDomain {
   private Integer id;
 
   private String description;
-  private BigDecimal value;
+  private BigDecimal value = BigDecimal.ZERO;
 
   @Enumerated(EnumType.STRING)
   private TypeReceive typeReceive;

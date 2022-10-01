@@ -3,7 +3,6 @@ package br.com.music.modules.event.dataprovider.database;
 import br.com.music.modules.event.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
-import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +14,10 @@ import org.springframework.stereotype.Component;
 public class EventMySQLDataProvider implements EventDadosGateway {
 
   private final EventRepository eventRepository;
-  private final ReceiveRepository receiveRepository;
 
   @Override
   public void save(EventDomain eventDomain) {
     log.info("Save event.");
-
-    // final var receive = receiveRepository.findById(eventDomain.getReceive().getId());
 
     eventDomain.getReceive().setEvent(eventDomain);
 

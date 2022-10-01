@@ -2,6 +2,7 @@ package br.com.music.modules.event.usecase.domain;
 
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.song.usecase.domain.SongDomain;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -35,6 +36,9 @@ public class EventDomain {
   private String description;
   private String date;
   private String time;
+  private Integer idUser; // usuario que criou evento
+  private Integer idUserMaster; // evento que pertence ao evento
+  private BigDecimal value;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(

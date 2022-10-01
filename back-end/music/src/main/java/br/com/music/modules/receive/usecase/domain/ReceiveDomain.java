@@ -4,6 +4,7 @@ import br.com.music.modules.event.usecase.domain.EventDomain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class ReceiveDomain {
   @JsonManagedReference
   @OneToMany(mappedBy = "receiveDomain")
   @Fetch(FetchMode.JOIN)
-  private List<ReceiveItemDomain> items;
+  private List<ReceiveItemDomain> items = new ArrayList<>();
 
   @JsonBackReference
   @OneToOne(mappedBy = "receive")

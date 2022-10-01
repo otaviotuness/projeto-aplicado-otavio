@@ -25,7 +25,7 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   private final UserInfo userInfo;
 
   @Override
-  public void save(ReceiveDomain receiveDomain) {
+  public ReceiveDomain save(ReceiveDomain receiveDomain) {
     log.info("Save receive.");
 
     final var totalValue =
@@ -40,18 +40,22 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
 
     final var items = receiveDomain.getItems();
 
-    items.forEach(i -> i.setReceiveDomain(newReceive));
+    if (!items.isEmpty()) {
+      items.forEach(i -> i.setReceiveDomain(newReceive));
 
-    final var oldItems =
-        receiveRepository.findById(newReceive.getId()).orElse(new ReceiveDomain()).getItems();
+      final var oldItems =
+          receiveRepository.findById(newReceive.getId()).orElse(new ReceiveDomain()).getItems();
 
-    if (!oldItems.isEmpty()) {
-      receiveItemRepository.deleteAll(oldItems);
+      if (!oldItems.isEmpty()) {
+        receiveItemRepository.deleteAll(oldItems);
+      }
+
+      receiveItemRepository.saveAll(items);
     }
 
-    receiveItemRepository.saveAll(items);
-
     log.info("Save receive successfully!");
+
+    return newReceive;
   }
 
   @Override
