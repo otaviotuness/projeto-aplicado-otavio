@@ -6,7 +6,9 @@ import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveItemRepository;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
+import br.com.music.modules.receive.usecase.domain.ReceiveItemDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -27,38 +29,40 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   public ReceiveDomain save(ReceiveDomain receiveDomain) {
     log.info("Save receive.");
 
-    final var receive = Optional.ofNullable(receiveDomain.getItems());
-
-    //    final var totalValue =
-    //        receiveDomain.getItems().stream()
-    //            .map(ReceiveItemDomain::getValue)
-    //            .reduce(BigDecimal::add)
-    //            .orElse(BigDecimal.ZERO);
-    //
-    //    final var totalValue = receive.stream().map(ReceiveItemDomain::getValue);
-
-    receiveDomain.setTotalValueReceive(totalValue);
-
     final var newReceive = receiveRepository.save(receiveDomain);
 
-    final var items = receiveDomain.getItems();
+    verifyOldItems(newReceive.getId());
 
-    if (!items.isEmpty()) {
-      items.forEach(i -> i.setReceiveDomain(newReceive));
+    Optional.ofNullable(receiveDomain.getItems())
+        .ifPresent(
+            receiveItems -> {
+              final var totalValue =
+                  receiveItems.stream()
+                      .map(ReceiveItemDomain::getValue)
+                      .reduce(BigDecimal::add)
+                      .orElse(BigDecimal.ZERO);
 
-      final var oldItems =
-          receiveRepository.findById(newReceive.getId()).orElse(new ReceiveDomain()).getItems();
+              newReceive.setTotalValueReceive(totalValue);
 
-      if (!oldItems.isEmpty()) {
-        receiveItemRepository.deleteAll(oldItems);
-      }
+              receiveItems.forEach(i -> i.setReceiveDomain(newReceive));
 
-      receiveItemRepository.saveAll(items);
-    }
+              receiveItemRepository.saveAll(receiveItems);
+            });
+
+    receiveRepository.save(newReceive);
 
     log.info("Save receive successfully!");
 
     return newReceive;
+  }
+
+  private void verifyOldItems(final Integer receiveId) {
+    final var oldItems =
+        receiveRepository.findById(receiveId).orElse(new ReceiveDomain()).getItems();
+
+    if (!oldItems.isEmpty()) {
+      receiveItemRepository.deleteAll(oldItems);
+    }
   }
 
   @Override

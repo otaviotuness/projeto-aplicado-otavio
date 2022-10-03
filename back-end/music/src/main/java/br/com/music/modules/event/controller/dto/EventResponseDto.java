@@ -1,15 +1,11 @@
 package br.com.music.modules.event.controller.dto;
 
-import br.com.music.modules.checklist.controller.dto.ChecklistDto;
-import br.com.music.modules.receive.controller.dto.ReceiveDto;
 import br.com.music.modules.song.controller.dto.SongDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,18 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EventDto {
+public class EventResponseDto {
 
   private Integer id;
-
-  @NotBlank private String date;
-
-  @NotBlank private String time;
-
-  @NotBlank private String description;
-
-  @NotNull
-  @Min(value = 0)
+  private String date;
+  private String time;
+  private String description;
   private BigDecimal value = BigDecimal.ZERO;
 
   @JsonProperty("id_user")
@@ -39,7 +29,13 @@ public class EventDto {
   @NotNull
   private Integer idUserMaster;
 
-  private ReceiveDto receive;
+  private ReceiveResponseEventDto receive;
   private Set<SongDto> songs;
-  private List<ChecklistDto> checklist;
+
+  @Data
+  public static class ReceiveResponseEventDto {
+    private Integer id;
+    private BigDecimal totalValue;
+    private BigDecimal totalValueReceive;
+  }
 }

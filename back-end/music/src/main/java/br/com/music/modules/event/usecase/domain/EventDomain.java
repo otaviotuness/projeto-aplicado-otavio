@@ -1,9 +1,12 @@
 package br.com.music.modules.event.usecase.domain;
 
+import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.song.usecase.domain.SongDomain;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,8 +40,8 @@ public class EventDomain {
   private String description;
   private String date;
   private String time;
-  private Integer idUser; // usuario que criou evento
-  private Integer idUserMaster; // evento que pertence ao evento
+  private Integer idUser;
+  private Integer idUserMaster;
   private BigDecimal value;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -51,5 +55,7 @@ public class EventDomain {
   @JoinColumn(name = "receive_id", referencedColumnName = "id")
   private ReceiveDomain receive;
 
-  //  @OneToMany private List<Checklist> checklist;
+  @JsonManagedReference
+  @OneToMany(mappedBy = "event")
+  private List<ChecklistDomain> checklist;
 }

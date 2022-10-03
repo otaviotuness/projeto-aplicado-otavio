@@ -17,4 +17,6 @@ public class ChecklistDto {
 
   @JsonProperty("id_user")
   private Integer idUser;
+
+  private Boolean value;
 }

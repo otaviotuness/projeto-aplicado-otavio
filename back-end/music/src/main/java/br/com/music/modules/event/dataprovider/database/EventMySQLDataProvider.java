@@ -1,9 +1,11 @@
 package br.com.music.modules.event.dataprovider.database;
 
+import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepository;
 import br.com.music.modules.event.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class EventMySQLDataProvider implements EventDadosGateway {
 
   private final EventRepository eventRepository;
+  private final ChecklistRepository checklistRepository;
 
   @Override
   public void save(EventDomain eventDomain) {
@@ -21,7 +24,14 @@ public class EventMySQLDataProvider implements EventDadosGateway {
 
     eventDomain.getReceive().setEvent(eventDomain);
 
-    eventRepository.save(eventDomain);
+    final var newEvent = eventRepository.save(eventDomain);
+
+    Optional.ofNullable(eventDomain.getChecklist())
+        .ifPresent(
+            checklists -> {
+              checklists.forEach(checklist -> checklist.setEvent(newEvent));
+              checklistRepository.saveAll(checklists);
+            });
 
     log.info("Save event successfully!");
   }
@@ -30,7 +40,7 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   public List<EventDomain> findAll() {
     log.info("Find all events");
 
-    var eventDomain = eventRepository.findAll();
+    final var eventDomain = eventRepository.findAll();
 
     log.info("Find all events successfully");
 
