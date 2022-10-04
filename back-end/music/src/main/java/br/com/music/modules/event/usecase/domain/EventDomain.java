@@ -25,6 +25,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Getter
 @Setter
@@ -59,6 +61,7 @@ public class EventDomain {
   private ReceiveDomain receive;
 
   @JsonManagedReference
-  @OneToMany(cascade = CascadeType.DETACH, mappedBy = "event")
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(mappedBy = "event")
   private List<ChecklistDomain> checklist;
 }

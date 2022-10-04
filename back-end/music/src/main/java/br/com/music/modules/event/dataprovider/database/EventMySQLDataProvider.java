@@ -25,7 +25,7 @@ public class EventMySQLDataProvider implements EventDadosGateway {
 
     final var newEvent = eventRepository.save(eventDomain);
 
-    verifyOldItems(newEvent.getId());
+    eventRepository.deleteChecklistInEvent(newEvent.getId());
 
     Optional.ofNullable(eventDomain.getChecklist())
         .ifPresent(
@@ -66,13 +66,5 @@ public class EventMySQLDataProvider implements EventDadosGateway {
     eventRepository.deleteById(id);
 
     log.info("Delete successfully event by id: [{}}.", id);
-  }
-
-  private void verifyOldItems(final Integer eventId) {
-    final var oldItems = eventRepository.findById(eventId).orElse(new EventDomain()).getChecklist();
-
-    if (!oldItems.isEmpty()) {
-      checklistRepository.deleteAll(oldItems);
-    }
   }
 }

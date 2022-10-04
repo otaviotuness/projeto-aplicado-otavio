@@ -3,6 +3,7 @@ package br.com.music.modules.event.controller.dto;
 import br.com.music.modules.song.controller.dto.SongDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -31,6 +32,17 @@ public class EventResponseDto {
 
   private ReceiveResponseEventDto receive;
   private Set<SongDto> songs;
+  private List<ChecklistResponseDto> checklist;
+
+  @Data
+  public static class ChecklistResponseDto {
+    private Integer id;
+    private String description;
+    private Boolean value = false;
+
+    @JsonProperty("id_user")
+    private Integer idUser;
+  }
 
   @Data
   public static class ReceiveResponseEventDto {
