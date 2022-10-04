@@ -34,11 +34,11 @@ class ChecklistMySQLDataProviderIT extends TestWithMySQL {
 
     checklistMySQLDataProvider.save(checklist);
 
-    final var expectedchecklist = checklistRepository.findAll().get(0);
+    final var expectedChecklist = checklistRepository.findAll().get(0);
 
-    Assertions.assertNotNull(expectedchecklist);
+    Assertions.assertNotNull(expectedChecklist);
     Assertions.assertNotNull(checklist.getIdUser());
-    Assertions.assertEquals(checklist.getDescription(), expectedchecklist.getDescription());
+    Assertions.assertEquals(checklist.getDescription(), expectedChecklist.getDescription());
   }
 
   @Test
@@ -80,6 +80,7 @@ class ChecklistMySQLDataProviderIT extends TestWithMySQL {
   void shouldFindAll_thenReturnSuccessfully() {
     final var checklist = EASY_RANDOM.nextObject(ChecklistDomain.class);
     checklist.setIdUser(0);
+    checklist.setId(null);
     checklistMySQLDataProvider.save(checklist);
 
     Assertions.assertEquals(1, checklistRepository.count());
@@ -94,6 +95,7 @@ class ChecklistMySQLDataProviderIT extends TestWithMySQL {
   @Test
   void shouldDelete_thenReturnSuccessfully() {
     final var checklist = EASY_RANDOM.nextObject(ChecklistDomain.class);
+    checklist.setId(null);
 
     final var checklistSave = checklistRepository.save(checklist);
 

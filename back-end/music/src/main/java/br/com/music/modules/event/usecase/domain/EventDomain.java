@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "event")
+@Table(
+    name = "event",
+    uniqueConstraints = @UniqueConstraint(name = "uniqueReceiveId", columnNames = "receive_id"))
 public class EventDomain {
 
   @Id
@@ -56,6 +59,6 @@ public class EventDomain {
   private ReceiveDomain receive;
 
   @JsonManagedReference
-  @OneToMany(mappedBy = "event")
+  @OneToMany(cascade = CascadeType.DETACH, mappedBy = "event")
   private List<ChecklistDomain> checklist;
 }

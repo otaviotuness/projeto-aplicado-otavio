@@ -3,6 +3,7 @@ package br.com.music.modules.receive.dataprovider.database;
 import br.com.music.modules.commum.exceptions.DataIntegrityException;
 import br.com.music.modules.commum.exceptions.NotFoundException;
 import br.com.music.modules.commum.utils.UserInfo;
+import br.com.music.modules.event.dataprovider.repository.EventRepository;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveItemRepository;
 import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -23,6 +23,7 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
 
   private final ReceiveRepository receiveRepository;
   private final ReceiveItemRepository receiveItemRepository;
+  private final EventRepository eventRepository;
   private final UserInfo userInfo;
 
   @Override
@@ -94,12 +95,13 @@ public class ReceiveMySQLDataProvider implements ReceiveDadosGateway {
   public void deleteById(Integer id) {
     log.info("Delete receive by id: [{}}.", id);
 
-    try {
-      receiveRepository.deleteById(id);
-    } catch (DataIntegrityViolationException e) {
-      throw new DataIntegrityException(
-          "Não é possível excluir porque há recebimentos relacionados");
+    final var event = eventRepository.findByReceiveId(id);
+
+    if (event.isPresent()) {
+      throw new DataIntegrityException("Existe um evento vinculado ao recebimento");
     }
+
+    receiveRepository.deleteById(id);
 
     log.info("Delete successfully receive by id: [{}}.", id);
   }

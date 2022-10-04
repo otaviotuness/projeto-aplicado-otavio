@@ -60,4 +60,13 @@ public class ChecklistMySQLDataProvider implements ChecklistDadosGateway {
 
     log.info("Delete successfully checklist by id: [{}}.", id);
   }
+
+  @Override
+  public void deleteAll(List<ChecklistDomain> checklistDomains) {
+    log.info("Delete checklist");
+
+    checklistRepository.deleteAll(checklistDomains);
+
+    log.info("Delete checklists successfully");
+  }
 }

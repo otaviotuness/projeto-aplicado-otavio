@@ -12,4 +12,6 @@ public interface ChecklistDadosGateway {
   ChecklistDomain findById(Integer id);
 
   void deleteById(Integer id);
+
+  void deleteAll(List<ChecklistDomain> checklistDomains);
 }

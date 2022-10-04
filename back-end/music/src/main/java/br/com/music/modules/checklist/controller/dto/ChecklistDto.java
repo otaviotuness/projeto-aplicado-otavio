@@ -1,5 +1,6 @@
 package br.com.music.modules.checklist.controller.dto;
 
+import br.com.music.modules.event.usecase.domain.EventDomain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -19,4 +20,5 @@ public class ChecklistDto {
   private Integer idUser;
 
   private Boolean value;
+  private EventDomain event;
 }

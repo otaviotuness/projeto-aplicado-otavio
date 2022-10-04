@@ -3,7 +3,6 @@ package br.com.music.modules.receive.usecase;
 import br.com.music.modules.commum.utils.ValidateRequest;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
-import br.com.music.modules.receive.usecase.gateway.ReceiveItemDadosGateway;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class ReceiveUseCase {
 
   private final ReceiveDadosGateway receiveDadosGateway;
-  private final ReceiveItemDadosGateway receiveItemDadosGateway;
   private final ValidateRequest validateRequest;
 
   public void save(ReceiveDomain receiveDomain) {
@@ -40,10 +38,6 @@ public class ReceiveUseCase {
     final var receive = receiveDadosGateway.findById(id);
 
     validateRequest.validate(receive.getIdUser());
-
-    final var receiveItems = receive.getItems();
-
-    receiveItemDadosGateway.deleteAll(receiveItems);
 
     receiveDadosGateway.deleteById(id);
   }

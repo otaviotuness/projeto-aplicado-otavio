@@ -1,7 +1,5 @@
 package br.com.music.modules.receive.usecase.domain;
 
-import br.com.music.modules.event.usecase.domain.EventDomain;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,7 +41,7 @@ public class ReceiveDomain {
   @Fetch(FetchMode.JOIN)
   private List<ReceiveItemDomain> items = new ArrayList<>();
 
-  @JsonBackReference
-  @OneToOne(mappedBy = "receive")
-  private EventDomain event;
+  //  @JsonBackReference
+  //  @OneToOne(mappedBy = "receive")
+  //  private EventDomain event;
 }

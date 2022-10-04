@@ -1,6 +1,7 @@
 package br.com.music.modules.event.dataprovider.database;
 
 import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepository;
+import br.com.music.modules.commum.exceptions.NotFoundException;
 import br.com.music.modules.event.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
@@ -22,9 +23,9 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   public void save(EventDomain eventDomain) {
     log.info("Save event.");
 
-    eventDomain.getReceive().setEvent(eventDomain);
-
     final var newEvent = eventRepository.save(eventDomain);
+
+    verifyOldItems(newEvent.getId());
 
     Optional.ofNullable(eventDomain.getChecklist())
         .ifPresent(
@@ -51,7 +52,7 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   public EventDomain findById(Integer id) {
     log.info("Find event by id: [{}}.", id);
 
-    var eventDomain = eventRepository.findById(id).get();
+    var eventDomain = eventRepository.findById(id).orElseThrow(() -> NotFoundException.with(id));
 
     log.info("Find successfully event by id: [{}}.", id);
 
@@ -60,10 +61,18 @@ public class EventMySQLDataProvider implements EventDadosGateway {
 
   @Override
   public void deleteById(Integer id) {
-    log.info("Delete event by id: [{}}.", id);
 
+    log.info("Delete event by id: [{}}.", id);
     eventRepository.deleteById(id);
 
     log.info("Delete successfully event by id: [{}}.", id);
+  }
+
+  private void verifyOldItems(final Integer eventId) {
+    final var oldItems = eventRepository.findById(eventId).orElse(new EventDomain()).getChecklist();
+
+    if (!oldItems.isEmpty()) {
+      checklistRepository.deleteAll(oldItems);
+    }
   }
 }
