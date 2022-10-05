@@ -2,6 +2,7 @@ package br.com.music.modules.song.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,5 +19,6 @@ public class SongDto {
   @NotBlank private String link;
 
   @JsonProperty("id_user")
-  private int idUser;
+  @NotNull
+  private Integer idUser;
 }

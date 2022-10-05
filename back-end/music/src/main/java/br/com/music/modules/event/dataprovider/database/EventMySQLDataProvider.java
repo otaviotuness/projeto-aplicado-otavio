@@ -60,11 +60,13 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   }
 
   @Override
-  public void deleteById(Integer id) {
+  public void deleteById(Integer eventId) {
+    log.info("Delete event by id: [{}}.", eventId);
 
-    log.info("Delete event by id: [{}}.", id);
-    eventRepository.deleteById(id);
+    eventRepository.deleteChecklistInEvent(eventId);
 
-    log.info("Delete successfully event by id: [{}}.", id);
+    eventRepository.deleteById(eventId);
+
+    log.info("Delete successfully event by id: [{}}.", eventId);
   }
 }
