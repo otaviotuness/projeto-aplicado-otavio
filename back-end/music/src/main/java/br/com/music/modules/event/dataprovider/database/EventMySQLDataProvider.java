@@ -5,6 +5,7 @@ import br.com.music.modules.commum.exceptions.NotFoundException;
 import br.com.music.modules.event.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
+import br.com.music.modules.receive.dataprovider.repository.ReceiveRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class EventMySQLDataProvider implements EventDadosGateway {
 
   private final EventRepository eventRepository;
   private final ChecklistRepository checklistRepository;
+  private final ReceiveRepository receiveRepository;
 
   @Override
   public void save(EventDomain eventDomain) {
@@ -63,8 +65,15 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   public void deleteById(Integer eventId) {
     log.info("Delete event by id: [{}}.", eventId);
 
+    // delete receive
+    eventRepository
+        .findById(eventId)
+        .ifPresent(e -> receiveRepository.deleteById(e.getReceive().getId()));
+
+    // delete checklist
     eventRepository.deleteChecklistInEvent(eventId);
 
+    // delete evento
     eventRepository.deleteById(eventId);
 
     log.info("Delete successfully event by id: [{}}.", eventId);

@@ -8,7 +8,6 @@ import br.com.music.modules.event.usecase.helper.EventHelper;
 import br.com.music.modules.receive.usecase.gateway.ReceiveDadosGateway;
 import br.com.music.modules.song.usecase.gateway.SongDadosGateway;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -53,13 +52,8 @@ public class EventUseCase {
 
     final var event = eventDadosGateway.findById(id);
 
+    validateRequest.validate(event.getIdUser(), event.getIdUserMaster());
+
     eventDadosGateway.deleteById(id);
-
-    // deletando recebimentos
-    Optional.ofNullable(event.getReceive())
-        .ifPresent(receive -> receiveDadosGateway.deleteById(receive.getId()));
-
-    // deletando checklists
-    Optional.ofNullable(event.getChecklist()).ifPresent(checklistDadosGateway::deleteAll);
   }
 }

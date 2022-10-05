@@ -11,5 +11,7 @@ public interface EventMapper {
 
   EventDomain toDomain(EventDto eventDto);
 
-  List<EventResponseDto> toResponse(List<EventDomain> eventResponseDto);
+  List<EventResponseDto> toListResponse(List<EventDomain> eventListResponseDto);
+
+  EventResponseDto toResponse(EventDomain eventResponseDto);
 }

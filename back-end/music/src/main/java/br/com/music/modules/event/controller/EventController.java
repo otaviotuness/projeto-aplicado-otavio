@@ -4,7 +4,6 @@ import br.com.music.modules.event.controller.dto.EventDto;
 import br.com.music.modules.event.controller.dto.EventResponseDto;
 import br.com.music.modules.event.controller.mapper.EventMapper;
 import br.com.music.modules.event.usecase.EventUseCase;
-import br.com.music.modules.event.usecase.domain.EventDomain;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +26,14 @@ public class EventController implements Event {
 
     var eventDomain = eventUseCase.findAll();
 
-    return eventMapper.toResponse(eventDomain);
+    return eventMapper.toListResponse(eventDomain);
   }
 
-  public EventDomain findById(@PathVariable Integer id) {
+  public EventResponseDto findById(@PathVariable Integer id) {
 
-    return eventUseCase.findById(id);
+    final var event = eventUseCase.findById(id);
+
+    return eventMapper.toResponse(event);
   }
 
   public ResponseEntity<String> save(@Valid @RequestBody EventDto eventDto) {

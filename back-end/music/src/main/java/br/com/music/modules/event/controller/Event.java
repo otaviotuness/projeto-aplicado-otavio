@@ -2,7 +2,6 @@ package br.com.music.modules.event.controller;
 
 import br.com.music.modules.event.controller.dto.EventDto;
 import br.com.music.modules.event.controller.dto.EventResponseDto;
-import br.com.music.modules.event.usecase.domain.EventDomain;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ public interface Event {
   public List<EventResponseDto> findAll();
 
   @GetMapping("/event/{id}")
-  public EventDomain findById(@PathVariable Integer id);
+  public EventResponseDto findById(@PathVariable Integer id);
 
   @PostMapping("/event")
   public ResponseEntity<String> save(@Valid @RequestBody EventDto eventDto);
