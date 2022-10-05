@@ -65,16 +65,16 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   public void deleteById(Integer eventId) {
     log.info("Delete event by id: [{}}.", eventId);
 
-    // delete receive
-    eventRepository
-        .findById(eventId)
-        .ifPresent(e -> receiveRepository.deleteById(e.getReceive().getId()));
+    final var event = eventRepository.findById(eventId);
 
     // delete checklist
     eventRepository.deleteChecklistInEvent(eventId);
 
     // delete evento
     eventRepository.deleteById(eventId);
+
+    // delete receive
+    event.ifPresent(e -> receiveRepository.deleteById(e.getReceive().getId()));
 
     log.info("Delete successfully event by id: [{}}.", eventId);
   }

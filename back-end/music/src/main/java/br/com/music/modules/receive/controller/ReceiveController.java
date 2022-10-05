@@ -1,10 +1,9 @@
 package br.com.music.modules.receive.controller;
 
-import br.com.music.modules.commum.utils.ValidateRequest;
 import br.com.music.modules.receive.controller.dto.ReceiveDto;
+import br.com.music.modules.receive.controller.dto.ReceiveResponseDto;
 import br.com.music.modules.receive.controller.mapper.ReceiveMapper;
 import br.com.music.modules.receive.usecase.ReceiveUseCase;
-import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,18 +21,19 @@ public class ReceiveController implements Receive {
 
   private final ReceiveMapper receiveMapper;
   private final ReceiveUseCase receiveUseCase;
-  private final ValidateRequest validateRequest;
 
-  public ReceiveDomain findById(@PathVariable Integer id) {
+  public ResponseEntity<ReceiveResponseDto> findById(@PathVariable Integer id) {
 
-    return receiveUseCase.findById(id);
+    final var receive = receiveUseCase.findById(id);
+
+    return ResponseEntity.ok(receiveMapper.toResponseDto(receive));
   }
 
-  public ResponseEntity<List<ReceiveDomain>> findAll() {
+  public List<ReceiveResponseDto> findAll() {
 
     var receives = receiveUseCase.findAll();
 
-    return ResponseEntity.ok(receives);
+    return receiveMapper.toListResponseDto(receives);
   }
 
   public ResponseEntity<String> save(@Valid @RequestBody ReceiveDto receiveDto) {

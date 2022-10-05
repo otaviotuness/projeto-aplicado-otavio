@@ -1,7 +1,7 @@
 package br.com.music.modules.receive.controller;
 
 import br.com.music.modules.receive.controller.dto.ReceiveDto;
-import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
+import br.com.music.modules.receive.controller.dto.ReceiveResponseDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface Receive {
 
   @GetMapping("/receive/{id}")
-  ReceiveDomain findById(@PathVariable Integer id);
+  ResponseEntity<ReceiveResponseDto> findById(@PathVariable Integer id);
 
   @GetMapping("/receives")
-  ResponseEntity<List<ReceiveDomain>> findAll();
+  List<ReceiveResponseDto> findAll();
 
   @PostMapping("/receive")
   ResponseEntity<String> save(@Valid @RequestBody ReceiveDto receiveDto);
