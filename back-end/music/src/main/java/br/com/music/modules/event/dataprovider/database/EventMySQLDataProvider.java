@@ -2,6 +2,7 @@ package br.com.music.modules.event.dataprovider.database;
 
 import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepository;
 import br.com.music.modules.commum.exceptions.NotFoundException;
+import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.event.dataprovider.repository.EventRepository;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;
@@ -20,6 +21,7 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   private final EventRepository eventRepository;
   private final ChecklistRepository checklistRepository;
   private final ReceiveRepository receiveRepository;
+  private final UserInfo userInfo;
 
   @Override
   public void save(EventDomain eventDomain) {
@@ -43,7 +45,9 @@ public class EventMySQLDataProvider implements EventDadosGateway {
   public List<EventDomain> findAll() {
     log.info("Find all events");
 
-    final var eventDomain = eventRepository.findAll();
+    final var eventDomain =
+        eventRepository.findAllEvents(
+            userInfo.isAdmin(), userInfo.getUserId(), userInfo.getUserIdMaster());
 
     log.info("Find all events successfully");
 

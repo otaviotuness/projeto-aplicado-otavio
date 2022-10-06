@@ -6,6 +6,9 @@ import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepositor
 import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
 import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.configTest.TestWithMySQL;
+import br.com.music.modules.event.dataprovider.repository.EventRepository;
+import br.com.music.modules.event.usecase.domain.EventDomain;
+import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +22,8 @@ class ChecklistMySQLDataProviderIT extends TestWithMySQL {
 
   @Autowired private ChecklistRepository checklistRepository;
 
+  @Autowired private EventRepository eventRepository;
+
   @Autowired private UserInfo userInfo;
 
   @BeforeEach
@@ -28,7 +33,17 @@ class ChecklistMySQLDataProviderIT extends TestWithMySQL {
 
   @Test
   void shouldSave_thenReturnSuccessfully() {
+    final var event = EASY_RANDOM.nextObject(EventDomain.class);
+    final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
+    event.setId(null);
+    receive.setId(null);
+    event.setReceive(receive);
+
+    final var eventSaved = eventRepository.save(event);
+
     final var checklist = EASY_RANDOM.nextObject(ChecklistDomain.class);
+    checklist.setId(null);
+    checklist.setEvent(eventSaved);
 
     Assertions.assertEquals(0, checklistRepository.count());
 

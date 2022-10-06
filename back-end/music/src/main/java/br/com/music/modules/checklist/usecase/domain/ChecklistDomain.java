@@ -38,4 +38,8 @@ public class ChecklistDomain {
   @ManyToOne
   @JoinColumn(name = "event_id")
   private EventDomain event;
+
+  public Integer getEvent_id() {
+    return this.event.getId();
+  }
 }

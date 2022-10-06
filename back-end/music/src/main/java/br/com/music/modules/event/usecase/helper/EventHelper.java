@@ -9,7 +9,7 @@ public class EventHelper {
 
   public ReceiveDomain buildReceive(final EventDomain eventDomain) {
     return ReceiveDomain.builder()
-        .totalValueReceive(eventDomain.getValue())
+        .totalValue(eventDomain.getValue())
         .description(eventDomain.getDescription())
         .idUser(eventDomain.getIdUserMaster())
         .build();
