@@ -412,7 +412,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Checklist'
+              $ref: '#/components/schemas/ChecklistPost'
         required: true
       responses:
         201:
@@ -576,47 +576,25 @@ paths:
 components:
   schemas:
     UserResponse:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
     SongResponse:
-      type: object
-      properties:
-        songs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Song'
+      type: array
+      items:
+        $ref: '#/components/schemas/Song'
     EventResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-    RoleResponse:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
+      type: array
+      items:
+        $ref: '#/components/schemas/Event'
     ChecklistResponse:
-      type: object
-      properties:
-        checklists:
-          type: array
-          items:
-            $ref: '#/components/schemas/Checklist'
+      type: array
+      items:
+        $ref: '#/components/schemas/Checklist'
     ReceiveResponse:
-      type: object
-      properties:
-        receives:
-          type: array
-          items:
-            $ref: '#/components/schemas/Receive'
+      type: array
+      items:
+        $ref: '#/components/schemas/Receive'
     User:
       title: User
       required:
@@ -653,7 +631,7 @@ components:
         - id
         - description
         - link
-        - idUser
+        - id_user
       type: object
       properties:
         id:
@@ -668,7 +646,7 @@ components:
           type: string
           description: 'Link da música'
           example: 'https://www.linkmusic.com.br'
-        idUser:
+        id_user:
           type: integer
           description: 'Id do operador que cadastrou a música'
           example: '2'
@@ -697,16 +675,21 @@ components:
         - event_song
         - id_user
         - id_user_master
+        - value
       type: object
       properties:
         id:
           type: integer
-          description: 'ID do event'
+          description: 'ID do evento'
           example: '1'
         date:
           type: string
-          description: 'Data do event'
+          description: 'Data do evento'
           example: '10/10/2022'
+        description:
+          type: string
+          description: 'Descrição do evento'
+          example: 'Casamento Jõao e Maria'  
         time:
           type: string
           description: 'Horário do event'
@@ -715,19 +698,38 @@ components:
           type: integer
           description: 'ID do usuario vinculado ao evento'
           example: '12'
-        event_song:
+        id_user_master:
+          type: integer
+          description: 'ID do usuario master'
+          example: '2'  
+        value:
+          type: number
+          description: 'Valor do evento'
+          example: '1500.00'  
+        songs:
           type: array
           items:
             $ref: '#/components/schemas/Song'
-          description: 'ID do evnto'
+          description: 'Musica vinculada ao evento'
+        checklist:
+          type: array
+          items:
+            $ref: '#/components/schemas/Checklist'
+          description: 'Checklist vinculado ao evento'  
+        receive:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReceiveResponseEvent'
+          description: 'Recebimento vinculado ao evento'  
     Receive:
       title: Receive
       required:
         - id
         - description
-        - idUser
+        - id_user
         - totalValue
         - totalValueReceive
+        - date
       type: object
       properties:
         id:
@@ -738,19 +740,19 @@ components:
           type: string
           description: 'Descrição do Receber'
           example: 'CONTAS A RECEBER - JÃO'
-        idUser:
+        id_user:
           type: string
           description: 'Id do usuário'
           example: '1'
-        totalValue:
+        total_value:
           type: number
           description: 'Valor total'
           example: '1500.00'
-        totalValueReceive:
+        total_value_receive:
           type: number
           description: 'Valor recebido'
           example: '500.00'
-        receiveItem:
+        items:
           type: array
           items:
             $ref: '#/components/schemas/ReceiveItem'
@@ -760,7 +762,7 @@ components:
       required:
         - id
         - description
-        - idUser
+        - id_user
         - value
         - idTypeRecebimento
       type: object
@@ -773,7 +775,7 @@ components:
           type: string
           description: 'Descrição do Receber Item'
           example: 'Conta recebida do cliente Fulado de Tal'
-        idUser:
+        id_user:
           type: string
           description: 'Id do usuário'
           example: '1'
@@ -781,16 +783,38 @@ components:
           type: number
           description: 'Valore do recebimento'
           example: '500.00'
-        idTypeRecebimento:
+        type_receive:
+          type: string
+          description: 'Tipo do recebimento aberto/fechado'
+          example: 'CLOSE'
+    ReceiveResponseEvent:
+      title: Receive
+      required:
+        - id
+        - totalValue
+        - totalValueReceive
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID do Receber'
+          example: '1'
+        total_value:
           type: number
-          description: 'Id tipo recebimento'
-          example: '5'
+          description: 'Valor total'
+          example: '1500.00'
+        total_value_receive:
+          type: number
+          description: 'Valor recebido'
+          example: '500.00'
+    
     Checklist:
       title: CheckList
       required:
         - id
         - description
-        - idUser
+        - event_id
+        - id_user
       type: object
       properties:
         id:
@@ -800,8 +824,54 @@ components:
         description:
           type: string
           description: 'Descrição do item do checklist'
-          example: 'UTILIZA PALCO SOB-LOCADO'
-        idUser:
+          example: 'UTILIZA PALCO SUB-LOCADO'
+        value:
+          type: boolean
+          description: 'Ativo ou não'
+          example: 'true'  
+        id_user:
           type: integer
           description: 'ID do Receber'
           example: '1'
+        event_id:
+          type: integer
+          description: 'ID do Evento vinculado'
+          example: '1'  
+    ChecklistPost:
+      title: CheckList
+      required:
+        - id
+        - description
+        - event
+        - id_user
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'ID do Receber'
+          example: '1'
+        description:
+          type: string
+          description: 'Descrição do item do checklist'
+          example: 'UTILIZA PALCO SUB-LOCADO'
+        value:
+          type: boolean
+          description: 'Ativo ou não'
+          example: 'true'  
+        id_user:
+          type: integer
+          description: 'ID do Receber'
+          example: '1'
+        event:
+          type: object
+          $ref: '#/components/schemas/EventChecklist'      
+    EventChecklist:
+      title: Event Checklist
+      required:
+       - id
+      type: object 
+      properties:
+        id:
+          type: integer
+          description: 'ID do Evento vinculado ao Checklist'
+          example: '2'
