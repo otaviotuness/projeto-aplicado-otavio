@@ -1,6 +1,6 @@
-import { Flex, Text, Input, Icon } from "@chakra-ui/react"
+import { Flex, Text, Input, Icon, HStack, Box, Avatar } from "@chakra-ui/react"
 import { IncomingMessage } from "http"
-import { RiSearchLine } from 'react-icons/ri'
+import { RiNotificationLine, RiSearchLine, RiUserAddLine } from 'react-icons/ri'
 
 export function Header() {
   return(
@@ -48,6 +48,34 @@ export function Header() {
 
       </Flex>  
 
+      <Flex
+        align="center"
+        ml="auto" //todo conteudo jogado para direita
+      >
+        <HStack 
+          spacing="8"
+          mx="8"
+          pr="8"
+          py="1"
+          color="gray.300"
+          borderRightWidth={1}
+          borderColor="gray.700"
+        >
+          <Icon as={RiNotificationLine} fontSize="20" />
+          <Icon as={RiUserAddLine} fontSize="20" />
+        </HStack>
+
+        <Flex align="center"> 
+          <Box mr="4" textAlign="right">
+            <Text>Otavio</Text>
+            <Text color="gray.300" fontSize="small">
+              otavio.tunes@email.com</Text>
+          </Box>
+
+          <Avatar size="md" name="Otavio" src="" />
+        </Flex>
+
+      </Flex>
     </Flex>
   )
 }
