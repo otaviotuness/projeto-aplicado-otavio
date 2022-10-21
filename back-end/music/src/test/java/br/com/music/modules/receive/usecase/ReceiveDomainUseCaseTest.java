@@ -1,7 +1,6 @@
 package br.com.music.modules.receive.usecase;
 
 import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,8 +40,6 @@ public class ReceiveDomainUseCaseTest {
   void givenSave_thenReturnSuccessfully() {
     final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
 
-    doNothing().when(receiveDadosGateway).save(receive);
-
     receiveUseCase.save(receive);
 
     verify(receiveDadosGateway, times(1)).save(receive);
@@ -75,8 +72,6 @@ public class ReceiveDomainUseCaseTest {
     final var receive = EASY_RANDOM.nextObject(ReceiveDomain.class);
 
     when(receiveDadosGateway.findById(RECEIVE_ID)).thenReturn(receive);
-
-    doNothing().when(receiveItemDadosGateway).deleteAll(receive.getItems());
 
     receiveUseCase.deleteById(RECEIVE_ID);
 
