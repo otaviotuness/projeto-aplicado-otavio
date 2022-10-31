@@ -30,9 +30,9 @@ public class JwtUtils {
     JwtObjectImpl jwtObject;
     String[] tokens = accessToken.split("\\.");
 
-    if (tokens.length != 3) {
-      throw new BadRequestException(new Issue(IssueType.BAD_REQUEST_INVALID_JWT));
-    }
+    //    if (tokens.length != 3) {
+    //      throw new BadRequestException(new Issue(IssueType.BAD_REQUEST_INVALID_JWT));
+    //    }
 
     byte[] claimsBytesDecoded =
         Base64.getDecoder().decode(tokens[1].getBytes(StandardCharsets.UTF_8));

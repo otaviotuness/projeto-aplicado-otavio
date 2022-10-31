@@ -7,9 +7,7 @@ import org.apache.commons.codec.binary.Base64;
 
 public class DecodedToken {
 
-  public String sub;
   public String name;
-  public Boolean admin;
 
   public static DecodedToken getDecoded(String encodedToken) throws UnsupportedEncodingException {
     String[] pieces = encodedToken.split("\\.");
