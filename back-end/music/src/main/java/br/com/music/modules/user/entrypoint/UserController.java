@@ -40,7 +40,13 @@ public class UserController implements User {
   public ResponseEntity<UserResponseDto> me(Principal principal) {
     var user = userUseCase.findByEmail(principal.getName());
 
-    return ResponseEntity.ok(usuarioMapper.toResponse(user));
+    final var resp = UserResponseDto.builder()
+            .email(user.getEmail())
+            .name(user.getName())
+            .roles(Set.of(user.getRoles().stream().map(RoleDomain::getRoleName).findAny().orElse("")))
+            .build();
+
+    return ResponseEntity.ok(resp);
   }
 
   public ResponseEntity<List<UserDomain>> findAll() {

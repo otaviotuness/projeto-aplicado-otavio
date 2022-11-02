@@ -26,9 +26,7 @@ public interface User {
   @GetMapping("/user/{id}")
   ResponseEntity<Optional<UserDomain>> findById(@PathVariable Integer id);
 
-  @PermitMusician
-  @PermitOperator
-  @PermitAdmin
+  @PermitAll
   @GetMapping("/me")
   ResponseEntity<UserResponseDto> me(Principal principal);
 

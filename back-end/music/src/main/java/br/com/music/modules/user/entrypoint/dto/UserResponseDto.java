@@ -15,11 +15,6 @@ public class UserResponseDto {
 
   private String name;
   private String email;
-  private Set<RoleResponse> roles = new HashSet<>();
+  private Set<String> roles = new HashSet<>();
   private String token;
-
-  @Data
-  public static class RoleResponse {
-    private String roleName;
-  }
 }

@@ -1,10 +1,8 @@
 import { Flex, SimpleGrid, Box, Text, theme } from "@chakra-ui/react"
 import dynamic from 'next/dynamic'
-import { useContext, useEffect } from "react"
 import { Header } from "../components/Header"
 import { Sidebar } from "../components/Sidebar"
-import { AuthContext } from "../contex/AuthContext"
-import { api } from "../services/api"
+
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
@@ -63,19 +61,11 @@ const series=[
 ];
 
 export default function Dashboard() {
-
-  const { user } = useContext(AuthContext)
-
-  useEffect(() => {
-    api.get('/me').then(response => console.log(response))
-  })
-
   return(
     <Flex
       direction="column"//uma ao lado da outra
       h="100vh" //altura toda da tela
     >
-      <h1>{user?.email}</h1>
       <Header/>
 
       <Flex width="100%" my="6" maxWidth={1480} mx="auto" px="6">

@@ -5,12 +5,15 @@ import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
 import br.com.music.modules.user.entrypoint.mapper.UsuarioMapper;
 import br.com.music.modules.user.usecase.UserUseCase;
+import br.com.music.modules.user.usecase.domain.RoleDomain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -27,6 +30,13 @@ public class TokenController {
 
     String token = userUseCase.generateToken(authentication);
 
-    return ResponseEntity.ok().body(usuarioMapper.toResponse(userInfo, token));
+    final var resp = UserResponseDto.builder()
+            .email(userInfo.getEmail())
+            .name(userInfo.getName())
+            .token(token)
+            .roles(Set.of(userInfo.getRole()))
+            .build();
+
+    return ResponseEntity.ok().body(resp);
   }
 }
