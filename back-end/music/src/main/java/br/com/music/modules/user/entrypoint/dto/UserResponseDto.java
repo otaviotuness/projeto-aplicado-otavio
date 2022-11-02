@@ -2,21 +2,21 @@ package br.com.music.modules.user.entrypoint.dto;
 
 import java.util.HashSet;
 import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.validation.annotation.Validated;
 
-@Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
-@Validated
+@Data
+@Builder
 public class UserResponseDto {
 
   private String name;
   private String email;
   private Set<RoleResponse> roles = new HashSet<>();
+  private String token;
 
   @Data
   public static class RoleResponse {

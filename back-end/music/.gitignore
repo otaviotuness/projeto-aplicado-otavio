@@ -31,6 +31,7 @@ build/
 
 ##Senhas
 /src/main/resources/*.yml
+/src/main/resources/certs/*.pem
 
 ### VS Code ###
 .vscode/
@@ -42,4 +43,3 @@ build/
 rotas.txt
 util.txt
 
-out

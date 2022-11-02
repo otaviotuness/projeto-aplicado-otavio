@@ -1,6 +1,15 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
+import { setCookie, parseCookies } from "nookies";
 import { api } from "../services/api";
 
+import Router from 'next/router';
+
+type User = {
+  name: string;
+  email: string;
+  roles: string[];
+  token: string;
+}
 
 type SingInCredential = {
   email: string;
@@ -9,6 +18,7 @@ type SingInCredential = {
 
 type AuthContextData = {
   singIn(credential: SingInCredential): Promise<void>;
+  user: User;
   isAuthenticated: boolean;
 };
 
@@ -19,35 +29,59 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const isAuthenticated = false;
+  const [user, setUser] = useState<User>()
+  const isAuthenticated = !!user;
+
+  useEffect(() => {
+    const { 'music.token': token } = parseCookies()
+
+    if(token){
+      api.get('/me').then(response => {
+        const { name, email, roles } = response.data;
+
+        setUser({
+          name, 
+          email, 
+          roles, 
+          token})
+      })
+    }
+  }, [])
 
   async function singIn({email, password}: SingInCredential){
-    const form = new FormData();
 
-    form.append('username',email);
-    form.append('password',email);
-    form.append('grant_type','password');
-    
-    const response = await api.post("oauth/token", {}, {
-      auth: {
-        username: "myappname",
-        password: "mysecret"
-      },
-      headers : {
-        "Content-Type" : "application/x-www-form-urlencoded"
-      }, 
-      form: {
-        "username": email,
-        "password": password,
-        "grant_type": "password"
-      }
-    })
+    try{ 
+      const response = await api.get("/token", {
+        auth: {
+          username: email,
+          password: password
+        }
+      })
 
-    console.log(response.data)
+      const { name, roles, token } = response.data;
+
+      setCookie(undefined, 'music.token', token, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/'
+      })
+
+      setUser({
+        name,
+        email,
+        roles,
+        token
+      })
+
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+      Router.push('/dashboard')
+    } catch (err){
+      console.log(err);
+    }  
   }
 
   return (
-    <AuthContext.Provider value={{singIn, isAuthenticated}}>
+    <AuthContext.Provider value={{singIn, isAuthenticated, user}}>
       {children}
     </AuthContext.Provider>
   )

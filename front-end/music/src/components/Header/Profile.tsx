@@ -10,13 +10,14 @@ export function Profile({showProfileData = true}: ProfileProps){
 
       { showProfileData &&  (
         <Box mr="4" textAlign="right">
-          <Text>Otavio</Text>
+          <Text>otavio</Text>
           <Text color="gray.300" fontSize="small">
-            otavio.tunes@email.com</Text>
+            email
+          </Text>
         </Box>
       )}
 
-      <Avatar size="md" name="Otavio" src="" />
+      <Avatar size="md" name="email" src="" />
     </Flex>
   );
 }
