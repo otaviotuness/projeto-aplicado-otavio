@@ -30,8 +30,7 @@ public interface User {
   @GetMapping("/me")
   ResponseEntity<UserResponseDto> me(Principal principal);
 
-  @PermitMusician
-  @PermitAdmin
+  @PermitAll
   @GetMapping("/users")
   ResponseEntity<List<UserDomain>> findAll();
 

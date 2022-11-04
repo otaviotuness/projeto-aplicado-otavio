@@ -9,6 +9,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -103,7 +104,10 @@ public class WebSecurityConfig implements WebMvcConfigurer {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf(AbstractHttpConfigurer::disable)
         .authorizeRequests(
-            auth -> auth.mvcMatchers("/token").permitAll().anyRequest().authenticated())
+            auth -> auth.mvcMatchers("/token").permitAll()
+//                    .mvcMatchers("/users").permitAll()
+//                    .antMatchers(HttpMethod.GET, "/users").hasAnyRole(ADMIN)
+                    .anyRequest().authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

@@ -11,23 +11,18 @@ export function useCan({roles}: UseCanParams) {
   console.log(user, isAuthenticated);
 
   if (!isAuthenticated){
-    console.log(1)
     return false;
   }
 
   if (roles?.length > 0){
     const hasAllRoles = roles.some(role => {
-      console.log(2)
       return user.roles.includes(role)
     });
 
     if (!hasAllRoles){
-      console.log(3)
       return false;
     }
   }
-
-  console.log(4)
 
   return true;
 }

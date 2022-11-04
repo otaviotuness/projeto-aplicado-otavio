@@ -6,12 +6,35 @@ import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 
 import Link from 'next/link'
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
+import internal from "stream";
+
+interface User {
+  id: number;
+  email: string;
+  name: string;
+  telephone: string;
+  id_master: number;
+}
 
 export default function UserList(){
-const isWideVersion = useBreakpointValue({
-  base: false,
-  lg: true,
-})
+  const [users, setUsers] = useState<User[]>([]);
+  
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    lg: true,
+  })
+
+  async function getUsers() {
+    const response = await api.get('/users');
+    
+    setUsers(response.data);
+  }
+
+  useEffect(() => {
+    getUsers(); 
+  }, [])
 
   return(
     <Box>
@@ -50,46 +73,51 @@ const isWideVersion = useBreakpointValue({
                   <Th width="8"></Th>
                 </Tr>
               </Thead>
-              <Tbody>
-                <Tr>
-                  <Td px={["4", "4", "6"]}>
-                    <Checkbox colorScheme="pink"/>
-                  </Td>
-                  <Td>
-                    <Box>
-                      <Text fontWeight="bold">Otávio</Text>
-                      <Text fontSize="small" color="gray.300">otavio.tuens@email.com</Text>
-                    </Box>
-                  </Td>
-                  <Td>
-                    04 de abril de 2022
-                  </Td>
-                  <Td>
-                    <Button 
-                      as="a" 
-                      size="sm" 
-                      fontSize="sm" 
-                      colorScheme="pink"
-                      leftIcon={<Icon as={RiPencilLine}/>}
-                    >
-                      Editar
 
-                    </Button>
-                  </Td>
-                  <Td>
-                    <Button 
-                      as="a" 
-                      size="sm" 
-                      fontSize="sm" 
-                      colorScheme="pink"
-                      leftIcon={<Icon as={RiDeleteBinLine}/>}
-                    >
-                      Excluir
+                {users.map(user => {
+                  return(
+                    <Tbody>
+                      <Tr key={user.id}>
+                        <Td px={["4", "4", "6"]}>
+                          <Checkbox colorScheme="pink"/>
+                        </Td>
+                        <Td>
+                          <Box>
+                            <Text fontWeight="bold">{user.name}</Text>
+                            <Text fontSize="small" color="gray.300">{user.email}</Text>
+                          </Box>
+                        </Td>
+                        <Td>
+                          {user.telephone}
+                        </Td>
+                        <Td>
+                          <Button 
+                            as="a" 
+                            size="sm" 
+                            fontSize="sm" 
+                            colorScheme="pink"
+                            leftIcon={<Icon as={RiPencilLine}/>}
+                          >
+                            Editar
 
-                    </Button>
-                  </Td>
-                </Tr>
-              </Tbody>
+                          </Button>
+                        </Td>
+                        <Td>
+                          <Button 
+                            as="a" 
+                            size="sm" 
+                            fontSize="sm" 
+                            colorScheme="pink"
+                            leftIcon={<Icon as={RiDeleteBinLine}/>}
+                          >
+                            Excluir
+
+                          </Button>
+                        </Td>
+                      </Tr>
+                    </Tbody>  
+                  )
+                })}
             </Table>
 
             <Pagination/>
