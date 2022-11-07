@@ -1,7 +1,10 @@
 package br.com.music.modules.user.entrypoint;
 
+import static br.com.music.modules.commum.anotattion.TypePermissions.ADMIN;
+import static br.com.music.modules.commum.anotattion.TypePermissions.ADMIN_MUSICIAN;
 import static br.com.music.modules.user.enumeration.RoleEnum.MUSICIAN;
 
+import br.com.music.modules.commum.anotattion.Permission;
 import br.com.music.modules.user.entrypoint.dto.NewUserDto;
 import br.com.music.modules.user.entrypoint.dto.UserDto;
 import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
@@ -18,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,7 +53,8 @@ public class UserController implements User {
     return ResponseEntity.ok(resp);
   }
 
-  public ResponseEntity<List<UserDomain>> findAll() {
+  @Permission(permissions = ADMIN_MUSICIAN)
+  public ResponseEntity<List<UserDomain>> findAll(Authentication authentication) {
 
     List<UserDomain> usuarios = userUseCase.findAll();
 

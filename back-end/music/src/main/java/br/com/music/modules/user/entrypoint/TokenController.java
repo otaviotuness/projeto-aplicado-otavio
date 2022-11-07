@@ -5,7 +5,6 @@ import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
 import br.com.music.modules.user.entrypoint.mapper.UsuarioMapper;
 import br.com.music.modules.user.usecase.UserUseCase;
-import br.com.music.modules.user.usecase.domain.RoleDomain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
