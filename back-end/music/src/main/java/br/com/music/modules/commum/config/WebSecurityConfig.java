@@ -105,8 +105,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     return http.csrf(AbstractHttpConfigurer::disable)
         .authorizeRequests(
             auth -> auth.mvcMatchers("/token").permitAll()
-//                    .mvcMatchers("/users").permitAll()
-//                    .antMatchers(HttpMethod.GET, "/users").hasAnyRole(ADMIN)
+                    .mvcMatchers("/users").permitAll()
+                    .mvcMatchers("/me").permitAll()
                     .anyRequest().authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

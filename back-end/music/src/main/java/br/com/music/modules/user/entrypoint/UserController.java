@@ -1,7 +1,6 @@
 package br.com.music.modules.user.entrypoint;
 
-import static br.com.music.modules.commum.anotattion.TypePermissions.ADMIN;
-import static br.com.music.modules.commum.anotattion.TypePermissions.ADMIN_MUSICIAN;
+import static br.com.music.modules.commum.anotattion.TypePermissions.*;
 import static br.com.music.modules.user.enumeration.RoleEnum.MUSICIAN;
 
 import br.com.music.modules.commum.anotattion.Permission;
@@ -41,6 +40,7 @@ public class UserController implements User {
     return ResponseEntity.ok(user);
   }
 
+  @Permission(permissions = ALL)
   public ResponseEntity<UserResponseDto> me(Principal principal) {
     var user = userUseCase.findByEmail(principal.getName());
 

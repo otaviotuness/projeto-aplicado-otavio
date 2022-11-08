@@ -53,17 +53,37 @@ public class UserUseCase {
   }
 
   public String generateToken(Authentication authentication) {
-    Instant now = Instant.now();
+    final var userName = authentication.getName();
+
     String scope = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(" "));
-    JwtClaimsSet claims = JwtClaimsSet.builder()
+
+    JwtClaimsSet claims = getToken(scope, userName);
+
+    return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+  }
+
+  public String refreshToken(Authentication authentication) {
+    final var userName = authentication.getName();
+    final var user = userDadosGateway.findByEmail(userName);
+
+    String scope = user.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(" "));
+
+    JwtClaimsSet claims = getToken(scope, userName);
+
+    return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+  }
+
+  private JwtClaimsSet getToken(final String scope, final String name){
+    return  JwtClaimsSet.builder()
             .issuer("self")
-            .issuedAt(now)
-            .expiresAt(now.plus(1, ChronoUnit.HOURS))
-            .subject(authentication.getName())
+            .issuedAt(Instant.now())
+            .expiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
+            .subject(name)
             .claim("scope", scope)
             .build();
-    return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
   }
 }

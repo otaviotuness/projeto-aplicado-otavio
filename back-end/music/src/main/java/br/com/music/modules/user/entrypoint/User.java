@@ -26,7 +26,6 @@ public interface User {
   @GetMapping("/me")
   ResponseEntity<UserResponseDto> me(Principal principal);
 
-
   @PermitAll
   @GetMapping("/users")
   ResponseEntity<List<UserDomain>> findAll(Authentication authentication);

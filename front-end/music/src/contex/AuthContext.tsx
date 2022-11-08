@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { api } from "../services/api";
 
 import Router from 'next/router';
@@ -28,6 +28,12 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData)
 
+export function signOut(){
+  destroyCookie(undefined, 'music.token')
+
+  Router.push('/')
+}
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>()
   const isAuthenticated = !!user;
@@ -36,15 +42,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const { 'music.token': token } = parseCookies()
 
     if(token){
-      api.get('/me').then(response => {
-        const { name, email, roles } = response.data;
+      api.get('/me')
+        .then(response => {
+          const { name, email, roles } = response.data;
 
-        setUser({
-          name, 
-          email, 
-          roles, 
-          token})
-      })
+          setUser({
+            name, 
+            email, 
+            roles, 
+            token})
+        })
+        .catch(() => {
+          signOut();
+        })
     }
   }, [])
 
