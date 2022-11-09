@@ -1,12 +1,14 @@
 import { Flex, Button, Stack, } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Input } from '../components/Form/Input'
-
+import { Input } from '../components/form/Input';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AuthContext } from '../contex/AuthContext';
 
 import { useContext } from 'react'
+import { withSSRAuth } from '../utils/withSSRAuth';
+import { withSSRGuest } from '../utils/withSSRGuest';
+
 
 export default function Sigin() {
 
@@ -33,12 +35,12 @@ export default function Sigin() {
   }
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
+    <Flex w="100vw" h="100vh" align="center" justify="center" bg="gray.100">
       <Flex 
         as="form" 
         width="100%" 
         maxWidth={360} 
-        bg="gray.800" 
+        bg="purple.600" 
         p="8" 
         borderRadius={8} 
         flexDir="column"
@@ -64,7 +66,8 @@ export default function Sigin() {
         <Button 
           type="submit" 
           mt="6" 
-          colorScheme={'orange'} 
+          bg="orange.500" 
+          _hover={{bgColor: 'orange.700'}}
           size="lg" 
           isLoading={formState.isSubmitting}
         >
@@ -75,3 +78,9 @@ export default function Sigin() {
     </Flex>
   )
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props:{}
+  }
+});

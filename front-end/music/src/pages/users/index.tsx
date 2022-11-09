@@ -1,5 +1,6 @@
 import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue } from "@chakra-ui/react";
 import { RiAddLine, RiDeleteBinLine, RiPencilLine } from "react-icons/ri";
+import decode from 'jwt-decode'
 
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
@@ -8,7 +9,7 @@ import { Sidebar } from "../../components/Sidebar";
 import Link from 'next/link'
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
-import internal from "stream";
+import { withSSRAuth } from "../../utils/withSSRAuth";
 
 interface User {
   id: number;
@@ -27,7 +28,8 @@ export default function UserList(){
   })
 
   async function getUsers() {
-    const response = await api.get('/users');
+    const response = await api.get('/users')
+    .catch(error => (error));
     
     setUsers(response.data);
   }
@@ -127,3 +129,12 @@ export default function UserList(){
     </Box>
   )
 }
+
+export const getServerSideProps = withSSRAuth(async (ctx) => {
+  const response = await api.get('/me');
+  return {
+    props: {}
+  }
+}, {
+  roles: ['ROLE_ADMIN', 'ROLE_MUSICIAN'] 
+})
