@@ -7,6 +7,7 @@ export function Logo(){
       fontWeight="bold" 
       letterSpacing="tight" 
       w="64"
+      textColor="gray.100"
     >
       Music
     </Text> 

@@ -10,6 +10,9 @@ import Link from 'next/link'
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { withSSRAuth } from "../../utils/withSSRAuth";
+import { ButtonAdd } from "../../components/utils/button/ButtonAdd";
+import { ButtonDelete } from "../../components/utils/button/ButtonDelete";
+import { ButtonEdit } from "../../components/utils/button/ButtonEdit";
 
 interface User {
   id: number;
@@ -41,7 +44,7 @@ export default function UserList(){
   return(
     <Box>
       <Header/>
-        <Flex width="100%" my="6" maxWidth={1480} mx="auto" px="6">
+        <Flex width="100%" my="6" maxWidth={1480} mx="auto" px="6" >
           <Sidebar />
 
           <Box flex="1" borderRadius="8" bg="gray.800" p="8">
@@ -50,13 +53,15 @@ export default function UserList(){
 
               <Link href="/users/create" passHref>
                 <Button 
-                  as="a" 
-                  size="sm" 
-                  fontSize="sm" 
-                  colorScheme="pink"
-                  leftIcon={<Icon as={RiAddLine} fontSize="20"/>}
+                    as="a" 
+                    size="sm" 
+                    fontSize="sm" 
+                    colorScheme="pink"
+                    leftIcon={<Icon as={RiAddLine} fontSize="20"/>}
+                    bg="orange.600"
+                    _hover={{bgColor: 'orange.700'}}
                 >
-                  Criar novo
+                    Criar novo
 
                 </Button>
               </Link>              
@@ -70,7 +75,7 @@ export default function UserList(){
                     <Checkbox colorScheme="pink"/>
                   </Th>
                   <Th>Usuário</Th>
-                  <Th>Data de cadastro</Th>
+                  <Th>Telefone</Th>
                   <Th width="8"></Th>
                   <Th width="8"></Th>
                 </Tr>
@@ -93,28 +98,10 @@ export default function UserList(){
                           {user.telephone}
                         </Td>
                         <Td>
-                          <Button 
-                            as="a" 
-                            size="sm" 
-                            fontSize="sm" 
-                            colorScheme="pink"
-                            leftIcon={<Icon as={RiPencilLine}/>}
-                          >
-                            Editar
-
-                          </Button>
+                          <ButtonEdit />
                         </Td>
                         <Td>
-                          <Button 
-                            as="a" 
-                            size="sm" 
-                            fontSize="sm" 
-                            colorScheme="pink"
-                            leftIcon={<Icon as={RiDeleteBinLine}/>}
-                          >
-                            Excluir
-
-                          </Button>
+                          <ButtonDelete />
                         </Td>
                       </Tr>
                     </Tbody>  
@@ -129,12 +116,3 @@ export default function UserList(){
     </Box>
   )
 }
-
-export const getServerSideProps = withSSRAuth(async (ctx) => {
-  const response = await api.get('/me');
-  return {
-    props: {}
-  }
-}, {
-  roles: ['ROLE_ADMIN', 'ROLE_MUSICIAN'] 
-})

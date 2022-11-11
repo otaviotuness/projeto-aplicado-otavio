@@ -65,6 +65,7 @@ export default function Dashboard() {
     <Flex
       direction="column"//uma ao lado da outra
       h="100vh" //altura toda da tela
+      bg="purple.900"
     >
       <Header/>
 

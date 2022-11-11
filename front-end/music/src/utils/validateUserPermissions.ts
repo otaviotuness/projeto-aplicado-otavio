@@ -9,6 +9,9 @@ type ValidateUserPermissionsParams = {
 
 export function validateUserPermissionsParams({ user, roles }: ValidateUserPermissionsParams) {
     if (roles?.length > 0){
+
+        console.log(roles, user)
+
         const hasAllRoles = roles.some(role => {
             return user.roles.includes(role)
         });

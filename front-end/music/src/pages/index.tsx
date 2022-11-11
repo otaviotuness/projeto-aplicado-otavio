@@ -35,7 +35,7 @@ export default function Sigin() {
   }
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center" bg="gray.100">
+    <Flex w="100vw" h="100vh" align="center" justify="center">
       <Flex 
         as="form" 
         width="100%" 
