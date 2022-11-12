@@ -9,6 +9,7 @@ import Link from 'next/link'
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
+import { api } from "../../services/api";
 
 type CreateUserFormData = {
   name: string;
@@ -34,8 +35,17 @@ export default function CreateUser(){
 
   const { errors } = formState
 
-  const handleCreateUser: SubmitHandler<CreateUserFormData> = (values) => {
+  async function createUser({name, email, password}: CreateUserFormData){
+    await api.post("/user", {
+      name: name,
+      email: email,
+      password: password,
+      telefhone: "(19)99768876"
+    });
+  }  
 
+  const handleCreateUser: SubmitHandler<CreateUserFormData> = async (values) => {
+    await createUser(values)      
   }
 
   return(
