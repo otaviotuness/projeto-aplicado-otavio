@@ -28,5 +28,5 @@ public class UserDto {
   @NotBlank(message = "Password is not blanck")
   private String password;
 
-  @NotEmpty private Set<RoleDomain> roles = new HashSet<>();
+  private Set<RoleDomain> roles = new HashSet<>();
 }

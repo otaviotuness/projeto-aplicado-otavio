@@ -106,6 +106,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         .authorizeRequests(
             auth -> auth.mvcMatchers("/token").permitAll()
                     .mvcMatchers("/users").permitAll()
+                    .mvcMatchers("/user/**").permitAll()
                     .mvcMatchers("/me").permitAll()
                     .anyRequest().authenticated())
         .sessionManagement(

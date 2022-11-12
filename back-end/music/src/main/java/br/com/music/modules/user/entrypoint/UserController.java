@@ -33,6 +33,7 @@ public class UserController implements User {
   final UsuarioMapper usuarioMapper;
   final UserUseCase userUseCase;
 
+  @Permission(permissions = ADMIN_MUSICIAN)
   public ResponseEntity<Optional<UserDomain>> findById(@PathVariable Integer id) {
 
     var user = userUseCase.findById(id);
@@ -74,6 +75,7 @@ public class UserController implements User {
     return ResponseEntity.status(HttpStatus.ACCEPTED).build();
   }
 
+  @Permission(permissions = ADMIN_MUSICIAN)
   public ResponseEntity<String> saveUser(@Valid @RequestBody UserDto userDto) {
 
     var userDomain = usuarioMapper.toDomain(userDto);
@@ -83,6 +85,7 @@ public class UserController implements User {
     return ResponseEntity.status(HttpStatus.ACCEPTED).build();
   }
 
+  @Permission(permissions = ADMIN_MUSICIAN)
   public ResponseEntity<String> deleteUserById(@PathVariable Integer id) {
 
     userUseCase.deleteUserById(id);

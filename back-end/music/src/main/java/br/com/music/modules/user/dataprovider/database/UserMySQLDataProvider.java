@@ -1,13 +1,19 @@
 package br.com.music.modules.user.dataprovider.database;
 
 import br.com.music.modules.user.dataprovider.repository.UserRepository;
+import br.com.music.modules.user.usecase.domain.RoleDomain;
 import br.com.music.modules.user.usecase.domain.UserDomain;
 import br.com.music.modules.user.usecase.gateway.UserDadosGateway;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.stereotype.Component;
+
+import static br.com.music.modules.user.enumeration.RoleEnum.OPERATOR;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,6 +25,10 @@ public class UserMySQLDataProvider implements UserDadosGateway {
   @Override
   public void saveUser(UserDomain userDomain) {
     log.info("Save user in DB.");
+
+    if(userDomain.getRoles().isEmpty()){
+      userDomain.setRoles(Set.of(new RoleDomain(3, OPERATOR.getRoleName())));
+    }
 
     userRepository.save(userDomain);
 
