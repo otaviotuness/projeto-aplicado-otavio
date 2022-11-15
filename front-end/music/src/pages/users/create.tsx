@@ -16,6 +16,7 @@ type CreateUserFormData = {
   email: string;
   password: string;
   password_confirmation: string;
+  telephone: string;
 }
 
 const createUserSchema = yup.object().shape({
@@ -35,12 +36,12 @@ export default function CreateUser(){
 
   const { errors } = formState
 
-  async function createUser({name, email, password}: CreateUserFormData){
+  async function createUser({name, email, password, telephone}: CreateUserFormData){
     await api.post("/user", {
       name: name,
       email: email,
       password: password,
-      telefhone: "(19)99768876"
+      telephone: telephone
     });
   }  
 
@@ -54,7 +55,7 @@ export default function CreateUser(){
         <Flex width="100%" my="6" maxWidth={1480} mx="auto" px="6">
           <Sidebar />
 
-          <Box as="form" flex="1" borderRadius="8" bg="gray.800" p="8" onSubmit={handleSubmit(handleCreateUser)}>
+          <Box as="form" flex="1" borderRadius="8" bg="purple.800" p="8" onSubmit={handleSubmit(handleCreateUser)}>
             <Heading fontWeight="normal" size="lg">Criar Usuário</Heading>
 
             <Divider my="6" borderColor="gray.700" />
@@ -63,6 +64,7 @@ export default function CreateUser(){
               <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
                 <Input name="name" label="Nome completo" {...register('name')} error={errors.name}/>
                 <Input name="email" type="email" label="E-mail" {...register('email')} error={errors.email}/>
+                <Input name="telephone" label="Telefone" {...register('telephone')} error={errors.name}/>
               </SimpleGrid>
 
               <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
@@ -77,9 +79,9 @@ export default function CreateUser(){
             >
               <HStack spacing="4">
                 <Link href="/users" passHref>
-                  <Button as="a" colorScheme="whiteAlpha">Cancelar</Button>
+                  <Button as="a" colorScheme="red">Cancelar</Button>
                 </Link>  
-                <Button colorScheme="pink" type="submit" isLoading={formState.isSubmitting}>
+                <Button colorScheme="orange" type="submit" isLoading={formState.isSubmitting}>
                   Salvar
                 </Button>
               </HStack>      

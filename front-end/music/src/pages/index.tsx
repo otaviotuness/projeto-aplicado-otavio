@@ -40,7 +40,7 @@ export default function Sigin() {
         as="form" 
         width="100%" 
         maxWidth={360} 
-        bg="purple.600" 
+        bg="purple.800" 
         p="8" 
         borderRadius={8} 
         flexDir="column"

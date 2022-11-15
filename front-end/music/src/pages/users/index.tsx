@@ -56,7 +56,7 @@ export default function UserList(){
                     as="a" 
                     size="sm" 
                     fontSize="sm" 
-                    colorScheme="pink"
+                    colorScheme="orange"
                     leftIcon={<Icon as={RiAddLine} fontSize="20"/>}
                     bg="orange.600"
                     _hover={{bgColor: 'orange.700'}}
@@ -72,7 +72,7 @@ export default function UserList(){
               <Thead>
                 <Tr>
                   <Th px={["4", "4", "6"]} color="gray.300" width="8">
-                    <Checkbox colorScheme="pink"/>
+                    <Checkbox colorScheme="orange"/>
                   </Th>
                   <Th>Usuário</Th>
                   <Th>Telefone</Th>
@@ -86,7 +86,7 @@ export default function UserList(){
                     <Tbody>
                       <Tr key={user.id}>
                         <Td px={["4", "4", "6"]}>
-                          <Checkbox colorScheme="pink"/>
+                          <Checkbox colorScheme="orange"/>
                         </Td>
                         <Td>
                           <Box>
