@@ -102,13 +102,21 @@ public class WebSecurityConfig implements WebMvcConfigurer {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf(AbstractHttpConfigurer::disable)
         .authorizeRequests(
-            auth -> auth.mvcMatchers("/token").permitAll()
-                    .mvcMatchers("/users").permitAll()
-                    .mvcMatchers("/user/**").permitAll()
-                    .mvcMatchers("/me").permitAll()
-                    .mvcMatchers("/songs").permitAll()
-                    .mvcMatchers("/song/**").permitAll()
-                    .anyRequest().authenticated())
+            auth ->
+                auth.mvcMatchers("/token")
+                    .permitAll()
+                    .mvcMatchers("/users")
+                    .permitAll()
+                    .mvcMatchers("/user/**")
+                    .permitAll()
+                    .mvcMatchers("/me")
+                    .permitAll()
+                    .mvcMatchers("/songs")
+                    .permitAll()
+                    .mvcMatchers("/song/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

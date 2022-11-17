@@ -1,6 +1,6 @@
 package br.com.music.modules.user.usecase;
 
-import br.com.music.modules.user.usecase.domain.RoleDomain;
+import br.com.music.modules.user.domain.RoleDomain;
 import br.com.music.modules.user.usecase.gateway.RoleDadosGateway;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+// TODO fazer testes
 @Slf4j
 @Service
 @RequiredArgsConstructor

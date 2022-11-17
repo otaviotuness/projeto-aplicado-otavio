@@ -1,10 +1,9 @@
 package br.com.music.modules.user.entrypoint.dto;
 
-import br.com.music.modules.user.usecase.domain.RoleDomain;
+import br.com.music.modules.user.domain.RoleDomain;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

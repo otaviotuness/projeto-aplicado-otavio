@@ -1,6 +1,6 @@
 package br.com.music.modules.user.dataprovider.repository;
 
-import br.com.music.modules.user.usecase.domain.RoleDomain;
+import br.com.music.modules.user.domain.RoleDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

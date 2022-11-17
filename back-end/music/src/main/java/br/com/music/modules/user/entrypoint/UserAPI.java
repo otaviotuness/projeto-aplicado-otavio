@@ -1,10 +1,10 @@
 package br.com.music.modules.user.entrypoint;
 
-import br.com.music.modules.commum.anotattion.*;
+import br.com.music.modules.commum.anotattion.PermitAll;
+import br.com.music.modules.user.domain.UserDomain;
 import br.com.music.modules.user.entrypoint.dto.NewUserDto;
 import br.com.music.modules.user.entrypoint.dto.UserDto;
 import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
-import br.com.music.modules.user.usecase.domain.UserDomain;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -17,20 +17,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-public interface User {
+@PermitAll
+public interface UserAPI {
 
   @GetMapping("/user/{id}")
   ResponseEntity<Optional<UserDomain>> findById(@PathVariable Integer id);
 
-  @PermitAll
   @GetMapping("/me")
   ResponseEntity<UserResponseDto> me(Principal principal);
 
-  @PermitAll
   @GetMapping("/users")
   ResponseEntity<List<UserDomain>> findAll(Authentication authentication);
 
-  @PermitAll
   @PostMapping("/newUser")
   ResponseEntity<String> createNewUser(@Valid @RequestBody NewUserDto userDto);
 

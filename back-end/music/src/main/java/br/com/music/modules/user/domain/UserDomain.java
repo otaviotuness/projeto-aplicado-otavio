@@ -1,4 +1,4 @@
-package br.com.music.modules.user.usecase.domain;
+package br.com.music.modules.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;

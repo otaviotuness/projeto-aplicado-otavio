@@ -1,7 +1,7 @@
 package br.com.music.modules.user.dataprovider.database;
 
 import br.com.music.modules.user.dataprovider.repository.RoleRepository;
-import br.com.music.modules.user.usecase.domain.RoleDomain;
+import br.com.music.modules.user.domain.RoleDomain;
 import br.com.music.modules.user.usecase.gateway.RoleDadosGateway;
 import java.util.List;
 import java.util.Optional;

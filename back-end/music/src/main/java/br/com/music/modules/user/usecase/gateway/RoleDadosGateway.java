@@ -1,6 +1,6 @@
 package br.com.music.modules.user.usecase.gateway;
 
-import br.com.music.modules.user.usecase.domain.RoleDomain;
+import br.com.music.modules.user.domain.RoleDomain;
 import java.util.List;
 import java.util.Optional;
 

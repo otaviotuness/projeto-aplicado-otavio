@@ -1,6 +1,6 @@
 package br.com.music.modules.commum.utils;
 
-import br.com.music.modules.user.usecase.domain.RoleDomain;
+import br.com.music.modules.user.domain.RoleDomain;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;

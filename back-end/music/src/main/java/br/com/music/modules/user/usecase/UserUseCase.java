@@ -1,17 +1,14 @@
 package br.com.music.modules.user.usecase;
 
-import br.com.music.modules.user.usecase.domain.UserDomain;
+import br.com.music.modules.user.domain.UserDomain;
 import br.com.music.modules.user.usecase.gateway.UserDadosGateway;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,7 +52,8 @@ public class UserUseCase {
   public String generateToken(Authentication authentication) {
     final var userName = authentication.getName();
 
-    String scope = authentication.getAuthorities().stream()
+    String scope =
+        authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(" "));
 
@@ -68,7 +66,8 @@ public class UserUseCase {
     final var userName = authentication.getName();
     final var user = userDadosGateway.findByEmail(userName);
 
-    String scope = user.getAuthorities().stream()
+    String scope =
+        user.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(" "));
 
@@ -77,13 +76,13 @@ public class UserUseCase {
     return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
   }
 
-  private JwtClaimsSet getToken(final String scope, final String name){
-    return  JwtClaimsSet.builder()
-            .issuer("self")
-            .issuedAt(Instant.now())
-            .expiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
-            .subject(name)
-            .claim("scope", scope)
-            .build();
+  private JwtClaimsSet getToken(final String scope, final String name) {
+    return JwtClaimsSet.builder()
+        .issuer("self")
+        .issuedAt(Instant.now())
+        .expiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
+        .subject(name)
+        .claim("scope", scope)
+        .build();
   }
 }
