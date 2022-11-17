@@ -9,7 +9,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,8 +31,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig implements WebMvcConfigurer {
-
-  private final RsaKeyProperties rsaKeyProperties;
 
   // roles
   private static final String ADMIN = "ADMIN";
@@ -58,6 +55,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
   // event
   private static final String EVENTS = "/events/**";
   private static final String EVENT_BY_ID = "/event/**";
+  private final RsaKeyProperties rsaKeyProperties;
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
@@ -108,6 +106,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                     .mvcMatchers("/users").permitAll()
                     .mvcMatchers("/user/**").permitAll()
                     .mvcMatchers("/me").permitAll()
+                    .mvcMatchers("/songs").permitAll()
+                    .mvcMatchers("/song/**").permitAll()
                     .anyRequest().authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

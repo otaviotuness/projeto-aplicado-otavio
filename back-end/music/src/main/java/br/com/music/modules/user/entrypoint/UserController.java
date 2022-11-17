@@ -48,6 +48,7 @@ public class UserController implements User {
     var user = userUseCase.findByEmail(principal.getName());
 
     final var resp = UserResponseDto.builder()
+            .id(user.getId())
             .email(user.getEmail())
             .name(user.getName())
             .roles(Set.of(user.getRoles().stream().map(RoleDomain::getRoleName).findAny().orElse("")))

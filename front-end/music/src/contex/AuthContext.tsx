@@ -5,6 +5,7 @@ import { api } from "../services/api";
 import Router from 'next/router';
 
 type User = {
+  id: number,
   name: string;
   email: string;
   roles: string[];
@@ -44,9 +45,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if(token){
       api.get('/me')
         .then(response => {
-          const { name, email, roles } = response.data;
+          const { id, name, email, roles } = response.data;
 
           setUser({
+            id,
             name, 
             email, 
             roles, 
@@ -68,7 +70,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       })
 
-      const { name, roles, token } = response.data;
+      const { id, name, roles, token } = response.data;
 
       setCookie(undefined, 'music.token', token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -76,6 +78,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       setUser({
+        id,
         name,
         email,
         roles,

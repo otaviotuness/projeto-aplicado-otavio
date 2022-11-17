@@ -3,7 +3,6 @@ package br.com.music.modules.user.entrypoint;
 import br.com.music.modules.commum.anotattion.PermitAll;
 import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
-import br.com.music.modules.user.entrypoint.mapper.UsuarioMapper;
 import br.com.music.modules.user.usecase.UserUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +38,7 @@ public class TokenController {
 
   private UserResponseDto generateToken(final String token){
     return UserResponseDto.builder()
+            .id(userInfo.getUserId())
             .email(userInfo.getEmail())
             .name(userInfo.getName())
             .token(token)
