@@ -1,5 +1,5 @@
 import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue } from "@chakra-ui/react";
-import { RiAddLine, RiDeleteBinLine, RiPencilLine } from "react-icons/ri";
+import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import decode from 'jwt-decode'
 
 import { Header } from "../../components/Header";
@@ -98,7 +98,20 @@ export default function UserList(){
                           {user.telephone}
                         </Td>
                         <Td>
-                          <ButtonEdit />
+                          <Link href={`/users/edit/${encodeURIComponent(user.id)}`}>
+                            <Button 
+                                as="a" 
+                                size="sm" 
+                                fontSize="sm" 
+                                colorScheme="pink"
+                                leftIcon={<Icon as={RiPencilLine}/>}
+                                bg="orange.600"
+                                _hover={{bgColor: 'orange.700'}}
+                                >
+                                Editar
+
+                            </Button>
+                          </Link>
                         </Td>
                         <Td>
                           <ButtonDelete />
