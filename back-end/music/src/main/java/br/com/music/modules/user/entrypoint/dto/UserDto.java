@@ -15,16 +15,15 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class UserDto {
 
-  @NotBlank(message = "Name is not blanck")
+  @NotBlank(message = "Name is not blank")
   private String name;
 
-  @NotBlank(message = "Email is not blanck")
+  @NotBlank(message = "Email is not blank")
   private String email;
 
-  @NotBlank(message = "Telephone is not blanck")
+  @NotBlank(message = "Telephone is not blank")
   private String telephone;
 
-  @NotBlank(message = "Password is not blanck")
   private String password;
 
   private Set<RoleDomain> roles = new HashSet<>();

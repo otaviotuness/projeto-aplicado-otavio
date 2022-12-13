@@ -14,14 +14,6 @@ import { api } from "../../../services/api";
 
 import { useEffect, useState } from "react";
 
-interface User {
-  id: number;
-  email: string;
-  name: string;
-  telephone?: string;
-  id_master: number;
-}
-
 type EditUserFormData = {
   name: string;
   email: string;
@@ -33,6 +25,7 @@ type EditUserFormData = {
 const editUserSchema = yup.object().shape({
   name: yup.string().required('Nome obrigatório'),
   email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+  telephone: yup.string().required('Telefone obrigatório'),
   password: yup.string().required('Senha obrigatória').min(6, "Senha no mínimo 6 caracteres"),
   password_confirmation: yup.string().oneOf([
     null, yup.ref('password')
@@ -40,9 +33,11 @@ const editUserSchema = yup.object().shape({
 })
 
 export default function EditUser(){
-  const [user, setUser] = useState<User>();
+  const [idUser, setIdUser] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [telephone, setTelephone] = useState('');
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(editUserSchema)
@@ -50,29 +45,14 @@ export default function EditUser(){
 
   const { errors } = formState
 
-  async function editUser({name, email, password, telephone}: EditUserFormData){
-    await api.post("/user", {
-      name: name,
-      email: email,
-      password: password,
-      telephone: telephone
-    });
-  }  
-
-  //verificar possiblidade de usar apenas um unico objeto, user.algumacoisa
-  //caso contrario da paara tratar campo a campo
-
   const handleEditUser: SubmitHandler<EditUserFormData> = async (values) => {
     await editUser(values)      
   }
 
-  const handleChangeName = (text) => {
-    setName(text);
-  }
-  
-  const handleChangeEmail = (text) => {
-    setEmail(text);
-  }
+  const handleChangeName = (text) => { setName(text); }
+  const handleChangeEmail = (text) => { setEmail(text); }
+  const handleChangeTelephone = (text) => { setTelephone(text); }
+  const handleChangePassword = (text) => { setPassword(text); }
 
   const router = useRouter();
   const userId = router.query.edit_user_id;
@@ -83,10 +63,22 @@ export default function EditUser(){
     
     const userResponse = response.data;
 
-    setUser(userResponse);
+    setIdUser(userResponse.id);
     setName(userResponse.name);
     setEmail(userResponse.email);
+    setPassword(userResponse.password);
+    setTelephone(userResponse.telephone);
   }
+
+  async function editUser({name, email, password, telephone}: EditUserFormData){
+    await api.post("/user", {
+      id: idUser,
+      name: name,
+      email: email,
+      password: password,
+      telephone: telephone
+    });
+  } 
 
   useEffect(() => {
     getUser(); 
@@ -123,7 +115,9 @@ export default function EditUser(){
                 <Input 
                   name="telephone" 
                   label="Telefone" {...register('telephone')}   
-                  error={errors.name}
+                  value={telephone}
+                  error={errors.telephone}
+                  onChange={e => handleChangeTelephone(e.target.value)}
                   />
               </SimpleGrid>
 
@@ -132,7 +126,10 @@ export default function EditUser(){
                   name="password" 
                   type="password" 
                   label="Senha" {...register('password')}  
-                  error={errors.password}/>
+                  error={errors.password}
+                  value={password}
+                  onChange={e => handleChangePassword(e.target.value)}
+                />
                 <Input 
                   name="password_confirmation" 
                   type="password" 
