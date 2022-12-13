@@ -41,7 +41,7 @@ public class UserDomain implements UserDetails, Serializable {
   @Column(unique = true)
   private String email;
 
-  private String password;
+  @JsonIgnore private String password;
 
   private Integer id_master;
 

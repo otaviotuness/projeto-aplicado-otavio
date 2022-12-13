@@ -20,7 +20,6 @@ interface User {
   name: string;
   telephone?: string;
   id_master: number;
-  password: string;
 }
 
 type EditUserFormData = {
@@ -42,6 +41,8 @@ const editUserSchema = yup.object().shape({
 
 export default function EditUser(){
   const [user, setUser] = useState<User>();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(editUserSchema)
@@ -58,8 +59,19 @@ export default function EditUser(){
     });
   }  
 
+  //verificar possiblidade de usar apenas um unico objeto, user.algumacoisa
+  //caso contrario da paara tratar campo a campo
+
   const handleEditUser: SubmitHandler<EditUserFormData> = async (values) => {
     await editUser(values)      
+  }
+
+  const handleChangeName = (text) => {
+    setName(text);
+  }
+  
+  const handleChangeEmail = (text) => {
+    setEmail(text);
   }
 
   const router = useRouter();
@@ -69,11 +81,14 @@ export default function EditUser(){
     const response = await api.get('/user/'+ userId)
     .catch(error => (error));
     
-    setUser(response.data);
+    const userResponse = response.data;
+
+    setUser(userResponse);
+    setName(userResponse.name);
+    setEmail(userResponse.email);
   }
 
   useEffect(() => {
-    console.log("useeffect")
     getUser(); 
   },[])
 
@@ -93,33 +108,35 @@ export default function EditUser(){
                 <Input 
                   name="name" 
                   label="Nome completo" {...register('name')}
-                  value={user?.name.length > 0 ? user.name : ""} 
-                  error={errors.name}/>
+                  value={name} 
+                  error={errors.name}
+                  onChange={e => handleChangeName(e.target.value)}
+                />
                 <Input 
                   name="email" 
                   type="email" 
                   label="E-mail" {...register('email')}
-                  value={user?.email.length > 0 ? user.email : ""}  
-                  error={errors.email}/>
+                  value={email}
+                  onChange={e => handleChangeEmail(e.target.value)}
+                  error={errors.email}
+                />
                 <Input 
                   name="telephone" 
                   label="Telefone" {...register('telephone')}   
-                  value={user?.telephone != null ? user.telephone : "" } 
-                  error={errors.name}/>
+                  error={errors.name}
+                  />
               </SimpleGrid>
 
               <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
                 <Input 
                   name="password" 
                   type="password" 
-                  label="Senha" {...register('password')}
-                  value={user?.password.length > 0 ? user.password : "" }  
+                  label="Senha" {...register('password')}  
                   error={errors.password}/>
                 <Input 
                   name="password_confirmation" 
                   type="password" 
                   label="Confirmação da senha" {...register('password_confirmation')}  
-                  value={user?.password.length > 0 ? user.password : "" } 
                   error={errors.password_confirmation}/>
               </SimpleGrid>
             </VStack>
