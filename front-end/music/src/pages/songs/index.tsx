@@ -13,6 +13,8 @@ import { withSSRAuth } from "../../utils/withSSRAuth";
 import { ButtonAdd } from "../../components/utils/button/ButtonAdd";
 import { ButtonDelete } from "../../components/utils/button/ButtonDelete";
 import { ButtonEdit } from "../../components/utils/button/ButtonEdit";
+import ConfirmButton from "../../components/confirmButtonDelete/ConfirmButtonDelete";
+import { ButtonCreateNew } from "../../components/utils/button/ButtonCreateNew";
 
 interface Song {
   id: number;
@@ -31,9 +33,15 @@ export default function SongList(){
   async function getSongs() {
     const response = await api.get('/songs')
     .catch(error => (error));
-  
 
     setSongs(response.data);
+  }
+
+  async function deleteSong(id:number) {
+    await api.delete('/song/' + id)
+    .catch(error => (error));
+
+    getSongs();
   }
 
   useEffect(() => {
@@ -49,22 +57,7 @@ export default function SongList(){
           <Box flex="1" borderRadius="8" bg="gray.800" p="8">
             <Flex mb="8" justify="space-between" align="center">
               <Heading size="lg" fontWeight="normal">Músicas</Heading>
-
-              <Link href="/songs/create" passHref>
-                <Button 
-                    as="a" 
-                    size="sm" 
-                    fontSize="sm" 
-                    colorScheme="orange"
-                    leftIcon={<Icon as={RiAddLine} fontSize="20"/>}
-                    bg="orange.600"
-                    _hover={{bgColor: 'orange.700'}}
-                >
-                    Criar novo
-
-                </Button>
-              </Link>              
-              
+              <ButtonCreateNew href="/songs/create" passHref />              
             </Flex>
 
             <Table colorScheme="whiteAlpha">
@@ -94,17 +87,36 @@ export default function SongList(){
                           {song.link}
                         </Td>
                         <Td>
-                          <ButtonEdit />
+                          <Link href={`/songs/edit/${encodeURIComponent(song.id)}`}>
+                            <Button 
+                              as="a" 
+                              size="sm" 
+                              fontSize="sm" 
+                              leftIcon={<Icon as={RiPencilLine}/>}
+                              bg="orange.600"
+                              _hover={{bgColor: 'orange.700'}}
+                            >
+                              Editar
+                            </Button>
+                          </Link>
                         </Td>
                         <Td>
-                          <ButtonDelete />
+                          <ConfirmButton
+                            headerText="Deseja deletar essa música?"
+                            bodyText="
+                            Você tem certeza que quer deletar este registro? Isto não pode ser desfeito."
+                            onSuccessAction={() => {
+                              deleteSong(song.id);
+                            }}
+                            buttonText="Excluir"
+                            isDanger={true}
+                          />
                         </Td>
                       </Tr>
                     </Tbody>  
                   )
                 })}
             </Table>
-
             <Pagination/>
           </Box>
 

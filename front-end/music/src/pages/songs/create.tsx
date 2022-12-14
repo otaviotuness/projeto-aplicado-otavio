@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { api } from "../../services/api";
 import { AuthContext } from "../../contex/AuthContext";
 import { useContext } from "react";
+import { ButtonCancel } from "../../components/utils/button/ButtonCancel";
 
 type CreateSongFormData = {
   description: string;
@@ -68,7 +69,7 @@ export default function CreateSong(){
             >
               <HStack spacing="4">
                 <Link href="/songs" passHref>
-                  <Button as="a" colorScheme="red">Cancelar</Button>
+                  <ButtonCancel />
                 </Link>  
                 <Button colorScheme="orange" type="submit" isLoading={formState.isSubmitting}>
                   Salvar

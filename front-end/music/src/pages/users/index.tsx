@@ -10,10 +10,8 @@ import Link from 'next/link'
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { withSSRAuth } from "../../utils/withSSRAuth";
-import { ButtonAdd } from "../../components/utils/button/ButtonAdd";
-import { ButtonDelete } from "../../components/utils/button/ButtonDelete";
-import { ButtonEdit } from "../../components/utils/button/ButtonEdit";
 import ConfirmButton from "../../components/confirmButtonDelete/ConfirmButtonDelete";
+import { ButtonCreateNew } from "../../components/utils/button/ButtonCreateNew";
 
 interface User {
   id: number;
@@ -38,9 +36,20 @@ export default function UserList(){
     setUsers(response.data);
   }
 
+  async function deleteUser(id:number) {
+    await api.delete('/user/' + id)
+    .catch(error => (error));
+
+    getUsers();
+  }
+
   useEffect(() => {
     getUsers(); 
   }, [])
+
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  }
 
   return(
     <Box>
@@ -51,22 +60,7 @@ export default function UserList(){
           <Box flex="1" borderRadius="8" bg="gray.800" p="8">
             <Flex mb="8" justify="space-between" align="center">
               <Heading size="lg" fontWeight="normal">Usuários</Heading>
-
-              <Link href="/users/create" passHref>
-                <Button 
-                    as="a" 
-                    size="sm" 
-                    fontSize="sm" 
-                    colorScheme="orange"
-                    leftIcon={<Icon as={RiAddLine} fontSize="20"/>}
-                    bg="orange.600"
-                    _hover={{bgColor: 'orange.700'}}
-                >
-                    Criar novo
-
-                </Button>
-              </Link>              
-              
+              <ButtonCreateNew href={"/users/create"} passHref/>
             </Flex>
 
             <Table colorScheme="whiteAlpha">
@@ -81,7 +75,6 @@ export default function UserList(){
                   <Th width="8"></Th>
                 </Tr>
               </Thead>
-
                 {users.map(user => {
                   return(
                     <Tbody>
@@ -104,35 +97,33 @@ export default function UserList(){
                               as="a" 
                               size="sm" 
                               fontSize="sm" 
-                              colorScheme="pink"
                               leftIcon={<Icon as={RiPencilLine}/>}
                               bg="orange.600"
                               _hover={{bgColor: 'orange.700'}}
-                              >
+                            >
                               Editar
                             </Button>
                           </Link>
                         </Td>
                         <Td>
                           <ConfirmButton
-                            headerText="Delete this message?"
-                            bodyText="Are you sure you want to delete this message? This cannot be undone."
+                            headerText="Deseja deletar esse usuário?"
+                            bodyText="
+                            Você tem certeza que quer deletar este registro? Isto não pode ser desfeito."
                             onSuccessAction={() => {
-                              console.log("Successfully Deleted");
+                              deleteUser(user.id);
                             }}
-                            buttonText="Delete"
+                            buttonText="Excluir"
                             isDanger={true}
                           />
                         </Td>
                       </Tr>
                     </Tbody>  
                   )
-                })}
+                })}  
             </Table>
-
             <Pagination/>
           </Box>
-
         </Flex>  
     </Box>
   )

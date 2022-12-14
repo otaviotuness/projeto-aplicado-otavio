@@ -15,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { api } from "../../../services/api";
 
 import { useEffect, useState } from "react";
+import { ButtonCancel } from "../../../components/utils/button/ButtonCancel";
 
 type EditUserFormData = {
   name: string;
@@ -146,14 +147,13 @@ export default function EditUser(){
               mt="8"
               justify="flex-end"
             >
-              <HStack spacing="4">
-                <Link href="/users" passHref>
-                  <Button as="a" colorScheme="red">Cancelar</Button>
-                </Link>  
-                <Button colorScheme="orange" type="submit" isLoading={formState.isSubmitting}>
-                  Salvar
-                </Button>
-              </HStack>      
+
+            <HStack spacing="4">
+              <ButtonCancel href={"/users"} passHref /> 
+              <Button colorScheme="orange" type="submit" isLoading={formState.isSubmitting}>
+                Salvar
+              </Button>
+            </HStack>      
             </Flex>
           </Box>
         </Flex>  

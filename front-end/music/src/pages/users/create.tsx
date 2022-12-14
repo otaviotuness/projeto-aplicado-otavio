@@ -10,6 +10,7 @@ import Link from 'next/link'
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { api } from "../../services/api";
+import { ButtonCancel } from "../../components/utils/button/ButtonCancel";
 
 type CreateUserFormData = {
   name: string;
@@ -79,7 +80,7 @@ export default function CreateUser(){
             >
               <HStack spacing="4">
                 <Link href="/users" passHref>
-                  <Button as="a" colorScheme="red">Cancelar</Button>
+                  <ButtonCancel href={"/users/create"} passHref />
                 </Link>  
                 <Button colorScheme="orange" type="submit" isLoading={formState.isSubmitting}>
                   Salvar
