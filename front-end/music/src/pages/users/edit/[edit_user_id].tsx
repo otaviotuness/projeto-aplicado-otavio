@@ -8,6 +8,8 @@ import { Sidebar } from "../../../components/Sidebar";
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import Router from 'next/router';
+
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { api } from "../../../services/api";
@@ -46,7 +48,9 @@ export default function EditUser(){
   const { errors } = formState
 
   const handleEditUser: SubmitHandler<EditUserFormData> = async (values) => {
-    await editUser(values)      
+    await editUser(values);      
+
+    Router.push('/users');
   }
 
   const handleChangeName = (text) => { setName(text); }

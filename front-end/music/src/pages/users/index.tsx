@@ -13,6 +13,7 @@ import { withSSRAuth } from "../../utils/withSSRAuth";
 import { ButtonAdd } from "../../components/utils/button/ButtonAdd";
 import { ButtonDelete } from "../../components/utils/button/ButtonDelete";
 import { ButtonEdit } from "../../components/utils/button/ButtonEdit";
+import ConfirmButton from "../../components/confirmButtonDelete/ConfirmButtonDelete";
 
 interface User {
   id: number;
@@ -100,21 +101,28 @@ export default function UserList(){
                         <Td>
                           <Link href={`/users/edit/${encodeURIComponent(user.id)}`}>
                             <Button 
-                                as="a" 
-                                size="sm" 
-                                fontSize="sm" 
-                                colorScheme="pink"
-                                leftIcon={<Icon as={RiPencilLine}/>}
-                                bg="orange.600"
-                                _hover={{bgColor: 'orange.700'}}
-                                >
-                                Editar
-
+                              as="a" 
+                              size="sm" 
+                              fontSize="sm" 
+                              colorScheme="pink"
+                              leftIcon={<Icon as={RiPencilLine}/>}
+                              bg="orange.600"
+                              _hover={{bgColor: 'orange.700'}}
+                              >
+                              Editar
                             </Button>
                           </Link>
                         </Td>
                         <Td>
-                          <ButtonDelete />
+                          <ConfirmButton
+                            headerText="Delete this message?"
+                            bodyText="Are you sure you want to delete this message? This cannot be undone."
+                            onSuccessAction={() => {
+                              console.log("Successfully Deleted");
+                            }}
+                            buttonText="Delete"
+                            isDanger={true}
+                          />
                         </Td>
                       </Tr>
                     </Tbody>  
