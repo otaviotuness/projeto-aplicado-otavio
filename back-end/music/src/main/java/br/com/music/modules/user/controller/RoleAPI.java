@@ -1,8 +1,8 @@
-package br.com.music.modules.user.entrypoint;
+package br.com.music.modules.user.controller;
 
 import br.com.music.modules.commum.anotattion.PermitAll;
+import br.com.music.modules.user.controller.dto.RoleDto;
 import br.com.music.modules.user.domain.RoleDomain;
-import br.com.music.modules.user.entrypoint.dto.RoleDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;

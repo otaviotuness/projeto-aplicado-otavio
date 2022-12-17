@@ -1,7 +1,7 @@
-package br.com.music.modules.user.entrypoint;
+package br.com.music.modules.user.controller;
 
 import br.com.music.modules.commum.anotattion.PermitAll;
-import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
+import br.com.music.modules.user.controller.dto.UserResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;

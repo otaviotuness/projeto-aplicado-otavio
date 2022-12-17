@@ -115,6 +115,10 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                     .permitAll()
                     .mvcMatchers("/song/**")
                     .permitAll()
+                    .mvcMatchers("/checklists")
+                    .permitAll()
+                    .mvcMatchers("/checklist/**")
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .sessionManagement(

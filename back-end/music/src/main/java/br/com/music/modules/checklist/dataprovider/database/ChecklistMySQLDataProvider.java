@@ -1,8 +1,8 @@
 package br.com.music.modules.checklist.dataprovider.database;
 
 import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepository;
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
-import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
+import br.com.music.modules.checklist.service.domain.ChecklistDomain;
+import br.com.music.modules.checklist.service.gateway.ChecklistDadosGateway;
 import br.com.music.modules.commum.exceptions.NotFoundException;
 import br.com.music.modules.commum.utils.UserInfo;
 import java.util.List;

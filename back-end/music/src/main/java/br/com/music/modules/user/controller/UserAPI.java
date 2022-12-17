@@ -1,10 +1,10 @@
-package br.com.music.modules.user.entrypoint;
+package br.com.music.modules.user.controller;
 
 import br.com.music.modules.commum.anotattion.PermitAll;
+import br.com.music.modules.user.controller.dto.NewUserDto;
+import br.com.music.modules.user.controller.dto.UserDto;
+import br.com.music.modules.user.controller.dto.UserResponseDto;
 import br.com.music.modules.user.domain.UserDomain;
-import br.com.music.modules.user.entrypoint.dto.NewUserDto;
-import br.com.music.modules.user.entrypoint.dto.UserDto;
-import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;

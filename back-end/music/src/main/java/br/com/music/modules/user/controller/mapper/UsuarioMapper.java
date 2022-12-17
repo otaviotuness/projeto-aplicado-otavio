@@ -1,8 +1,8 @@
-package br.com.music.modules.user.entrypoint.mapper;
+package br.com.music.modules.user.controller.mapper;
 
+import br.com.music.modules.user.controller.dto.NewUserDto;
+import br.com.music.modules.user.controller.dto.UserDto;
 import br.com.music.modules.user.domain.UserDomain;
-import br.com.music.modules.user.entrypoint.dto.NewUserDto;
-import br.com.music.modules.user.entrypoint.dto.UserDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

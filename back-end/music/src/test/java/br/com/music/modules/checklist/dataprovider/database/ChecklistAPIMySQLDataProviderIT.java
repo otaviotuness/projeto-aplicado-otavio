@@ -3,7 +3,7 @@ package br.com.music.modules.checklist.dataprovider.database;
 import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
 
 import br.com.music.modules.checklist.dataprovider.repository.ChecklistRepository;
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
+import br.com.music.modules.checklist.service.domain.ChecklistDomain;
 import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.configTest.TestWithMySQL;
 import br.com.music.modules.event.dataprovider.repository.EventRepository;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 @EnableAutoConfiguration
-class ChecklistMySQLDataProviderIT extends TestWithMySQL {
+class ChecklistAPIMySQLDataProviderIT extends TestWithMySQL {
 
   @Autowired private ChecklistMySQLDataProvider checklistMySQLDataProvider;
 

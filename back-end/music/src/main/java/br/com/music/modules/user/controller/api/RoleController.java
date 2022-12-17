@@ -1,12 +1,12 @@
-package br.com.music.modules.user.entrypoint.api;
+package br.com.music.modules.user.controller.api;
 
 import static br.com.music.modules.commum.anotattion.TypePermissions.ADMIN;
 
 import br.com.music.modules.commum.anotattion.Permission;
+import br.com.music.modules.user.controller.RoleAPI;
+import br.com.music.modules.user.controller.dto.RoleDto;
+import br.com.music.modules.user.controller.mapper.RoleMapper;
 import br.com.music.modules.user.domain.RoleDomain;
-import br.com.music.modules.user.entrypoint.RoleAPI;
-import br.com.music.modules.user.entrypoint.dto.RoleDto;
-import br.com.music.modules.user.entrypoint.mapper.RoleMapper;
 import br.com.music.modules.user.usecase.RoleUseCase;
 import java.util.List;
 import javax.validation.Valid;

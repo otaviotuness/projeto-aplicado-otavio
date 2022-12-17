@@ -5,8 +5,6 @@ import { Input } from "../../components/Form/Input";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 
-import Link from 'next/link'
-
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { api } from "../../services/api";
@@ -79,9 +77,7 @@ export default function CreateUser(){
               justify="flex-end"
             >
               <HStack spacing="4">
-                <Link href="/users" passHref>
-                  <ButtonCancel href={"/users/create"} passHref />
-                </Link>  
+                <ButtonCancel href={"/users/create"} passHref />
                 <Button colorScheme="orange" type="submit" isLoading={formState.isSubmitting}>
                   Salvar
                 </Button>

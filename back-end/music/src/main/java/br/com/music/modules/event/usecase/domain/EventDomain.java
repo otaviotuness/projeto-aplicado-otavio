@@ -1,6 +1,6 @@
 package br.com.music.modules.event.usecase.domain;
 
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
+import br.com.music.modules.checklist.service.domain.ChecklistDomain;
 import br.com.music.modules.receive.usecase.domain.ReceiveDomain;
 import br.com.music.modules.song.usecase.domain.SongDomain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

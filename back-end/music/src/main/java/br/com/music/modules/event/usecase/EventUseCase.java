@@ -1,6 +1,6 @@
 package br.com.music.modules.event.usecase;
 
-import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
+import br.com.music.modules.checklist.service.gateway.ChecklistDadosGateway;
 import br.com.music.modules.commum.utils.ValidateRequest;
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import br.com.music.modules.event.usecase.gateway.EventDadosGateway;

@@ -1,7 +1,7 @@
-package br.com.music.modules.checklist.usecase;
+package br.com.music.modules.checklist.service;
 
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
-import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
+import br.com.music.modules.checklist.service.domain.ChecklistDomain;
+import br.com.music.modules.checklist.service.gateway.ChecklistDadosGateway;
 import br.com.music.modules.commum.utils.ValidateRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ChecklistUseCase {
+public class ChecklistService {
 
   private final ChecklistDadosGateway checklistDadosGateway;
   private final ValidateRequest validateRequest;

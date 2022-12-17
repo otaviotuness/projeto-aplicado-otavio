@@ -1,5 +1,5 @@
 import { Stack, useConst } from "@chakra-ui/react";
-import { RiContactsLine, RiDashboardLine, RiMusic2Fill } from "react-icons/ri";
+import { RiContactsLine, RiDashboardLine, RiListCheck2, RiMusic2Fill } from "react-icons/ri";
 import { Can } from "../authorization/Can";
 import { NavLink } from "./NavLink";
 import { NavSection } from "./NavSection";
@@ -18,6 +18,10 @@ export function SidebarNav(){
 
         <Can roles={['ADMIN', 'MUSICIAN']}>
           <NavLink icon={RiMusic2Fill} href="/songs">Musicas</NavLink>
+        </Can>
+
+        <Can roles={['ADMIN', 'MUSICIAN']}>
+          <NavLink icon={RiListCheck2} href="/checklists">Checklists</NavLink>
         </Can>
       </NavSection>
     </Stack>

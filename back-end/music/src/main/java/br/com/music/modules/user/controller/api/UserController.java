@@ -1,17 +1,17 @@
-package br.com.music.modules.user.entrypoint.api;
+package br.com.music.modules.user.controller.api;
 
 import static br.com.music.modules.commum.anotattion.TypePermissions.ADMIN_MUSICIAN;
 import static br.com.music.modules.commum.anotattion.TypePermissions.ALL;
 import static br.com.music.modules.user.enumeration.RoleEnum.MUSICIAN;
 
 import br.com.music.modules.commum.anotattion.Permission;
+import br.com.music.modules.user.controller.UserAPI;
+import br.com.music.modules.user.controller.dto.NewUserDto;
+import br.com.music.modules.user.controller.dto.UserDto;
+import br.com.music.modules.user.controller.dto.UserResponseDto;
+import br.com.music.modules.user.controller.mapper.UsuarioMapper;
 import br.com.music.modules.user.domain.RoleDomain;
 import br.com.music.modules.user.domain.UserDomain;
-import br.com.music.modules.user.entrypoint.UserAPI;
-import br.com.music.modules.user.entrypoint.dto.NewUserDto;
-import br.com.music.modules.user.entrypoint.dto.UserDto;
-import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
-import br.com.music.modules.user.entrypoint.mapper.UsuarioMapper;
 import br.com.music.modules.user.usecase.UserUseCase;
 import java.security.Principal;
 import java.util.List;

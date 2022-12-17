@@ -1,11 +1,11 @@
-package br.com.music.modules.user.entrypoint.api;
+package br.com.music.modules.user.controller.api;
 
 import static br.com.music.modules.commum.anotattion.TypePermissions.ALL;
 
 import br.com.music.modules.commum.anotattion.Permission;
 import br.com.music.modules.commum.utils.UserInfo;
-import br.com.music.modules.user.entrypoint.TokenAPI;
-import br.com.music.modules.user.entrypoint.dto.UserResponseDto;
+import br.com.music.modules.user.controller.TokenAPI;
+import br.com.music.modules.user.controller.dto.UserResponseDto;
 import br.com.music.modules.user.usecase.UserUseCase;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;

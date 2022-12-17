@@ -1,10 +1,14 @@
 package br.com.music.modules.checklist.usecase;
 
 import static br.com.music.modules.configTest.GeneratorObj.EASY_RANDOM;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
-import br.com.music.modules.checklist.usecase.gateway.ChecklistDadosGateway;
+import br.com.music.modules.checklist.service.ChecklistService;
+import br.com.music.modules.checklist.service.domain.ChecklistDomain;
+import br.com.music.modules.checklist.service.gateway.ChecklistDadosGateway;
 import br.com.music.modules.commum.utils.UserInfo;
 import br.com.music.modules.commum.utils.ValidateRequest;
 import java.util.List;
@@ -17,12 +21,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class ChecklistCaseTest {
+class ChecklistAPICaseTest {
 
   private static final Integer CHECKLIST_ID = 123;
   private static final Integer USER_ID = 123;
 
-  @InjectMocks ChecklistUseCase checklistUseCase;
+  @InjectMocks ChecklistService checklistService;
 
   @Mock private ChecklistDadosGateway checklistDadosGateway;
 
@@ -41,7 +45,7 @@ class ChecklistCaseTest {
 
     doNothing().when(checklistDadosGateway).save(checklist);
 
-    checklistUseCase.save(checklist);
+    checklistService.save(checklist);
 
     verify(checklistDadosGateway, times(1)).save(checklist);
   }
@@ -50,9 +54,9 @@ class ChecklistCaseTest {
   void givenFindAll_thenReturnSuccessfully() {
     final var checklist = EASY_RANDOM.nextObject(ChecklistDomain.class);
 
-    when(checklistUseCase.findAll()).thenReturn(List.of(checklist));
+    when(checklistService.findAll()).thenReturn(List.of(checklist));
 
-    checklistUseCase.findAll();
+    checklistService.findAll();
 
     verify(checklistDadosGateway, times(1)).findAll();
   }
@@ -65,7 +69,7 @@ class ChecklistCaseTest {
 
     doNothing().when(validateRequest).validate(checklist.getIdUser());
 
-    checklistUseCase.findById(CHECKLIST_ID);
+    checklistService.findById(CHECKLIST_ID);
 
     verify(checklistDadosGateway, times(1)).findById(CHECKLIST_ID);
   }
@@ -81,7 +85,7 @@ class ChecklistCaseTest {
 
     doNothing().when(validateRequest).validate(checklist.getIdUser());
 
-    checklistUseCase.deleteById(CHECKLIST_ID);
+    checklistService.deleteById(CHECKLIST_ID);
 
     verify(checklistDadosGateway, times(1)).deleteById(CHECKLIST_ID);
   }

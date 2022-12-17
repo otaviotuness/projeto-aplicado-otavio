@@ -1,6 +1,6 @@
-package br.com.music.modules.checklist.usecase.gateway;
+package br.com.music.modules.checklist.service.gateway;
 
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
+import br.com.music.modules.checklist.service.domain.ChecklistDomain;
 import java.util.List;
 
 public interface ChecklistDadosGateway {

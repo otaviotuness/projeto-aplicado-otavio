@@ -1,7 +1,8 @@
 package br.com.music.modules.checklist.controller;
 
 import br.com.music.modules.checklist.controller.dto.ChecklistDto;
-import br.com.music.modules.checklist.usecase.domain.ChecklistDomain;
+import br.com.music.modules.checklist.service.domain.ChecklistDomain;
+import br.com.music.modules.commum.anotattion.PermitAll;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping
 @Valid
-public interface Checklist {
+@PermitAll
+public interface ChecklistAPI {
 
   @GetMapping("/checklist/{id}")
-  public ChecklistDomain findById(@PathVariable Integer id);
+  ChecklistDomain findById(@PathVariable Integer id);
 
   @GetMapping("/checklists")
-  public ResponseEntity<List<ChecklistDomain>> findAll();
+  ResponseEntity<List<ChecklistDomain>> findAll();
 
   @PostMapping("/checklist")
-  public ResponseEntity<String> save(@Valid @RequestBody ChecklistDto checklistDto);
+  ResponseEntity<String> save(@Valid @RequestBody ChecklistDto checklistDto);
 
   @DeleteMapping("/checklist/{id}")
-  public ResponseEntity<String> deleteById(@PathVariable Integer id);
+  ResponseEntity<String> deleteById(@PathVariable Integer id);
 }

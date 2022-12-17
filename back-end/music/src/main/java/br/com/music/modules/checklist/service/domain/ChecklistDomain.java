@@ -1,4 +1,4 @@
-package br.com.music.modules.checklist.usecase.domain;
+package br.com.music.modules.checklist.service.domain;
 
 import br.com.music.modules.event.usecase.domain.EventDomain;
 import com.fasterxml.jackson.annotation.JsonBackReference;

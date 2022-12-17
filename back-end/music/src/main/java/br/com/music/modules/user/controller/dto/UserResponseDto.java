@@ -1,4 +1,4 @@
-package br.com.music.modules.user.entrypoint.dto;
+package br.com.music.modules.user.controller.dto;
 
 import java.util.HashSet;
 import java.util.Set;
